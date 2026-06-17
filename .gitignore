@@ -1,0 +1,28 @@
+# Dependencies
+node_modules/
+
+# Next.js build output
+.next/
+out/
+
+# Environment / secrets — never commit
+.env
+.env.*
+!.env*.example
+**/.env.local
+**/.env*.local
+
+# Shopify CLI
+.shopify/
+dist/
+
+# OS / editor
+.DS_Store
+*.log
+
+# Local agent config
+.claude/
+
+# Raw source assets (large; processed versions live in spritz-site/public)
+/archive (1)/
+/video-sources/

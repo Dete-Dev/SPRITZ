@@ -1,0 +1,18 @@
+# SPRITZ custom app — hosts the bundle tier discount Function.
+#
+# client_id is filled automatically when you run `shopify app config link`
+# after the store + Partner account exist. See README.md for the full
+# deferred-deploy runbook.
+
+name = "spritz-bundle"
+application_url = "https://shopify.dev/apps/default-app-home"
+embedded = false
+
+[access_scopes]
+scopes = "write_discounts"
+
+[webhooks]
+api_version = "2025-01"
+
+[build]
+include_config_on_deploy = true

@@ -1,0 +1,13 @@
+{
+  "name": "spritz-shopify-app",
+  "private": true,
+  "version": "0.1.0",
+  "description": "SPRITZ custom Shopify app — bundle tier discount Function",
+  "workspaces": [
+    "extensions/*"
+  ],
+  "scripts": {
+    "deploy": "shopify app deploy",
+    "dev": "shopify app dev"
+  }
+}

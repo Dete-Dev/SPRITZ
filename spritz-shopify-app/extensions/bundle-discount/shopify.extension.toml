@@ -1,0 +1,28 @@
+# Bundle tier discount Function.
+#
+# NOTE: Shopify is migrating discount Functions from the legacy
+# `product_discounts` api to the unified discount api
+# (cartLinesDiscountsGenerateRun target). If `shopify app deploy` rejects
+# this config at deploy time, re-scaffold with the then-current template:
+#   shopify app generate extension --template discount_function
+# and port src/run.ts — the tier logic is template-agnostic.
+
+api_version = "2025-01"
+
+[[extensions]]
+name = "spritz-bundle-discount"
+handle = "spritz-bundle-discount"
+type = "function"
+description = "Tiered discount: more SPRITZ bottles, bigger percent off"
+
+  [[extensions.targeting]]
+  target = "purchase.product-discount.run"
+  input_query = "src/run.graphql"
+  export = "run"
+
+  [extensions.build]
+  command = ""
+  path = "dist/function.wasm"
+
+  [extensions.ui]
+  enable_create = false

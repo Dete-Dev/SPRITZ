@@ -1,0 +1,24 @@
+query RunInput {
+  cart {
+    lines {
+      id
+      quantity
+      sellingPlanAllocation {
+        sellingPlan {
+          id
+        }
+      }
+      merchandise {
+        __typename
+        ... on ProductVariant {
+          id
+        }
+      }
+    }
+  }
+  discountNode {
+    metafield(namespace: "spritz", key: "tiers") {
+      value
+    }
+  }
+}

@@ -1,0 +1,275 @@
+{
+  "meta": {
+    "siteTitle": "SPRITZ — Five Scents",
+    "siteDescription": "A small house of five perfumes. Made in small batches.",
+    "shopTitle": "SPRITZ — Shop",
+    "shopDescription": "Reservations open soon."
+  },
+  "header": {
+    "shop": "Shop",
+    "cart": "Bag",
+    "home": "SPRITZ — home"
+  },
+  "cart": {
+    "title": "Your bag",
+    "close": "Close",
+    "empty": "Your bag is empty.",
+    "emptyHint": "Pick one of the five and let the rest follow.",
+    "remove": "Remove",
+    "increase": "Increase quantity",
+    "decrease": "Decrease quantity",
+    "subtotal": "Subtotal",
+    "discount": "Discount",
+    "total": "Total",
+    "subscriptionBadge": "Subscription",
+    "shippingNote": "Shipping & taxes calculated at checkout",
+    "checkout": "Checkout",
+    "addToBag": "Add to bag",
+    "added": "Added",
+    "notReady": "Store launching soon"
+  },
+  "purchaseOptions": {
+    "legend": "Purchase options",
+    "oneTime": "One-time purchase",
+    "subscribe": "Subscribe & save {percent}%",
+    "perDelivery": "per delivery",
+    "cancelAnytime": "Pause or cancel anytime"
+  },
+  "languageToggle": {
+    "ro": "RO",
+    "en": "EN",
+    "switchTo": "Switch to {locale}"
+  },
+  "hero": {
+    "scrollCue": "scroll to enter",
+    "sidebar": "SPRITZ — Edition 01 — Five scents",
+    "scents": {
+      "ananas": {
+        "eyebrow": "Edition 01 — Ananas",
+        "notes": "Pineapple rind, birch bark, lemon peel, violet."
+      },
+      "cerise": {
+        "eyebrow": "Edition 02 — Cerise",
+        "notes": "Black cherry, rose petal, raspberry, lime."
+      },
+      "menthe": {
+        "eyebrow": "Edition 03 — Menthe",
+        "notes": "Cedarwood, fresh mint, ginger root, lemon."
+      },
+      "safran": {
+        "eyebrow": "Edition 04 — Safran",
+        "notes": "Saffron threads, amber resin, jasmine, sandalwood."
+      },
+      "truffe": {
+        "eyebrow": "Edition 05 — Truffe",
+        "notes": "Black truffle, dark cocoa, jasmine, bergamot zest."
+      }
+    }
+  },
+  "story": {
+    "eyebrow": "The house — est. 2026",
+    "headline": "Five scents.",
+    "headlineEm": "One idea.",
+    "p1": "SPRITZ is a small house of five perfumes. We name them in French because perfume reads better in French — but we make them where we live, in small batches, in real glass, with real materials.",
+    "p2": "No twelve-volume backstory. No marketing words for \"woody.\" Five bottles, five things they smell like, and a phone number if you want to talk about it."
+  },
+  "marquee": "ananas · cerise · menthe · safran · truffe",
+  "five": {
+    "eyebrow": "The five — Edition 01",
+    "headline": "Five scents,",
+    "headlineEm": "one season.",
+    "intro": "Five eau de parfum in 50ml. Composed in small batches, signed and numbered by hand. Each is its own thing — pick the one that sounds like you today.",
+    "shortNotes": {
+      "ananas": "Pineapple, birch, violet.",
+      "cerise": "Cherry, rose, lime.",
+      "menthe": "Cedar, mint, ginger.",
+      "safran": "Saffron, amber, jasmine.",
+      "truffe": "Truffle, cocoa, jasmine."
+    }
+  },
+  "craft": {
+    "eyebrow": "The craft",
+    "headline": "Three steps,",
+    "headlineEm": "no shortcuts.",
+    "caption": "Small batch — 50ml flacon",
+    "steps": {
+      "compose": {
+        "title": "Compose",
+        "body": "Each scent starts on paper, then on skin, then on a colleague, then on a stranger. Drafts mature for weeks before they earn a name."
+      },
+      "batch": {
+        "title": "Batch",
+        "body": "We mix in 200-bottle batches — small enough to taste-test, large enough to keep the price honest. No filler ingredients, no synthetics chasing a marketing claim."
+      },
+      "send": {
+        "title": "Send",
+        "body": "Hand-poured, labeled, sealed. Numbered on the cap. Wrapped in something that doesn't end up in the ocean."
+      }
+    }
+  },
+  "reserve": {
+    "eyebrow": "Edition 01 — five scents",
+    "h1": "Numbered,",
+    "h2": "signed,",
+    "h3em": "sent.",
+    "body": "Edition 01 ships this season. Drop your email — we'll send one note the week before bottles leave the studio. No drip campaign, no newsletter babble.",
+    "emailPlaceholder": "your@email.com",
+    "submit": "Notify me",
+    "footnote": "50ml · eau de parfum · Small batch"
+  },
+  "footer": {
+    "tagline": "Five scents, made in small batches. Edition 01 — ships this season.",
+    "scents": "Scents",
+    "house": "House",
+    "houseLinks": {
+      "story": "Story",
+      "five": "The five",
+      "craft": "Craft",
+      "reserve": "Reserve",
+      "shop": "Shop"
+    },
+    "correspondence": "Correspondence",
+    "correspondenceBody": "One note when Edition 01 ships. Nothing else.",
+    "emailPlaceholder": "your@email.com",
+    "join": "Join",
+    "copyright": "© 2026 SPRITZ",
+    "terms": "Terms",
+    "privacy": "Privacy"
+  },
+  "shop": {
+    "eyebrow": "Edition 01",
+    "headline": "Reservations",
+    "headlineBreak": "open soon.",
+    "body": "Five eau de parfum, made in small batches — poured, labeled, and sealed by hand."
+  },
+  "finder": {
+    "eyebrow": "The advisor",
+    "headline": "Not sure which one?",
+    "intro": "Answer what you feel like answering. We match you with one of the five — and tell you why.",
+    "occasionLabel": "When will you wear it",
+    "occasion": {
+      "day": "Daytime",
+      "evening": "Evening",
+      "work": "At work",
+      "gift": "It is a gift"
+    },
+    "intensityLabel": "How loud should it be",
+    "intensity": {
+      "quiet": "Quiet",
+      "present": "Present",
+      "loud": "Loud"
+    },
+    "characterLabel": "Which way does it lean",
+    "character": {
+      "sweet": "Sweet",
+      "dry": "Dry",
+      "fresh": "Fresh",
+      "dark": "Dark"
+    },
+    "freeTextPlaceholder": "Or tell us in your own words — what do you want it to smell like?",
+    "submit": "Find my scent",
+    "loading": "Matching you with one of the five",
+    "resultEyebrow": "Our pick for you",
+    "viewScent": "See the scent",
+    "restart": "Start over",
+    "error": "Something went sideways.",
+    "fallback": "The five are below — trust your nose."
+  },
+  "bundle": {
+    "eyebrow": "Edition 01 — build your set",
+    "headline": "More bottles, better price.",
+    "intro": "Pick any of the five, in any mix. Two bottles take 10% off, three take 15%, five take 20% — across everything in your bag.",
+    "tierProgress": "{count, plural, one {1 more bottle for −{percent}%} other {# more bottles for −{percent}%}}",
+    "tierUnlocked": "Best price unlocked — −{percent}%",
+    "estimate": "Estimated total",
+    "addScent": "Tap to add a fragrance",
+    "discountNote": "Discount applied at checkout",
+    "addAll": "{count, plural, one {Add 1 bottle to bag} other {Add # bottles to bag}}",
+    "emptySelection": "Pick at least one",
+    "addToBundle": "Add to bundle",
+    "barLabel": "Your bundle",
+    "clear": "Clear"
+  },
+  "scentPage": {
+    "size": "50ml · eau de parfum",
+    "reserve": "Reserve",
+    "back": "← All five",
+    "currency": "RON",
+    "priceLabel": "Price",
+    "sizeLabel": "Size",
+    "edpLabel": "eau de parfum",
+    "notify": "Notify me when in stock",
+    "notifyPlaceholder": "your@email.com",
+    "notifySubmit": "Send",
+    "notifyHelp": "We'll write once — the day this scent is in stock. Nothing else.",
+    "bullets": [
+      "Small batch — 200 bottles per pour",
+      "Hand-poured, signed, numbered",
+      "Ships within Romania · 2–4 days"
+    ],
+    "story": "The story",
+    "notes": "Notes",
+    "notesIntro": "What it actually smells like, layer by layer. Top notes hit first and fade fastest; the base is what you wear into the evening.",
+    "noteLayers": {
+      "top": "Top",
+      "heart": "Heart",
+      "base": "Base"
+    },
+    "noteLayerDescriptions": {
+      "top": "The opening — what you smell in the first ten minutes.",
+      "heart": "Where the scent settles, an hour in.",
+      "base": "What's left on your skin after dinner."
+    },
+    "wear": "How to wear it",
+    "wearBody": "Spray once on each wrist, once at the base of the throat. Don't rub. Re-apply after about four hours if you want it loud.",
+    "moreTitle": "The other four",
+    "moreSubtitle": "Pick one for a different evening."
+  },
+  "scentDetails": {
+    "ananas": {
+      "story1": "Pineapple cut at a kitchen counter in late August — sticky knife, lemon rind on a board, someone laughing in the next room.",
+      "story2": "Birch bark holds the whole thing together. It keeps the fruit from being a dessert; it makes the bottle smell like something an adult might wear to dinner.",
+      "notes": {
+        "top": ["Pineapple rind", "Calabrian bergamot", "Pink pepper"],
+        "heart": ["Birch sap", "Violet leaf", "Jasmine sambac"],
+        "base": ["Cedarwood", "White musk", "Vetiver"]
+      }
+    },
+    "cerise": {
+      "story1": "The cherry is the first thing you notice and the last thing you'd remember — it's bright, it's almost too sweet, then the rose steps in and turns it adult.",
+      "story2": "Built like a perfume from the 90s, but lighter. Wears well in cold weather. Don't put it on if you're trying to be subtle.",
+      "notes": {
+        "top": ["Black cherry", "Raspberry", "Lime zest"],
+        "heart": ["Damascena rose", "Iris", "Almond blossom"],
+        "base": ["Tonka bean", "Sandalwood", "White musk"]
+      }
+    },
+    "menthe": {
+      "story1": "Imagine walking into a cedar closet with a mint leaf in your pocket. The mint cuts the wood; the wood holds the mint in place.",
+      "story2": "The quietest one in the five. Reads as fresh without being a cologne. Looks good on anyone.",
+      "notes": {
+        "top": ["Spearmint", "Lemon zest", "Ginger root"],
+        "heart": ["Cedarwood", "Geranium", "Cardamom"],
+        "base": ["Patchouli", "Vetiver", "White moss"]
+      }
+    },
+    "safran": {
+      "story1": "Saffron is expensive on purpose — a few threads change the whole composition. Here it sits on top of an amber-resin base that takes about an hour to fully arrive.",
+      "story2": "The warmest of the five. Wears longer than the others. We saved this one for after sundown.",
+      "notes": {
+        "top": ["Saffron threads", "Bergamot", "Pink pepper"],
+        "heart": ["Jasmine", "Damask rose", "Cinnamon"],
+        "base": ["Amber resin", "Sandalwood", "Oud accord"]
+      }
+    },
+    "truffe": {
+      "story1": "Black truffle and dark cocoa — written down it sounds like a dessert menu. Worn, it's the smell of a very old wood-paneled room with a small fire going.",
+      "story2": "Heaviest of the five. Don't reach for it in July. Don't reach for anything else in February.",
+      "notes": {
+        "top": ["Bergamot zest", "Pink pepper", "Cardamom"],
+        "heart": ["Black truffle", "Jasmine", "Iris"],
+        "base": ["Dark cocoa", "Vanilla bean", "Patchouli"]
+      }
+    }
+  }
+}

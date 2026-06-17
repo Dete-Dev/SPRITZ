@@ -1,0 +1,12 @@
+{
+  "name": "bundle-discount",
+  "private": true,
+  "version": "0.1.0",
+  "scripts": {
+    "build": "shopify app function build",
+    "typegen": "shopify app function typegen"
+  },
+  "dependencies": {
+    "@shopify/shopify_function": "^1.0.0"
+  }
+}

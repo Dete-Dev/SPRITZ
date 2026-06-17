@@ -1,0 +1,163 @@
+"use client";
+
+import { useEffect, useState } from "react";
+import { AnimatePresence, motion } from "framer-motion";
+import { useTranslations } from "next-intl";
+import {
+  getSellingPlans,
+  sellingPlanPercentOff,
+} from "@/lib/shopify/products";
+import type { SellingPlanAllocation } from "@/lib/shopify/types";
+import { useCart } from "@/components/cart/CartProvider";
+import AddToCartButton from "@/components/cart/AddToCartButton";
+
+interface PurchaseOptionsProps {
+  /** Shopify variant GID — empty until the store is wired up. */
+  variantId: string;
+  /** Base one-time price in RON (from lib/scents). */
+  price: number;
+  className?: string;
+}
+
+/**
+ * One-time vs subscription selector above the product CTA.
+ *
+ * Fetches selling plans for the variant at runtime, only when Shopify is
+ * configured. Until a subscription app (e.g. Appstle) publishes plans, the
+ * fetch returns an empty list and this renders exactly what BuyBox rendered
+ * before — just the AddToCartButton. No layout shift, no Shopify coupling
+ * in the server component.
+ */
+export default function PurchaseOptions({
+  variantId,
+  price,
+  className,
+}: PurchaseOptionsProps) {
+  const t = useTranslations("purchaseOptions");
+  const tCart = useTranslations("cart");
+  const { isReady } = useCart();
+  const [plans, setPlans] = useState<SellingPlanAllocation[]>([]);
+  const [selectedPlanId, setSelectedPlanId] = useState<string | null>(null);
+
+  useEffect(() => {
+    if (!isReady || !variantId) return;
+    let cancelled = false;
+    (async () => {
+      const allocations = await getSellingPlans(variantId);
+      if (!cancelled) setPlans(allocations);
+    })();
+    return () => {
+      cancelled = true;
+    };
+  }, [isReady, variantId]);
+
+  const selectedPlan = plans.find(
+    (p) => p.sellingPlan.id === selectedPlanId,
+  );
+
+  return (
+    <div className={className}>
+      <AnimatePresence initial={false}>
+        {plans.length > 0 && (
+          <motion.fieldset
+            initial={{ opacity: 0, height: 0 }}
+            animate={{ opacity: 1, height: "auto" }}
+            exit={{ opacity: 0, height: 0 }}
+            transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
+            className="mb-5 overflow-hidden"
+          >
+            <legend className="sr-only">{t("legend")}</legend>
+
+            {/* One-time */}
+            <PlanRow
+              checked={selectedPlanId === null}
+              onSelect={() => setSelectedPlanId(null)}
+              title={t("oneTime")}
+              detail={`${price} RON`}
+            />
+
+            {/* Subscription plans */}
+            {plans.map((allocation) => {
+              const percent = sellingPlanPercentOff(allocation, price);
+              const planPrice =
+                allocation.priceAdjustments[0]?.price.amount ?? null;
+              return (
+                <PlanRow
+                  key={allocation.sellingPlan.id}
+                  checked={selectedPlanId === allocation.sellingPlan.id}
+                  onSelect={() =>
+                    setSelectedPlanId(allocation.sellingPlan.id)
+                  }
+                  title={
+                    percent !== null
+                      ? t("subscribe", { percent })
+                      : allocation.sellingPlan.name
+                  }
+                  detail={
+                    planPrice
+                      ? `${Number(planPrice).toFixed(0)} RON ${t("perDelivery")}`
+                      : t("perDelivery")
+                  }
+                  hint={t("cancelAnytime")}
+                />
+              );
+            })}
+          </motion.fieldset>
+        )}
+      </AnimatePresence>
+
+      <AddToCartButton
+        variantId={variantId}
+        sellingPlanId={selectedPlan?.sellingPlan.id}
+        label={tCart("addToBag")}
+        addedLabel={tCart("added")}
+        notReadyLabel={tCart("notReady")}
+      />
+    </div>
+  );
+}
+
+interface PlanRowProps {
+  checked: boolean;
+  onSelect: () => void;
+  title: string;
+  detail: string;
+  hint?: string;
+}
+
+function PlanRow({ checked, onSelect, title, detail, hint }: PlanRowProps) {
+  return (
+    <label
+      className={`mb-2 flex cursor-pointer items-start gap-3 rounded-2xl border px-5 py-4 transition-colors ${
+        checked
+          ? "border-ink/60 bg-ink/[0.04]"
+          : "border-ink/15 hover:border-ink/35"
+      }`}
+    >
+      <input
+        type="radio"
+        name="purchase-option"
+        checked={checked}
+        onChange={onSelect}
+        className="sr-only"
+      />
+      <span
+        aria-hidden
+        className={`mt-[3px] inline-block h-3 w-3 shrink-0 rounded-full border transition-colors ${
+          checked ? "border-ink bg-ink" : "border-ink/35"
+        }`}
+      />
+      <span className="flex flex-1 flex-col">
+        <span className="text-[11px] uppercase tracking-[0.28em] text-ink">
+          {title}
+        </span>
+        <span className="mt-1 text-[13px] text-ink/65">{detail}</span>
+        {hint && checked && (
+          <span className="mt-1 text-[10px] uppercase tracking-[0.28em] text-ink/40">
+            {hint}
+          </span>
+        )}
+      </span>
+    </label>
+  );
+}
