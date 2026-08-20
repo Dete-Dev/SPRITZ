@@ -2,9 +2,9 @@
  * The SPRITZ catalogue — 22 inspired-by ("dupe") eau de parfum.
  *
  * Source of truth for names, note words, label colourways and the designer
- * fragrance each one answers to: the label artwork in `spritz_labels_transparent/`
- * and the bottle mockups rendered from it. Accents are sampled straight from
- * each label's printed stripe, so a card always matches its bottle.
+ * fragrance each one answers to: the label artwork in `brand/labels/`. Accents
+ * are sampled straight from each label's printed stripe, so a card always
+ * matches its bottle. Product shots come from `brand/bottle-photos.zip`.
  *
  * - `name` / `noteWords` are NOT translated — they are printed on the glass.
  * - `inspiredBy` names the designer fragrance the scent answers to. This is the
