@@ -5,6 +5,8 @@ import Image from "next/image";
 import { useTranslations } from "next-intl";
 import { SCENTS } from "@/lib/scents";
 import { useCart } from "@/components/cart/CartProvider";
+import Cta from "@/components/ui/Cta";
+import { Mark, Sticker, StripeBand } from "@/components/ui/vandal";
 import { useBundle } from "./BundleProvider";
 import BundleSlots from "./BundleSlots";
 
@@ -20,6 +22,7 @@ import BundleSlots from "./BundleSlots";
 export default function BundleBuilder() {
   const t = useTranslations("bundle");
   const tCart = useTranslations("cart");
+  const tCommon = useTranslations("common");
   const { isReady, loading } = useCart();
   const {
     slots,
@@ -51,23 +54,30 @@ export default function BundleBuilder() {
   }
 
   return (
-    <div className="rounded-[2rem] bg-bone/70 px-5 py-8 shadow-[0_1px_0_rgba(255,255,255,0.5)_inset,0_20px_60px_-40px_rgba(26,20,17,0.4)] md:px-10 md:py-10">
-      <div className="mb-7 flex flex-col gap-3 md:flex-row md:items-end md:gap-6">
-        <h2 className="font-display text-[clamp(2.2rem,4vw,3.4rem)] leading-[0.95] text-ink">
-          {t("headline")}
+    <div className="overflow-hidden rounded-card border-2 border-ink bg-paper shadow-hard">
+      <StripeBand color="var(--sp-red)" height={14} />
+
+      <div className="px-5 py-8 md:px-10 md:py-10">
+      <div className="mb-7">
+        <h2 className="sp-display text-d-2xl">
+          <Mark color="var(--sp-yellow)">{t("headline")}</Mark>
         </h2>
-        <p className="max-w-md text-[14px] leading-relaxed text-ink/65 md:pb-1">
+        <p className="mt-5 max-w-xl font-sans text-base text-muted">
           {t("intro")}
         </p>
+      </div>
+
+      <div className="mb-7">
+        <Sticker tilt={-3} variant="ink" fill="var(--sp-red)">
+          {tCommon("tiers")}
+        </Sticker>
       </div>
 
       <BundleSlots slots={slots} onRemove={removeAt} />
 
       {/* Scent picker — tap a bottle to drop it into the next slot. */}
       <div className="mt-7">
-        <p className="mb-3 text-[10px] uppercase tracking-[0.4em] text-ink/45">
-          {t("addScent")}
-        </p>
+        <p className="sp-eyebrow mb-3">{t("addScent")}</p>
         <div className="flex flex-wrap gap-2">
           {SCENTS.map((scent) => (
             <button
@@ -75,7 +85,7 @@ export default function BundleBuilder() {
               type="button"
               disabled={loading}
               onClick={() => addScent(scent.key)}
-              className="group flex items-center gap-2.5 rounded-full border border-ink/20 bg-ivory/50 py-1.5 pl-1.5 pr-4 transition-colors hover:border-ink/50 disabled:opacity-50"
+              className="sp-lift group flex items-center gap-2.5 rounded-full border-2 border-ink bg-paper py-1.5 pl-1.5 pr-4 disabled:opacity-40"
             >
               <span className="relative h-9 w-7">
                 <Image
@@ -89,10 +99,10 @@ export default function BundleBuilder() {
               <span className="flex items-center gap-2">
                 <span
                   aria-hidden
-                  className="h-1.5 w-1.5 rounded-full"
-                  style={{ backgroundColor: scent.accent }}
+                  className="h-3 w-3 rounded-full border border-ink"
+                  style={{ backgroundColor: scent.stripe }}
                 />
-                <span className="text-[11px] uppercase tracking-[0.18em] text-ink/75">
+                <span className="font-sans text-[11px] font-bold uppercase tracking-[0.1em]">
                   {scent.key}
                 </span>
               </span>
@@ -102,9 +112,9 @@ export default function BundleBuilder() {
       </div>
 
       {/* Progress + total + CTA */}
-      <div className="mt-9 flex flex-col gap-5 border-t border-ink/12 pt-6 md:flex-row md:items-end md:justify-between">
+      <div className="mt-9 flex flex-col gap-5 border-t-2 border-ink pt-6 md:flex-row md:items-end md:justify-between">
         <div>
-          <p className="text-[11px] uppercase tracking-[0.32em] text-ink/60">
+          <p className="sp-eyebrow">
             {next
               ? t("tierProgress", {
                   count: next.remaining,
@@ -114,26 +124,23 @@ export default function BundleBuilder() {
                 ? t("tierUnlocked", { percent: unlocked.percentOff })
                 : t("emptySelection")}
           </p>
-          <p className="mt-3 font-display text-3xl text-ink">
+          <p className="mt-3 font-sans text-3xl font-bold">
             {estimate.percentOff > 0 && (
-              <span className="mr-3 text-xl text-ink/35 line-through">
-                {estimate.subtotal}
+              <span className="sp-strike mr-3 text-xl font-normal text-muted">
+                {tCommon("price", { price: estimate.subtotal })}
               </span>
             )}
-            {estimate.total || 0}{" "}
-            <span className="text-base text-ink/55">RON</span>
+            {tCommon("price", { price: estimate.total || 0 })}
           </p>
-          <p className="mt-1 text-[10px] uppercase tracking-[0.32em] text-ink/40">
-            {t("discountNote")}
-          </p>
+          <p className="sp-eyebrow mt-2">{t("discountNote")}</p>
         </div>
 
         <div className="md:w-64">
-          <button
-            type="button"
+          <Cta
             onClick={handleAddAll}
-            disabled={!canSubmit}
-            className="inline-flex w-full items-center justify-center rounded-full border border-ink/70 bg-ink px-7 py-3 text-[11px] uppercase tracking-[0.32em] text-ivory transition-colors hover:bg-transparent hover:text-ink disabled:cursor-not-allowed disabled:opacity-50"
+            variant="primary"
+            block
+            className={canSubmit ? "" : "pointer-events-none opacity-40"}
           >
             {notReady
               ? tCart("notReady")
@@ -142,14 +149,17 @@ export default function BundleBuilder() {
                 : justAdded
                   ? tCart("added")
                   : t("addAll", { count: slots.length })}
-          </button>
+          </Cta>
           {error && (
-            <p className="mt-3 text-center text-[11px] uppercase tracking-[0.3em] text-rust">
+            <p className="sp-scrawl mt-3 text-center text-xs text-red">
               {error}
             </p>
           )}
         </div>
       </div>
+      </div>
+
+      <StripeBand color="var(--sp-red)" height={14} />
     </div>
   );
 }

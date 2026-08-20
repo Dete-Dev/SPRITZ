@@ -1,0 +1,30 @@
+/* SPRITZ v2 — motion. Transform + opacity only. */
+:root {
+  --sp-fast: 150ms;
+  --sp-normal: 320ms;
+  --sp-slow: 900ms;
+  --sp-ease: cubic-bezier(0.16, 1, 0.3, 1); /* out-expo, the house curve */
+}
+
+/* Hover convention: pasted things lift (translate -2px, harder shadow).
+   Press convention: they get slapped down (translate +1px, shadow shrinks). */
+.sp-lift {
+  transition:
+    transform var(--sp-fast) var(--sp-ease),
+    box-shadow var(--sp-fast) var(--sp-ease);
+}
+.sp-lift:hover {
+  transform: translate(-2px, -2px);
+  box-shadow: var(--sp-shadow-hard-lift);
+}
+.sp-lift:active {
+  transform: translate(1px, 1px);
+  box-shadow: var(--sp-shadow-hard-sm);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}

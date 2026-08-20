@@ -2,6 +2,8 @@ import { getTranslations } from "next-intl/server";
 import type { Scent } from "@/lib/scents";
 import PurchaseOptions from "@/components/scent/PurchaseOptions";
 import AddToBundleButton from "@/components/bundle/AddToBundleButton";
+import LabelName from "@/components/ui/LabelName";
+import { Sticker } from "@/components/ui/vandal";
 
 interface BuyBoxProps {
   scent: Scent;
@@ -18,44 +20,45 @@ interface BuyBoxProps {
  */
 export default async function BuyBox({ scent }: BuyBoxProps) {
   const t = await getTranslations("scentPage");
-  const tHero = await getTranslations("hero.scents");
-  const tStory = await getTranslations(`scentDetails.${scent.key}`);
+  const tCommon = await getTranslations("common");
 
   const bullets = t.raw("bullets") as string[];
-  const priceFormatted = new Intl.NumberFormat("ro-RO").format(scent.price);
+  const priceFormatted = String(scent.price);
 
   return (
     <div className="md:sticky md:top-28">
-      <p className="text-[11px] uppercase tracking-[0.4em] text-ink/55 mb-5">
-        {tHero(`${scent.key}.eyebrow`)}
+      <p className="sp-eyebrow mb-5">
+        {tCommon("inspiredBy", { name: scent.inspiredBy })}
       </p>
 
-      <h1 className="font-display text-[clamp(2.4rem,4.4vw,4.4rem)] leading-[0.96] whitespace-pre-line mb-7">
-        {scent.nameDisplay}
+      {/* The name is set exactly as printed on the bottle: lowercase French,
+          note words bold (rule 7). */}
+      <h1 className="sp-display mb-7 text-[clamp(2.2rem,4vw,4rem)] lowercase">
+        <LabelName name={scent.name} noteWords={scent.noteWords} />
       </h1>
 
-      <p className="text-ink/75 leading-relaxed mb-10 max-w-md">
-        {tStory("story1")}
-      </p>
+      <Sticker tilt={-4} variant="fill" fill={scent.stripe}>
+        {scent.size} · eau de parfum
+      </Sticker>
 
       {/* Price + size row */}
-      <div className="flex items-end gap-10 mb-8 border-t border-ink/15 pt-6">
+      <div className="mb-8 mt-8 flex items-end gap-10 border-t-2 border-ink pt-6">
         <div>
-          <p className="text-[10px] uppercase tracking-[0.4em] text-ink/55 mb-2">
-            {t("priceLabel")}
-          </p>
-          <p className="font-display text-3xl text-ink">
+          <p className="sp-eyebrow mb-2">{t("priceLabel")}</p>
+          <p className="font-sans text-3xl font-bold">
             {priceFormatted}{" "}
-            <span className="text-base text-ink/55">{t("currency")}</span>
+            <span className="text-base font-normal text-muted">
+              {t("currency")}
+            </span>
           </p>
         </div>
         <div>
-          <p className="text-[10px] uppercase tracking-[0.4em] text-ink/55 mb-2">
-            {t("sizeLabel")}
-          </p>
-          <p className="font-display text-3xl text-ink">
+          <p className="sp-eyebrow mb-2">{t("sizeLabel")}</p>
+          <p className="font-sans text-3xl font-bold">
             {scent.size}{" "}
-            <span className="text-base text-ink/55">{t("edpLabel")}</span>
+            <span className="text-base font-normal text-muted">
+              {t("edpLabel")}
+            </span>
           </p>
         </div>
       </div>
@@ -79,12 +82,11 @@ export default async function BuyBox({ scent }: BuyBoxProps) {
         {bullets.map((line, i) => (
           <li
             key={i}
-            className="flex items-start gap-3 text-[13px] text-ink/65 leading-relaxed"
+            className="flex items-start gap-3 font-sans text-[13px] leading-relaxed text-muted"
           >
-            <span
-              aria-hidden
-              className="mt-[7px] inline-block h-1 w-1 rounded-full bg-ink/40"
-            />
+            <span aria-hidden className="mt-px font-bold text-green">
+              ✓
+            </span>
             <span>{line}</span>
           </li>
         ))}

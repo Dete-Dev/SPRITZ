@@ -1,14 +1,50 @@
+/* ==========================================================================
+   SPRITZ — global stylesheet
+   Design system: v2 "Vandal" (see /design). Tokens are vendored verbatim from
+   the Vandal Design System package into ./tokens — edit those files, not this
+   one, when a token changes. Everything below is app plumbing only.
+   ========================================================================== */
+@import "./tokens/fonts.css";
+@import "./tokens/colors.css";
+@import "./tokens/typography.css";
+@import "./tokens/spacing.css";
+@import "./tokens/effects.css";
+@import "./tokens/motion.css";
+@import "./tokens/base.css";
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --color-surface: #f4ede2;
-  --color-surface-deep: #ebe2d2;
-  --color-ink: #1a1411;
-  --color-amber: #b87333;
-  --duration-slow: 1200ms;
-  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+/* --------------------------------------------------------------------------
+   Patch: CTA colour on ink surfaces.
+
+   tokens/base.css declares `.sp-surface-ink a { color: var(--sp-cream) }`
+   (specificity 0,1,1), which outranks the CTA variant rules (0,1,0). The
+   design-system kit only ever renders CTAs as <button>, so it never hit this
+   — our <Cta href> renders an <a>, and on ink every variant inherited cream,
+   making the white `invert` pill unreadable.
+
+   Restate the variants at matching specificity. Keep this if tokens/ is
+   re-vendored; delete it once base.css scopes its link rule with :not(.sp-cta).
+   -------------------------------------------------------------------------- */
+.sp-surface-ink a.sp-cta--primary {
+  color: var(--sp-on-accent);
+}
+.sp-surface-ink a.sp-cta--primary:hover {
+  color: var(--sp-ink);
+}
+.sp-surface-ink a.sp-cta--invert {
+  color: var(--sp-ink);
+}
+.sp-surface-ink a.sp-cta--invert:hover {
+  color: var(--sp-on-accent);
+}
+.sp-surface-ink a.sp-cta--outline-invert {
+  color: var(--sp-paper);
+}
+.sp-surface-ink a.sp-cta--outline-invert:hover {
+  color: var(--sp-ink);
 }
 
 /* Lenis manages smooth scroll; native scroll-behavior is intentionally off */
@@ -25,94 +61,83 @@ html.lenis body {
   overscroll-behavior: contain;
 }
 
-html,
-body {
-  color: var(--color-ink);
-  -webkit-font-smoothing: antialiased;
-  text-rendering: optimizeLegibility;
-}
-
-/* `<main>` provides the page background. Body is transparent so an
-   explicit solid color can't mismatch with main's OKLCH-interpolated
-   gradient (a 1-2 RGB rounding diff between the two used to render as
-   a faint horizontal seam at compositor-layer boundaries — e.g. the
-   bottom of the sticky inner inside ScentParade). The body's previous
-   `var(--color-surface)` fallback now lives on `html` only, which is
-   only visible during overscroll bounce. */
-html {
-  background: var(--color-surface);
-}
-body {
-  background: transparent;
-}
-
-/* Home page lives under `<main id="top">`. One continuous OKLCH gradient,
-   but the cream holds through ~80% of the page and only the bottom 20%
-   transitions toward ink. That puts ReserveSection in the cream area
-   (dark text reads) and Footer in the dark area (ivory text reads). The
-   intermediate stop at 80% creates a soft knee — kept gentle by OKLCH
-   interpolation. */
-main#top {
-  background: linear-gradient(
-    to bottom in oklch,
-    #f4ede2 0%,
-    #f4ede2 80%,
-    #1a1411 100%
-  );
-}
-
 /* `overflow-x: hidden` on html/body breaks `position: sticky` for sections
-   that pin during scroll (the horizontal scent parade). Use `overflow-x: clip`
-   instead — it prevents horizontal scrollbars without creating a scroll
-   context that defeats sticky. Falls back gracefully if a browser doesn't
-   support `clip` (very rare in 2026). */
+   that pin during scroll (the video hero, the horizontal scent parade). Use
+   `overflow-x: clip` instead — it prevents horizontal scrollbars without
+   creating a scroll context that defeats sticky. */
 html,
 body {
   overflow-x: clip;
 }
 
-::selection {
-  background: var(--color-amber);
-  color: var(--color-surface);
+/* v2 has two worlds, not one gradient: ink (hero, editorial, footer) and
+   paper (shop, PDP, cart). Sections opt into ink with `.sp-surface-ink`, so
+   the page itself just stays paper. */
+main#top {
+  background: var(--sp-paper);
 }
 
-body {
-  font-family: "Inter", ui-sans-serif, system-ui, sans-serif;
-}
-
-.font-display {
-  font-family: "Cormorant Garamond", "Times New Roman", serif;
-  font-weight: 300;
-}
-
-/* Grain texture overlay for atmosphere */
-.grain::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  opacity: 0.08;
-  mix-blend-mode: multiply;
-  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='240' height='240'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%25' height='100%25' filter='url(%23n)' opacity='0.7'/></svg>");
-}
-
-/* Wordmark color theming.
+/* Wordmark colour theming.
    - Default: black graffiti, as authored.
-   - When the floating header is over a section marked `data-header-bg="dark"`,
-     the <HeaderThemeWatcher/> toggles `.header-on-dark` on <html>, which
-     inverts the wordmark to warm cream via a CSS filter. The slight sepia
-     and reduced brightness pull pure white down to an on-brand cream tone
-     (~#f4ede2) so it doesn't read as harsh white on the dark backgrounds. */
+   - Over a section marked `data-header-bg="dark"`, <HeaderThemeWatcher/>
+     toggles `.header-on-dark` on <html>, inverting the wordmark to cream.
+     The slight sepia and reduced brightness pull pure white down to the
+     on-brand cream (#f4ede2) so it doesn't read as harsh white on ink. */
 .wordmark-themed {
-  transition: filter 300ms cubic-bezier(0.16, 1, 0.3, 1);
+  transition: filter var(--sp-normal) var(--sp-ease);
 }
 html.header-on-dark .wordmark-themed {
   filter: invert(1) brightness(0.96) sepia(0.18);
 }
 
-@media (prefers-reduced-motion: reduce) {
-  * {
-    animation-duration: 0.01ms !important;
-    transition-duration: 0.01ms !important;
-  }
+/* --------------------------------------------------------------------------
+   Header controls (Shop, Bag, RO/EN).
+
+   The header floats over both worlds, so it can't pick one colour. Same
+   watcher that themes the wordmark drives this: ink pill on paper sections,
+   cream outline on ink sections. Matches the design system's header — a
+   bordered pill, hard shadow on paper, no shadow on ink.
+   -------------------------------------------------------------------------- */
+.header-control {
+  --header-fg: var(--sp-ink);
+  color: var(--header-fg);
+  border-color: var(--header-fg);
+  background: color-mix(in srgb, var(--sp-paper) 78%, transparent);
+  box-shadow: var(--sp-shadow-hard-sm);
+  backdrop-filter: blur(8px);
+  /* No background transition. <HeaderThemeWatcher/> can only add
+     `.header-on-dark` after hydration, so a fade here shows the paper pill
+     over the ink hero for a beat on every load. It snaps instead — which is
+     also the house convention: hard edges, no soft fades. */
+  transition:
+    color var(--sp-fast) var(--sp-ease),
+    border-color var(--sp-fast) var(--sp-ease);
+}
+.header-control:hover {
+  background: var(--sp-ink);
+  color: var(--sp-paper);
+  border-color: var(--sp-ink);
+}
+html.header-on-dark .header-control {
+  --header-fg: var(--sp-cream);
+  /* Solid, not translucent. The hero film cuts to a sunlit white building,
+     and any alpha let that punch through until the pill stopped reading. */
+  background: var(--sp-ink);
+  border-color: var(--sp-cream);
+  box-shadow: none;
+}
+html.header-on-dark .header-control:hover {
+  background: var(--sp-cream);
+  color: var(--sp-ink);
+  border-color: var(--sp-cream);
+}
+
+/* The RO/EN toggle is bare text, not a pill — it only needs the colour flip. */
+.header-text {
+  --header-fg: var(--sp-ink);
+  color: var(--header-fg);
+  transition: color var(--sp-fast) var(--sp-ease);
+}
+html.header-on-dark .header-text {
+  --header-fg: var(--sp-cream);
 }

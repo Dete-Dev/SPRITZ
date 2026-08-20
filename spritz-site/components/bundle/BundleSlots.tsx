@@ -55,10 +55,10 @@ export default function BundleSlots({
             }`}
           >
             <div
-              className={`relative flex h-full w-full items-center justify-center rounded-2xl border text-center transition-colors ${
+              className={`relative flex h-full w-full items-center justify-center overflow-hidden rounded-card border-2 border-ink text-center transition-shadow ${
                 scent
-                  ? "border-solid border-ink/15 bg-[#faf5ea]"
-                  : "border-dashed border-ink/25 bg-[#faf5ea]/60"
+                  ? "bg-paper shadow-hard-sm"
+                  : "border-dashed bg-paper-2"
               }`}
             >
               <AnimatePresence mode="wait">
@@ -81,13 +81,14 @@ export default function BundleSlots({
                       sizes="140px"
                       className={`object-contain ${compact ? "p-1.5" : "p-3"}`}
                     />
-                    <span className="absolute inset-0 flex items-center justify-center rounded-2xl bg-ink/0 text-[10px] uppercase tracking-[0.28em] text-ink/0 transition-colors group-hover:bg-ivory/80 group-hover:text-ink">
+                    <span className="absolute inset-0 flex items-center justify-center bg-transparent font-sans text-[10px] font-bold uppercase tracking-[0.12em] text-transparent transition-colors group-hover:bg-paper/85 group-hover:text-ink">
                       {tCart("remove")}
                     </span>
+                    {/* The scent's own stripe colourway, banded like the label. */}
                     <span
                       aria-hidden
-                      className="absolute left-2 top-2 h-1.5 w-1.5 rounded-full"
-                      style={{ backgroundColor: scent.accent }}
+                      className="sp-stripe absolute inset-x-0 bottom-0 h-2"
+                      style={{ ["--stripe" as string]: scent.stripe }}
                     />
                   </motion.button>
                 ) : tier ? (
@@ -95,7 +96,7 @@ export default function BundleSlots({
                     key="reward"
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
-                    className={`px-1 font-medium uppercase tracking-[0.08em] text-rust ${
+                    className={`px-1 font-sans font-bold uppercase tracking-[0.06em] text-red ${
                       compact
                         ? "text-[0.55rem]"
                         : "text-[clamp(0.7rem,1.3vw,0.95rem)]"
@@ -108,7 +109,7 @@ export default function BundleSlots({
                     key="plus"
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
-                    className={`text-rust/70 ${compact ? "text-base" : "text-2xl"}`}
+                    className={`text-muted ${compact ? "text-base" : "text-2xl"}`}
                   >
                     +
                   </motion.span>
@@ -116,7 +117,7 @@ export default function BundleSlots({
               </AnimatePresence>
 
               <span
-                className={`absolute tabular-nums text-amber/70 ${
+                className={`absolute font-sans tabular-nums text-muted ${
                   compact
                     ? "bottom-0.5 right-1 text-[8px]"
                     : "bottom-1.5 right-2 text-[11px]"

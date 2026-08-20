@@ -29,10 +29,12 @@ interface ScentDetailMessages {
 interface ScentKnowledge {
   key: string;
   name: string;
+  /** The designer fragrance this one answers to — the model leans on it. */
+  inspiredBy: string;
   price: number;
-  story1: string;
-  story2: string;
-  notes: { top: string[]; heart: string[]; base: string[] };
+  story1?: string;
+  story2?: string;
+  notes?: { top: string[]; heart: string[]; base: string[] };
 }
 
 const MESSAGES: Record<FinderLocale, typeof enMessages> = {
@@ -45,15 +47,19 @@ export function getScentKnowledge(locale: FinderLocale): ScentKnowledge[] {
     string,
     ScentDetailMessages
   >;
+  // Only five scents carry hand-written editorial so far; the rest are
+  // described to the model by their label name and the designer fragrance
+  // they answer to. Nothing is invented on their behalf.
   return SCENTS.map((scent) => {
     const detail = details[scent.key];
     return {
       key: scent.key,
       name: scent.name,
+      inspiredBy: scent.inspiredBy,
       price: scent.price,
-      story1: detail.story1,
-      story2: detail.story2,
-      notes: detail.notes,
+      story1: detail?.story1,
+      story2: detail?.story2,
+      notes: detail?.notes,
     };
   });
 }
@@ -65,20 +71,30 @@ const LANGUAGE_NAME: Record<FinderLocale, string> = {
 
 export function buildSystemPrompt(locale: FinderLocale): string {
   const knowledge = getScentKnowledge(locale)
-    .map(
-      (s) =>
-        `### ${s.key} — "${s.name}" (${s.price} RON)\n` +
-        `Top notes: ${s.notes.top.join(", ")}\n` +
-        `Heart notes: ${s.notes.heart.join(", ")}\n` +
-        `Base notes: ${s.notes.base.join(", ")}\n` +
-        `Character: ${s.story1}\n` +
-        `Wearing it: ${s.story2}`,
-    )
+    .map((s) => {
+      const lines = [
+        `### ${s.key} — "${s.name}" (${s.price} EUR)`,
+        `Answers to: ${s.inspiredBy}`,
+      ];
+      // Five scents have full editorial; the rest are described by their label
+      // and their designer reference only. Never invent notes for those.
+      if (s.notes) {
+        lines.push(
+          `Top notes: ${s.notes.top.join(", ")}`,
+          `Heart notes: ${s.notes.heart.join(", ")}`,
+          `Base notes: ${s.notes.base.join(", ")}`,
+        );
+      }
+      if (s.story1) lines.push(`Character: ${s.story1}`);
+      if (s.story2) lines.push(`Wearing it: ${s.story2}`);
+      return lines.join("\n");
+    })
     .join("\n\n");
 
   return [
-    "You are the scent advisor for SPRITZ, a small Romanian perfume house with exactly five eau de parfum.",
-    "Your job: given a visitor's preferences, recommend exactly ONE of the five scents.",
+    `You are the scent advisor for SPRITZ, a Romanian perfume house selling ${SCENT_KEYS.length} inspired-by eau de parfum.`,
+    "Your job: given a visitor's preferences, recommend exactly ONE of them.",
+    "Some scents list full notes; for the rest, reason from the label name and the designer fragrance they answer to. Never invent notes that are not listed.",
     "",
     "Brand voice for the `reason` text:",
     "- Sober, editorial, concrete. Short sentences.",

@@ -14,14 +14,13 @@ export default function CartButton({ label }: { label: string }) {
       type="button"
       onClick={openDrawer}
       aria-label={`${label} (${cartCount})`}
-      className="pointer-events-auto inline-flex items-center gap-2 rounded-full border bg-ivory/40 px-5 py-2 text-[11px] uppercase tracking-[0.32em] text-ink backdrop-blur-sm transition-colors hover:bg-ink hover:text-ivory"
-      style={{ borderColor: "rgba(26,20,17,0.25)" }}
+      className="header-control pointer-events-auto inline-flex items-center gap-2 rounded-full border-2 px-5 py-2 text-[11px] font-bold uppercase tracking-[0.2em]"
     >
       <span>{label}</span>
       {cartCount > 0 && (
         <span
           aria-hidden
-          className="inline-flex h-5 min-w-5 items-center justify-center rounded-full bg-ink px-1.5 text-[10px] font-medium text-ivory"
+          className="inline-flex h-5 min-w-5 items-center justify-center rounded-full bg-red px-1.5 text-[10px] font-bold text-white"
         >
           {cartCount}
         </span>

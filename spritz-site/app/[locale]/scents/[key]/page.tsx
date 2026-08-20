@@ -9,6 +9,8 @@ import BuyBox from "@/components/scent/BuyBox";
 import NotesPyramid from "@/components/scent/NotesPyramid";
 import MoreFromTheFive from "@/components/scent/MoreFromTheFive";
 import SiteFooter from "@/components/SiteFooter";
+import LabelName from "@/components/ui/LabelName";
+import { Spray, StripeBand } from "@/components/ui/vandal";
 
 /**
  * Real product page for a single scent.
@@ -38,10 +40,10 @@ export async function generateMetadata({
   const { locale, key } = await params;
   const scent = SCENTS.find((s) => s.key === key);
   if (!scent) return { title: "SPRITZ" };
-  const tHero = await getTranslations({ locale, namespace: "hero.scents" });
+  const t = await getTranslations({ locale, namespace: "common" });
   return {
     title: `SPRITZ — ${scent.name}`,
-    description: tHero(`${key}.notes`),
+    description: `${scent.name} — ${t("inspiredBy", { name: scent.inspiredBy })}. 50ml eau de parfum, €${scent.price}.`,
   };
 }
 
@@ -56,34 +58,45 @@ export default async function ScentPage({
   if (!scent) notFound();
 
   const t = await getTranslations("scentPage");
-  const tStory = await getTranslations(`scentDetails.${key}`);
+  const tCommon = await getTranslations("common");
+  // Only the five with `hasStory` carry hand-written editorial and a full note
+  // pyramid. The rest render from label facts alone rather than inventing copy.
+  const tStory = scent.hasStory
+    ? await getTranslations(`scentDetails.${key}`)
+    : null;
 
   return (
     <>
-      <main
-        className="min-h-screen"
-        style={{
-          background: `linear-gradient(180deg, var(--color-surface) 0%, ${scent.accent}1a 100%)`,
-        }}
-      >
+      {/* Bottles sit on plain paper white — no gradient behind product
+          (design system rule 5). The scent's identity is carried by its
+          stripe colourway and one spray hit instead. */}
+      <main className="relative min-h-screen overflow-hidden bg-paper">
+        <StripeBand
+          color={scent.stripe}
+          height={14}
+          className="fixed inset-x-0 top-0 z-30"
+        />
+
         {/* Back link */}
-        <div className="mx-auto max-w-7xl px-6 md:px-14 pt-28 md:pt-32">
-          <Link
-            href="/#five"
-            className="text-[11px] uppercase tracking-[0.4em] text-ink/55 hover:text-ink"
-          >
+        <div className="mx-auto max-w-7xl px-gutter pt-28 md:pt-32">
+          <Link href="/shop" className="sp-eyebrow hover:text-ink">
             {t("back")}
           </Link>
         </div>
 
         {/* Above the fold: gallery + buy box */}
-        <section className="mx-auto max-w-7xl px-6 md:px-14 py-14 md:py-20">
-          <div className="grid grid-cols-12 gap-8 md:gap-14 items-start">
+        <section className="relative mx-auto max-w-7xl px-gutter py-14 md:py-20">
+          <Spray
+            color={scent.stripe}
+            opacity={0.25}
+            className="absolute -left-20 top-0 h-[30rem] w-[30rem]"
+          />
+          <div className="relative grid grid-cols-12 items-start gap-8 md:gap-14">
             <div className="col-span-12 md:col-span-7">
               <ScentGallery
                 images={scent.gallery}
                 alt={scent.name}
-                accent={scent.accent}
+                stripe={scent.stripe}
               />
             </div>
             <div className="col-span-12 md:col-span-5">
@@ -92,51 +105,78 @@ export default async function ScentPage({
           </div>
         </section>
 
-        {/* The story */}
-        <section className="px-6 md:px-14 py-24 md:py-32 bg-bone">
-          <div className="mx-auto max-w-3xl">
-            <p className="text-[11px] uppercase tracking-[0.4em] text-ink/55 mb-6">
-              {t("story")}
-            </p>
-            <p className="font-display text-3xl md:text-4xl leading-[1.15] text-ink mb-6">
-              {tStory("story1")}
-            </p>
-            <p className="text-ink/75 leading-relaxed text-lg max-w-2xl">
-              {tStory("story2")}
-            </p>
-          </div>
-        </section>
+        {/* The story — the one ink beat on the product page. Shown only for
+            scents that have real editorial written for them. */}
+        {tStory ? (
+          <section
+            data-header-bg="dark"
+            className="sp-surface-ink sp-grain relative px-gutter py-section"
+          >
+            <div className="mx-auto max-w-3xl">
+              <p className="sp-eyebrow">{t("story")}</p>
+              <p className="sp-display mt-5 text-d-xl">{tStory("story1")}</p>
+              <p className="mt-6 max-w-2xl font-sans text-d-lg text-cream/80">
+                {tStory("story2")}
+              </p>
+            </div>
+          </section>
+        ) : null}
 
         {/* Notes pyramid */}
-        <section className="px-6 md:px-14 py-24 md:py-32 bg-ivory">
-          <div className="mx-auto max-w-6xl mb-14 max-w-2xl">
-            <p className="text-[11px] uppercase tracking-[0.4em] text-ink/55 mb-6">
-              {t("notes")}
-            </p>
-            <h2 className="font-display text-4xl md:text-5xl leading-[1.02] mb-5">
-              {scent.name}
+        <section className="bg-paper px-gutter py-section">
+          <div className="mx-auto mb-12 max-w-6xl">
+            <p className="sp-eyebrow">{t("notes")}</p>
+            <h2 className="sp-display mt-5 text-d-2xl lowercase">
+              <LabelName name={scent.name} noteWords={scent.noteWords} />
             </h2>
-            <p className="text-ink/70 leading-relaxed max-w-md">
-              {t("notesIntro")}
+            <p className="sp-eyebrow mt-4">
+              {tCommon("inspiredBy", { name: scent.inspiredBy })}
+            </p>
+            <p className="mt-5 max-w-md font-sans text-base text-muted">
+              {scent.hasStory ? t("notesIntro") : t("notesIntroLabel")}
             </p>
           </div>
           <div className="mx-auto max-w-6xl">
-            <NotesPyramid scentKey={key} />
+            {scent.hasStory ? (
+              <NotesPyramid scentKey={key} />
+            ) : (
+              /* No pyramid written yet — state the two notes the label
+                 actually prints, and nothing more. */
+              <ul className="grid gap-5 sm:grid-cols-2">
+                {scent.noteWords.map((note, i) => (
+                  <li
+                    key={note}
+                    className="overflow-hidden rounded-card border-2 border-ink bg-paper shadow-hard-sm"
+                  >
+                    <StripeBand color={scent.stripe} height={12} />
+                    <div className="p-8">
+                      <p className="sp-eyebrow mb-3">
+                        {String(i + 1).padStart(2, "0")} — {t("noteOnLabel")}
+                      </p>
+                      <p className="sp-display text-d-xl lowercase">{note}</p>
+                    </div>
+                  </li>
+                ))}
+              </ul>
+            )}
           </div>
         </section>
 
         {/* How to wear */}
-        <section
-          className="px-6 md:px-14 py-24 md:py-32"
-          style={{
-            background: `linear-gradient(180deg, ${scent.accent}11 0%, var(--color-surface) 100%)`,
-          }}
-        >
+        <section className="relative overflow-hidden bg-paper-2 px-gutter py-section">
+          <StripeBand
+            color={scent.stripe}
+            height={14}
+            className="absolute inset-x-0 top-0"
+          />
+          <StripeBand
+            color={scent.stripe}
+            height={14}
+            className="absolute inset-x-0 bottom-0"
+          />
           <div className="mx-auto max-w-3xl text-center">
-            <p className="text-[11px] uppercase tracking-[0.4em] text-ink/55 mb-6">
-              {t("wear")}
-            </p>
-            <p className="font-display text-2xl md:text-3xl leading-[1.3] text-ink max-w-2xl mx-auto">
+            <p className="sp-eyebrow">{t("wear")}</p>
+            <p className="sp-display mx-auto mt-5 max-w-2xl text-d-xl">
               {t("wearBody")}
             </p>
           </div>

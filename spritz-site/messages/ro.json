@@ -1,7 +1,7 @@
 {
   "meta": {
-    "siteTitle": "SPRITZ — Cinci parfumuri",
-    "siteDescription": "O casă mică de cinci parfumuri. Făcute în loturi mici.",
+    "siteTitle": "SPRITZ — 22 de dupe-uri, un preț",
+    "siteDescription": "Douăzeci și două de parfumuri inspirate de marile case. 50ml, 100 € fiecare. Același nas, fără adaosul de designer.",
     "shopTitle": "SPRITZ — Magazin",
     "shopDescription": "Rezervările se deschid curând."
   },
@@ -14,7 +14,7 @@
     "title": "Sacoșa ta",
     "close": "Închide",
     "empty": "Sacoșa e goală.",
-    "emptyHint": "Alege unul din cele cinci, restul vin după.",
+    "emptyHint": "Alege unul dintre cele douăzeci și două și restul vine de la sine.",
     "remove": "Șterge",
     "increase": "Mărește cantitatea",
     "decrease": "Scade cantitatea",
@@ -42,25 +42,25 @@
   },
   "hero": {
     "scrollCue": "scrolează pentru a începe",
-    "sidebar": "SPRITZ — Ediția 01 — Cinci parfumuri",
+    "sidebar": "SPRITZ — Ediția 01 — 22 de parfumuri",
     "scents": {
-      "ananas": {
+      "ananas-bouleau": {
         "eyebrow": "Ediția 01 — Ananas",
         "notes": "Coajă de ananas, scoarță de mesteacăn, coajă de lămâie, violetă."
       },
-      "cerise": {
+      "cerise-rose": {
         "eyebrow": "Ediția 02 — Cireșe",
         "notes": "Cireșe negre, petale de trandafir, zmeură, lime."
       },
-      "menthe": {
+      "cedre-menthe": {
         "eyebrow": "Ediția 03 — Mentă",
         "notes": "Lemn de cedru, mentă proaspătă, rădăcină de ghimbir, lămâie."
       },
-      "safran": {
+      "safran-ambre": {
         "eyebrow": "Ediția 04 — Șofran",
         "notes": "Fire de șofran, rășină de chihlimbar, iasomie, lemn de santal."
       },
-      "truffe": {
+      "truffe-chocolat": {
         "eyebrow": "Ediția 05 — Trufă",
         "notes": "Trufă neagră, cacao amară, iasomie, coajă de bergamotă."
       }
@@ -68,24 +68,43 @@
   },
   "story": {
     "eyebrow": "Casa — înființată 2026",
-    "headline": "Cinci parfumuri.",
+    "headline": "Douăzeci și două de parfumuri.",
     "headlineEm": "O singură idee.",
-    "p1": "SPRITZ este o casă mică de cinci parfumuri. Le numim în franceză pentru că parfumul sună mai bine în franceză — dar le facem aici, în loturi mici, în sticlă reală, cu materiale reale.",
-    "p2": "Nicio biografie în douăsprezece volume. Nicio formulare de marketing pentru \"lemnos.\" Cinci sticle, cinci lucruri cu care miros, și un număr de telefon dacă vrei să vorbim despre ele."
+    "p1": "SPRITZ face un singur lucru: parfumurile pentru care marile case cer trei sute, la o sută. Le numim în franceză pentru că asta scrie pe etichetă — dar le facem unde locuim, în loturi mici, în sticlă adevărată, cu materiale adevărate.",
+    "p2": "Fără poveste în douăsprezece volume. Fără cuvinte de marketing pentru \"lemnos\". Douăzeci și două de sticle, notele de pe etichetă, și un număr de telefon dacă vrei să vorbim.",
+    "caption": "bois de cèdre ↑"
   },
   "marquee": "ananas · cerise · menthe · safran · truffe",
   "five": {
-    "eyebrow": "Cele cinci — Ediția 01",
-    "headline": "Cinci parfumuri,",
-    "headlineEm": "un sezon.",
-    "intro": "Cinci eau de parfum de 50ml. Compuse în loturi mici, semnate și numerotate manual. Fiecare este propriul său lucru — alege-l pe cel care sună a tine astăzi.",
+    "eyebrow": "Catalogul — 22 de parfumuri",
+    "headline": "Douăzeci și două de dupe-uri,",
+    "headlineEm": "un singur preț.",
+    "intro": "Fiecare e un eau de parfum de 50ml la 100 €. Același nas ca sticla de designer, fără adaosul de designer.",
     "shortNotes": {
-      "ananas": "Ananas, mesteacăn, violetă.",
-      "cerise": "Cireșe, trandafir, lime.",
-      "menthe": "Cedru, mentă, ghimbir.",
-      "safran": "Șofran, chihlimbar, iasomie.",
-      "truffe": "Trufă, cacao, iasomie."
-    }
+      "mer-bergamote": "Sare de mare, bergamotă.",
+      "citron-cardamome": "Lămâie, cardamom.",
+      "cognac-bergamote": "Coniac, bergamotă.",
+      "amande-tonka": "migdală, tonka.",
+      "cedre-menthe": "Cedru, mentă.",
+      "ylang-jasmin": "Ylang, iasomie.",
+      "ananas-bouleau": "Ananas, mesteacăn.",
+      "oud-safran": "Oud, șofran.",
+      "gardenia-mandarin": "Gardenie, mandarină.",
+      "cerise-rose": "Cireșe, trandafir.",
+      "iris-bergamote": "Iris, bergamotă.",
+      "safran-ambre": "șofran, ambră.",
+      "jasmin-cashmeran": "iasomie, cashmeran.",
+      "cuir-menthe": "Piele, mentă.",
+      "poivre-ambre": "Piper negru, ambră.",
+      "oud-santal": "Oud, lemn de santal.",
+      "menthe-tonka": "mentă, tonka.",
+      "rose-jasmin": "trandafir, iasomie.",
+      "lavande-vanille": "Lavandă, vanilie.",
+      "truffe-chocolat": "Trufă, ciocolată.",
+      "cuir-tabac": "Piele, tutun.",
+      "vanille-cafe": "vanilie, cafea."
+    },
+    "seeAll": "Vezi toate cele {count} parfumuri"
   },
   "craft": {
     "eyebrow": "Meșteșugul",
@@ -108,7 +127,7 @@
     }
   },
   "reserve": {
-    "eyebrow": "Ediția 01 — cinci parfumuri",
+    "eyebrow": "Ediția 01 — 22 de parfumuri",
     "h1": "Numerotat,",
     "h2": "semnat,",
     "h3em": "trimis.",
@@ -118,12 +137,12 @@
     "footnote": "50ml · eau de parfum · Lot mic"
   },
   "footer": {
-    "tagline": "Cinci parfumuri, făcute în loturi mici. Ediția 01 — pleacă în acest sezon.",
+    "tagline": "Douăzeci și două de parfumuri, în loturi mici. Ediția 01 — se livrează sezonul acesta.",
     "scents": "Parfumuri",
     "house": "Casa",
     "houseLinks": {
       "story": "Poveste",
-      "five": "Cele cinci",
+      "five": "Catalogul",
       "craft": "Meșteșug",
       "reserve": "Rezervă",
       "shop": "Magazin"
@@ -134,18 +153,18 @@
     "join": "Înscrie-mă",
     "copyright": "© 2026 SPRITZ",
     "terms": "Termeni",
-    "privacy": "Confidențialitate"
+    "privacy": "Confidențialitate",
+    "signoff": "Miroase scump.",
+    "allScents": "Toate cele {count} →"
   },
   "shop": {
-    "eyebrow": "Ediția 01",
-    "headline": "Rezervările",
-    "headlineBreak": "se deschid curând.",
-    "body": "Cinci eau de parfum, făcute în loturi mici — turnate, etichetate și sigilate manual."
+    "eyebrow": "eau de parfum · 50ml · 100 €",
+    "headline": "Toate douăzeci și două."
   },
   "finder": {
     "eyebrow": "Consilierul",
     "headline": "Nu știi care e al tău?",
-    "intro": "Răspunde doar la ce ai chef. Te potrivim cu unul din cele cinci — și îți spunem de ce.",
+    "intro": "Răspunde la ce ai chef. Te potrivim cu unul dintre cele douăzeci și două — și îți spunem de ce.",
     "occasionLabel": "Când îl porți",
     "occasion": {
       "day": "Ziua",
@@ -168,17 +187,17 @@
     },
     "freeTextPlaceholder": "Sau spune-ne cu cuvintele tale — cum vrei să miroasă?",
     "submit": "Găsește-mi parfumul",
-    "loading": "Te potrivim cu unul din cele cinci",
+    "loading": "Îți căutăm sticla",
     "resultEyebrow": "Alegerea noastră pentru tine",
     "viewScent": "Vezi parfumul",
     "restart": "Reia",
     "error": "Ceva n-a mers.",
-    "fallback": "Cele cinci sunt mai jos — ai încredere în nasul tău."
+    "fallback": "Catalogul e mai jos — ai încredere în nasul tău."
   },
   "bundle": {
     "eyebrow": "Ediția 01 — alcătuiește-ți setul",
     "headline": "Mai multe sticle, preț mai bun.",
-    "intro": "Alege oricare dintre cele cinci, în orice combinație. Două sticle scad 10%, trei scad 15%, cinci scad 20% — din tot ce ai în sacoșă.",
+    "intro": "Alege oricare dintre cele douăzeci și două, în orice combinație. Două sticle scad 10%, trei scad 15%, cinci scad 20% — la tot din coș.",
     "tierProgress": "{count, plural, one {Încă o sticlă pentru −{percent}%} few {Încă # sticle pentru −{percent}%} other {Încă # de sticle pentru −{percent}%}}",
     "tierUnlocked": "Cel mai bun preț deblocat — −{percent}%",
     "estimate": "Total estimat",
@@ -193,8 +212,8 @@
   "scentPage": {
     "size": "50ml · eau de parfum",
     "reserve": "Rezervă",
-    "back": "← Toate cinci",
-    "currency": "RON",
+    "back": "← Toate parfumurile",
+    "currency": "EUR",
     "priceLabel": "Preț",
     "sizeLabel": "Mărime",
     "edpLabel": "eau de parfum",
@@ -222,54 +241,168 @@
     },
     "wear": "Cum se poartă",
     "wearBody": "Un puf pe fiecare încheietură, unul la baza gâtului. Nu freca. Reaplică după patru ore dacă vrei să se simtă tare.",
-    "moreTitle": "Celelalte patru",
-    "moreSubtitle": "Alege unul pentru o altă seară."
+    "moreTitle": "Altele din catalog",
+    "moreSubtitle": "Alege unul pentru o altă seară.",
+    "noteOnLabel": "scris pe etichetă",
+    "notesIntroLabel": "Cele două note scrise pe sticlă. Piramida completă e în lucru."
   },
   "scentDetails": {
-    "ananas": {
+    "ananas-bouleau": {
       "story1": "Ananas tăiat pe un blat de bucătărie, sfârșit de august — cuțit lipicios, coajă de lămâie pe tocător, cineva râzând în camera de alături.",
       "story2": "Mesteacănul ține totul în loc. Nu lasă fructul să devină desert; face sticla să miroase a ceva ce un adult ar purta la cină.",
       "notes": {
-        "top": ["Coajă de ananas", "Bergamotă de Calabria", "Piper roz"],
-        "heart": ["Sevă de mesteacăn", "Frunză de violetă", "Iasomie sambac"],
-        "base": ["Lemn de cedru", "Mosc alb", "Vetiver"]
+        "top": [
+          "Coajă de ananas",
+          "Bergamotă de Calabria",
+          "Piper roz"
+        ],
+        "heart": [
+          "Sevă de mesteacăn",
+          "Frunză de violetă",
+          "Iasomie sambac"
+        ],
+        "base": [
+          "Lemn de cedru",
+          "Mosc alb",
+          "Vetiver"
+        ]
       }
     },
-    "cerise": {
+    "cerise-rose": {
       "story1": "Cireșele sunt primul lucru pe care îl simți și ultimul de care ți-ai aminti — sunt vii, aproape prea dulci, apoi intră trandafirul și le maturează.",
       "story2": "Construit ca un parfum din anii '90, dar mai ușor. Stă bine pe vreme rece. Nu îl pune dacă vrei să fii discretă.",
       "notes": {
-        "top": ["Cireșe negre", "Zmeură", "Coajă de lime"],
-        "heart": ["Trandafir damascena", "Iris", "Floare de migdal"],
-        "base": ["Tonka", "Lemn de santal", "Mosc alb"]
+        "top": [
+          "Cireșe negre",
+          "Zmeură",
+          "Coajă de lime"
+        ],
+        "heart": [
+          "Trandafir damascena",
+          "Iris",
+          "Floare de migdal"
+        ],
+        "base": [
+          "Tonka",
+          "Lemn de santal",
+          "Mosc alb"
+        ]
       }
     },
-    "menthe": {
+    "cedre-menthe": {
       "story1": "Imaginează-ți că intri într-un dulap de cedru cu o frunză de mentă în buzunar. Menta taie lemnul; lemnul ține menta în loc.",
       "story2": "Cel mai liniștit din cele cinci. Se citește proaspăt fără să fie o colonie. Stă bine pe oricine.",
       "notes": {
-        "top": ["Mentă verde", "Coajă de lămâie", "Rădăcină de ghimbir"],
-        "heart": ["Lemn de cedru", "Mușcată", "Cardamom"],
-        "base": ["Patchouli", "Vetiver", "Mușchi alb"]
+        "top": [
+          "Mentă verde",
+          "Coajă de lămâie",
+          "Rădăcină de ghimbir"
+        ],
+        "heart": [
+          "Lemn de cedru",
+          "Mușcată",
+          "Cardamom"
+        ],
+        "base": [
+          "Patchouli",
+          "Vetiver",
+          "Mușchi alb"
+        ]
       }
     },
-    "safran": {
+    "safran-ambre": {
       "story1": "Șofranul e scump dintr-un motiv — câteva fire schimbă întreaga compoziție. Aici stă deasupra unei baze de chihlimbar care are nevoie de aproape o oră să se așeze.",
       "story2": "Cel mai cald din cele cinci. Rezistă mai mult decât celelalte. Pe acesta îl ținem pentru după apus.",
       "notes": {
-        "top": ["Fire de șofran", "Bergamotă", "Piper roz"],
-        "heart": ["Iasomie", "Trandafir damasc", "Scorțișoară"],
-        "base": ["Rășină de chihlimbar", "Lemn de santal", "Acord de oud"]
+        "top": [
+          "Fire de șofran",
+          "Bergamotă",
+          "Piper roz"
+        ],
+        "heart": [
+          "Iasomie",
+          "Trandafir damasc",
+          "Scorțișoară"
+        ],
+        "base": [
+          "Rășină de chihlimbar",
+          "Lemn de santal",
+          "Acord de oud"
+        ]
       }
     },
-    "truffe": {
+    "truffe-chocolat": {
       "story1": "Trufă neagră și cacao amară — pe hârtie sună a meniu de desert. Purtat, e mirosul unei camere vechi cu lambriuri de lemn, cu un foc mic în spate.",
       "story2": "Cel mai greu din cele cinci. Nu îl pune în iulie. Nu pune altceva în februarie.",
       "notes": {
-        "top": ["Coajă de bergamotă", "Piper roz", "Cardamom"],
-        "heart": ["Trufă neagră", "Iasomie", "Iris"],
-        "base": ["Cacao amară", "Vanilie", "Patchouli"]
+        "top": [
+          "Coajă de bergamotă",
+          "Piper roz",
+          "Cardamom"
+        ],
+        "heart": [
+          "Trufă neagră",
+          "Iasomie",
+          "Iris"
+        ],
+        "base": [
+          "Cacao amară",
+          "Vanilie",
+          "Patchouli"
+        ]
       }
     }
+  },
+  "landing": {
+    "heroLabel": "SPRITZ — best of the dupes",
+    "heroLine1": "Miroase scump.",
+    "heroSub": "Douăzeci și două de parfumuri inspirate de marile case. Același nas, alt preț.",
+    "scrollCue": "Derulează",
+    "ctaShop": "Vezi toate parfumurile",
+    "ctaFinder": "Găsește-mi parfumul",
+    "landingEyebrow": "Fă-ți setul",
+    "landingSub": "Alege oricare trei și îți tăiem prețul. Fără abonament, fără capcane.",
+    "ctaBundle": "Construiește setul",
+    "ctaAll": "Vezi toate cele 20",
+    "landingReassurance": "Transport gratuit la orice comandă · retur în 30 de zile",
+    "eyebrow": "eau de parfum · bucurești · din 2026",
+    "heroLine2Pre": "Plătește",
+    "heroLine2Mark": "street.",
+    "fromPrice": "orice sticlă 100 €",
+    "landingTitlePre": "Ia 3 →",
+    "landingTitleMark": "scădem 15%."
+  },
+  "bands": {
+    "dupes": {
+      "eyebrow": "Best of the dupes",
+      "title": "Același nas.",
+      "body": "Reproducem parfumurile pentru care lumea te oprește pe stradă — apoi cerem 100 € pe sticlă, nu trei sute.",
+      "primary": "Vezi toate parfumurile",
+      "secondary": "Fă-ți setul",
+      "titleMark": "Alt preț."
+    },
+    "finder": {
+      "eyebrow": "Încă nu te-ai hotărât?",
+      "title": "Patru întrebări.",
+      "body": "Spune-ne ce îți place și îți arătăm sticla. Durează vreo douăzeci de secunde.",
+      "primary": "Găsește-mi parfumul",
+      "secondary": "Sari peste — arată-mi tot",
+      "titleMark": "O potrivire."
+    },
+    "closer": {
+      "eyebrow": "Din 2026",
+      "title": "Miroase scump.",
+      "body": "Transport gratuit la orice comandă. Retur în treizeci de zile, fără întrebări.",
+      "primary": "Începe cumpărăturile",
+      "secondary": "Construiește setul",
+      "titleMark": "Plătește street."
+    }
+  },
+  "common": {
+    "price": "{price} €",
+    "allUnder": "toate 50ml · toate 100 €",
+    "viewScent": "Vezi parfumul",
+    "tiers": "2 → −10% · 3 → −15% · 5 → −20%",
+    "inspiredBy": "inspirat de {name}"
   }
 }

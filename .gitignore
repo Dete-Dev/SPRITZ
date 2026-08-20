@@ -26,3 +26,15 @@ dist/
 # Raw source assets (large; processed versions live in spritz-site/public)
 /archive (1)/
 /video-sources/
+/labels/
+/spritz_labels_transparent/
+/vandal-ds/
+*.zip
+/spritz guideline.pdf
+
+# Generated video output + LUT previews (regenerate with video-luts/generate-lut.py)
+/video-out/
+/video-luts/preview/
+
+# TypeScript incremental build cache
+*.tsbuildinfo

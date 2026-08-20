@@ -47,15 +47,12 @@ export default async function LocaleLayout({
   return (
     <html lang={locale}>
       <head>
+        {/* Arimo + Alegreya are pulled in by app/tokens/fonts.css. */}
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link
           rel="preconnect"
           href="https://fonts.gstatic.com"
           crossOrigin=""
-        />
-        <link
-          href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300&family=Inter:wght@300;400;500&display=swap"
-          rel="stylesheet"
         />
       </head>
       <body className="antialiased">

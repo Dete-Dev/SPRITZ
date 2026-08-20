@@ -16,7 +16,7 @@ export default function LanguageToggle() {
 
   return (
     <div
-      className="pointer-events-auto inline-flex items-center gap-1 text-[10px] uppercase tracking-[0.32em]"
+      className="header-text pointer-events-auto inline-flex items-center gap-1 text-[10px] font-bold uppercase tracking-[0.2em]"
       role="group"
       aria-label="Language"
     >
@@ -24,7 +24,7 @@ export default function LanguageToggle() {
         const isActive = l === locale;
         return (
           <span key={l} className="flex items-center gap-1">
-            {i > 0 && <span aria-hidden className="text-ink/30">/</span>}
+            {i > 0 && <span aria-hidden className="opacity-40">/</span>}
             <Link
               href={pathname}
               locale={l}
@@ -32,8 +32,8 @@ export default function LanguageToggle() {
               aria-current={isActive ? "true" : undefined}
               className={
                 isActive
-                  ? "text-ink"
-                  : "text-ink/40 hover:text-ink transition-colors"
+                  ? "opacity-100"
+                  : "opacity-45 transition-opacity hover:opacity-100"
               }
             >
               {t(l)}

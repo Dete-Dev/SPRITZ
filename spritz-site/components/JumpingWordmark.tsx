@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import { useTranslations } from "next-intl";
 import { motion, useScroll, useSpring, useTransform } from "framer-motion";
 import { Link } from "@/i18n/navigation";
@@ -11,10 +12,11 @@ import { Link } from "@/i18n/navigation";
  * Position: 6-stop spring-damped jump path (top-center → upper-right →
  * middle-left → lower-right → upper-left → back to top-center).
  *
- * Color: 7-stop framer interpolation through ink → ananas → cerise →
- * menthe → safran → truffe → ivory. Ink at the top is the brand default
- * (high contrast on the cream gradient); ivory at the bottom matches the
- * dark footer area so the wordmark stays visible end-to-end.
+ * Color: 7-stop framer interpolation through the five brand colours, ending
+ * cream so the mark stays visible on the ink footer. The first stop is the
+ * resting colour at the top of the page — ink on paper sections, cream when
+ * the header sits over an ink section (v2 opens on the ink video hero, where
+ * a black mark would disappear).
  *
  * Implementation note: the wordmark is rendered as a CSS mask-image over
  * an animated `background-color`, NOT as an <img>. This is how a single
@@ -25,6 +27,11 @@ import { Link } from "@/i18n/navigation";
 export default function JumpingWordmark() {
   const t = useTranslations("header");
   const { scrollYProgress } = useScroll();
+
+  // <HeaderThemeWatcher/> toggles `.header-on-dark` on <html> whenever an
+  // ink section is under the header. The wordmark's fill is an inline motion
+  // style, so CSS can't theme it — read the class instead.
+  const onDark = useHeaderOnDark();
 
   const progress = useSpring(scrollYProgress, {
     stiffness: 90,
@@ -55,14 +62,15 @@ export default function JumpingWordmark() {
 
   // Color stops — independent from position so all 5 scent colors fit.
   const COLOR_STOPS = [0, 0.167, 0.333, 0.5, 0.667, 0.833, 1] as const;
+  // v2 runs the five brand colours loud rather than the muted label tints.
   const backgroundColor = useTransform(progress, [...COLOR_STOPS], [
-    "#1a1411", // ink — brand default at header
-    "#d9b675", // ananas — warm cream-yellow
-    "#e89bb4", // cerise — soft pink
-    "#7ec4b7", // menthe — muted teal
-    "#c45a4f", // safran — brick red
-    "#8a6238", // truffe — walnut brown
-    "#f4ede2", // ivory — keeps wordmark visible on the dark footer
+    onDark ? "#f4ede2" : "#0a0a0a", // resting colour: cream on ink, ink on paper
+    "#e8b83c", // yellow — ananas colourway
+    "#f178ac", // pink — cerise
+    "#1652c2", // blue — menthe
+    "#e5143c", // red — safran
+    "#16a85f", // green — truffe
+    "#f4ede2", // cream — keeps the wordmark visible on the ink footer
   ]);
 
   return (
@@ -92,4 +100,22 @@ export default function JumpingWordmark() {
       </Link>
     </motion.div>
   );
+}
+
+/** True while `<html>` carries `.header-on-dark`. */
+function useHeaderOnDark(): boolean {
+  const [onDark, setOnDark] = useState(false);
+
+  useEffect(() => {
+    const root = document.documentElement;
+    const sync = (): void =>
+      setOnDark(root.classList.contains("header-on-dark"));
+
+    sync();
+    const obs = new MutationObserver(sync);
+    obs.observe(root, { attributes: true, attributeFilter: ["class"] });
+    return () => obs.disconnect();
+  }, []);
+
+  return onDark;
 }
