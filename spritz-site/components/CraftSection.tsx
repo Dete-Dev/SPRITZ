@@ -38,7 +38,7 @@ export default function CraftSection() {
             <Reveal>
               <div className="-rotate-2">
                 <ParallaxImage
-                  src="/images/scents/ananas/clean.webp"
+                  src="/images/scents/ananas-bouleau/clean.webp"
                   alt="SPRITZ — voile d'ananas et bouleau"
                   speed={0.12}
                   className="aspect-[4/5] rounded-card border-2 border-cream bg-paper"

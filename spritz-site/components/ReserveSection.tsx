@@ -58,9 +58,9 @@ export default function ReserveSection() {
         <Reveal delay={120} className="col-span-12 md:col-span-4 md:col-start-9">
           <div className="relative rotate-[3deg]">
             <Tape rotate={-5} className="absolute -top-4 left-1/2 z-10 -ml-14" />
-            <div className="relative aspect-[1.339/1] w-full rounded-card border-2 border-ink bg-paper">
+            <div className="relative aspect-[2/3] w-full rounded-card border-2 border-ink bg-paper">
               <Image
-                src="/images/scents/safran/hero.webp"
+                src="/images/scents/safran-ambre/hero.webp"
                 alt="SPRITZ — essence de safran et ambre"
                 fill
                 sizes="(min-width: 768px) 34vw, 100vw"

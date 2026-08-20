@@ -47,7 +47,7 @@ export default function StorySection() {
               className="absolute -top-4 left-1/2 z-10 -ml-14"
             />
             <ParallaxImage
-              src="/images/scents/menthe/clean.webp"
+              src="/images/scents/cedre-menthe/clean.webp"
               alt="SPRITZ — bois de cèdre et menthe"
               speed={0.18}
               className="aspect-[4/5] rounded-card border-2 border-cream bg-paper"

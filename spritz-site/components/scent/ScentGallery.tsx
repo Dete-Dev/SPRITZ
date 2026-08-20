@@ -9,8 +9,9 @@ import { useState } from "react";
  * Single source of truth: the parent passes an ordered array of webp paths.
  * Thumbnail clicks swap the main image with a soft crossfade.
  *
- * Aspect ratio of each image is 1.339:1 (1600x1195) — locked so the layout
- * doesn't jump when swapping.
+ * The frame is portrait to suit the product: the bottle shots are tall and
+ * narrow, so a landscape frame shrank them to a sliver. Locked so the layout
+ * doesn't jump when swapping images.
  */
 export default function ScentGallery({
   images,
@@ -30,7 +31,7 @@ export default function ScentGallery({
       {/* Bottles sit on plain paper white — no gradient behind product
           (design system rule 5). The frame is a pasted-on card instead. */}
       <div className="overflow-hidden rounded-card border-2 border-ink bg-paper shadow-hard">
-      <div className="relative aspect-[1.339/1] w-full">
+      <div className="relative aspect-[2/3] w-full">
         {/* Crossfade: render every image stacked, vary opacity. */}
         {images.map((src, i) => (
           <Image
