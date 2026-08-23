@@ -3,12 +3,24 @@
     "siteTitle": "SPRITZ — 22 dupes, one price",
     "siteDescription": "Twenty-two inspired-by eau de parfum. 50ml, €100 each. Same nose as the designer bottle, without the designer markup.",
     "shopTitle": "SPRITZ — Shop",
-    "shopDescription": "Reservations open soon."
+    "shopDescription": "Reservations open soon.",
+    "bundleTitle": "SPRITZ — Build your set",
+    "bundleDescription": "Pick any of the twenty-two. Two bottles take 10% off, three take 15%, five take 20%.",
+    "setsTitle": "SPRITZ — Gift sets",
+    "setsDescription": "Pick two or three bottles and the discount applies itself. Ready-made selections too."
   },
   "header": {
     "shop": "Shop",
     "cart": "Bag",
-    "home": "SPRITZ — home"
+    "home": "SPRITZ — home",
+    "discoverySet": "Make your discovery set"
+  },
+  "heroBar": {
+    "placeholder": "Search Chanel, Tom Ford… or one of ours",
+    "searchLabel": "Search the catalogue",
+    "noResults": "Nothing matched — try a designer name or a bottle name.",
+    "inspiredBy": "inspired by {name}",
+    "shortPlaceholder": "Search"
   },
   "cart": {
     "title": "Your bag",
@@ -42,26 +54,26 @@
   },
   "hero": {
     "scrollCue": "scroll to enter",
-    "sidebar": "SPRITZ — Edition 01 — 22 scents",
+    "sidebar": "SPRITZ — 22 scents",
     "scents": {
       "ananas-bouleau": {
-        "eyebrow": "Edition 01 — Ananas",
+        "eyebrow": "Ananas",
         "notes": "Pineapple rind, birch bark, lemon peel, violet."
       },
       "cerise-rose": {
-        "eyebrow": "Edition 02 — Cerise",
+        "eyebrow": "Cerise",
         "notes": "Black cherry, rose petal, raspberry, lime."
       },
       "cedre-menthe": {
-        "eyebrow": "Edition 03 — Menthe",
+        "eyebrow": "Menthe",
         "notes": "Cedarwood, fresh mint, ginger root, lemon."
       },
       "safran-ambre": {
-        "eyebrow": "Edition 04 — Safran",
+        "eyebrow": "Safran",
         "notes": "Saffron threads, amber resin, jasmine, sandalwood."
       },
       "truffe-chocolat": {
-        "eyebrow": "Edition 05 — Truffe",
+        "eyebrow": "Truffe",
         "notes": "Black truffle, dark cocoa, jasmine, bergamot zest."
       }
     }
@@ -127,17 +139,17 @@
     }
   },
   "reserve": {
-    "eyebrow": "Edition 01 — 22 scents",
+    "eyebrow": "22 scents",
     "h1": "Numbered,",
     "h2": "signed,",
     "h3em": "sent.",
-    "body": "Edition 01 ships this season. Drop your email — we'll send one note the week before bottles leave the studio. No drip campaign, no newsletter babble.",
+    "body": "The bottles ship this season. Drop your email — we'll send one note the week before bottles leave the studio. No drip campaign, no newsletter babble.",
     "emailPlaceholder": "your@email.com",
     "submit": "Notify me",
     "footnote": "50ml · eau de parfum · Small batch"
   },
   "footer": {
-    "tagline": "Twenty-two scents, made in small batches. Edition 01 — ships this season.",
+    "tagline": "Twenty-two scents, made in small batches. Ships this season.",
     "scents": "Scents",
     "house": "House",
     "houseLinks": {
@@ -145,21 +157,38 @@
       "five": "The catalogue",
       "craft": "Craft",
       "reserve": "Reserve",
-      "shop": "Shop"
+      "shop": "Shop",
+      "bundle": "Build a set",
+      "journal": "Journal",
+      "sets": "Gift sets"
     },
     "correspondence": "Correspondence",
-    "correspondenceBody": "One note when Edition 01 ships. Nothing else.",
+    "correspondenceBody": "One note when the bottles ship. Nothing else.",
     "emailPlaceholder": "your@email.com",
     "join": "Join",
     "copyright": "© 2026 SPRITZ",
     "terms": "Terms",
     "privacy": "Privacy",
     "signoff": "Smell expensive.",
-    "allScents": "All {count} →"
+    "allScents": "All {count} →",
+    "information": "Information",
+    "backToTop": "Back to top",
+    "infoLinks": {
+      "faq": "FAQ",
+      "contact": "Contact us",
+      "shipping": "Shipping & returns"
+    }
   },
   "shop": {
     "eyebrow": "eau de parfum · 50ml · €100",
-    "headline": "All twenty-two."
+    "headline": "All twenty-two.",
+    "filterAll": "All",
+    "genders": {
+      "her": "for her",
+      "him": "for him",
+      "unisex": "unisex"
+    },
+    "count": "{count, plural, one {# scent} other {# scents}}"
   },
   "finder": {
     "eyebrow": "The advisor",
@@ -195,7 +224,7 @@
     "fallback": "The catalogue is below — trust your nose."
   },
   "bundle": {
-    "eyebrow": "Edition 01 — build your set",
+    "eyebrow": "Build your set",
     "headline": "More bottles, better price.",
     "intro": "Pick any of the twenty-two, in any mix. Two bottles take 10% off, three take 15%, five take 20% — across everything in your bag.",
     "tierProgress": "{count, plural, one {1 more bottle for −{percent}%} other {# more bottles for −{percent}%}}",
@@ -244,7 +273,20 @@
     "moreTitle": "More from the catalogue",
     "moreSubtitle": "Pick one for a different evening.",
     "noteOnLabel": "printed on the label",
-    "notesIntroLabel": "The two notes printed on this bottle. The full pyramid is being written."
+    "notesIntroLabel": "The two notes printed on this bottle. The full pyramid is being written.",
+    "retailPrice": "(retail price €{price})",
+    "thisPerfumeIs": "This perfume is:",
+    "mainNotes": "Main notes",
+    "aboutFallback": "Made in small batches in Bucharest, hand-poured into 50ml glass and numbered on the cap. The full note breakdown for this one is still being written — the two notes printed on the label are the honest summary until then.",
+    "shippingHint": "Free shipping with 2+ bottles. Free returns.",
+    "layeredIntro": "These sit in the same family, so they layer without fighting each other. Two bottles already take 10% off.",
+    "accordion": {
+      "notes": "Scent notes",
+      "about": "About",
+      "shipping": "Shipping + returns",
+      "faqs": "FAQs",
+      "layered": "Best layered with"
+    }
   },
   "scentDetails": {
     "ananas-bouleau": {
@@ -370,7 +412,9 @@
     "heroLine2Mark": "street.",
     "fromPrice": "every bottle €100",
     "landingTitlePre": "Take 3 →",
-    "landingTitleMark": "we cut 15%."
+    "landingTitleMark": "we cut 15%.",
+    "heroNudge": "Not sure which one?",
+    "ctaShopAll": "Shop all scents"
   },
   "bands": {
     "dupes": {
@@ -403,6 +447,241 @@
     "allUnder": "all 50ml · all €100",
     "viewScent": "View scent",
     "tiers": "2 → −10% · 3 → −15% · 5 → −20%",
-    "inspiredBy": "inspired by {name}"
+    "inspiredBy": "inspired by {name}",
+    "tickerLead": "inspired by",
+    "cheaperThan": "€{amount} cheaper than the original",
+    "cheaperPercent": "{percent}% cheaper than the original"
+  },
+  "drops": {
+    "eyebrow": "Fresh off the bench",
+    "headline": "The latest",
+    "headlineEm": "drops.",
+    "newBadge": "new"
+  },
+  "families": {
+    "eyebrow": "Shop by scent family",
+    "names": {
+      "fresh": "Fresh",
+      "floral": "Floral",
+      "warm": "Warm",
+      "sweet": "Sweet"
+    }
+  },
+  "faq": {
+    "eyebrow": "Straight answers",
+    "headline": "Questions,",
+    "headlineEm": "answered.",
+    "items": {
+      "dupe": {
+        "q": "What exactly is a dupe?",
+        "a": "A dupe is our own eau de parfum built to smell like a designer fragrance — same scent direction, our own formula. It is not a copy of the bottle or the box; the name on the glass is ours."
+      },
+      "lasting": {
+        "q": "How long does it last on skin?",
+        "a": "Every scent is a true eau de parfum, not a body mist — count in hours, not minutes. Longevity varies by scent family: warm and sweet scents hold longest, fresh ones wear lighter."
+      },
+      "size": {
+        "q": "What size are the bottles?",
+        "a": "One size, one price: every scent is a 50ml eau de parfum at €100. No minis or decants for now — the bundle is the way to try several."
+      },
+      "bundle": {
+        "q": "How does the bundle discount work?",
+        "a": "Stack bottles into a bundle: 2 bottles take 10% off, 3 take 15%, 5 take 20%. The discount applies automatically at checkout, across every bottle in the set."
+      },
+      "shipping": {
+        "q": "Where do you ship?",
+        "a": "Across Romania and the EU — shipping is free on every order. Exact courier options and delivery times show at checkout for your address."
+      },
+      "returns": {
+        "q": "Can I return a scent?",
+        "a": "Thirty days, no questions — same promise as everywhere else on this site. Send a bottle back within 30 days for a full refund."
+      }
+    }
+  },
+  "promoBadge": {
+    "label": "Get up to 20% off",
+    "dismiss": "Dismiss offer"
+  },
+  "newsletterPopup": {
+    "sticker": "−20%",
+    "eyebrow": "The list",
+    "title": "Your first order,",
+    "titleEm": "20% lighter",
+    "body": "Drop your email and we send the code straight back. New drops and restocks land in your inbox first.",
+    "emailLabel": "Email address",
+    "emailPlaceholder": "you@example.com",
+    "submit": "Send my code",
+    "sending": "Sending…",
+    "close": "Close",
+    "footnote": "One email a month. No noise. Unsubscribe any time.",
+    "successEyebrow": "You're on the list",
+    "successTitle": "Code's yours.",
+    "successBody": "Use it at checkout. It stacks on nothing else, so pair it with a bundle for the deepest cut.",
+    "codeLabel": "Your code",
+    "shopCta": "Build a bundle",
+    "errorInvalid": "That email doesn't look right. Check it and try again.",
+    "errorGeneric": "Something broke on our side. Try again in a moment."
+  },
+  "rail": {
+    "previous": "Previous scents",
+    "next": "Next scents"
+  },
+  "bestSellers": {
+    "eyebrow": "Best sellers",
+    "headline": "More scent.",
+    "headlineEm": "More personality."
+  },
+  "featured": {
+    "eyebrow": "Featured — small batch",
+    "headline": "Crafted in Bucharest,",
+    "headlineEm": "worn everywhere."
+  },
+  "genderTiles": {
+    "eyebrow": "Shop by who it's for"
+  },
+  "usps": {
+    "ingredients": "Premium ingredients",
+    "pricing": "Honest pricing",
+    "lasting": "Long-lasting scents",
+    "variety": "Twenty-two options"
+  },
+  "split": {
+    "singleEyebrow": "The single — 50ml",
+    "singleTitle": "One bottle. One hundred euro.",
+    "singleCta": "Shop this scent",
+    "setEyebrow": "The set — two or more",
+    "setTitle": "Two bottles, ten percent off.",
+    "setBody": "Pick any two of the twenty-two and the discount lands at checkout. Three take 15%, five take 20%.",
+    "setBadge": "−10% at two",
+    "setCta": "Build your set"
+  },
+  "proof": {
+    "headline": "Twenty-two scents. One honest price.",
+    "footnote": "* Figures from our own customer surveys, pre-launch.",
+    "value": {
+      "percent": "96",
+      "label": "say SPRITZ offers unbeatable value for the quality"
+    },
+    "lasting": {
+      "percent": "93",
+      "label": "say the scent is still there at the end of the day"
+    },
+    "recommend": {
+      "percent": "95",
+      "label": "would recommend SPRITZ to a friend"
+    }
+  },
+  "blog": {
+    "eyebrow": "The journal",
+    "headline": "How a dupe is actually made.",
+    "body": "Notes, batches, and why the same nose costs three hundred somewhere else. We write it down as we go.",
+    "cta": "Read more"
+  },
+  "journal": {
+    "metaTitle": "SPRITZ — Journal",
+    "metaDescription": "Notes, batches and the honest maths behind a dupe. First entries land soon.",
+    "eyebrow": "The journal",
+    "headline": "Notes, batches,",
+    "headlineEm": "and the maths.",
+    "body": "We are writing down how each of the twenty-two gets made.",
+    "bodyTwo": "The notes we chase. The batches we reject. Why the same nose costs three hundred somewhere else.",
+    "badge": "First entries soon",
+    "ctaShop": "Shop all scents",
+    "ctaBundle": "Build a set"
+  },
+  "tierBanner": {
+    "label": "Bundle offer",
+    "tier": "{count}+ bottles · −{percent}%"
+  },
+  "packSelector": {
+    "legend": "Choose your pack",
+    "singleTitle": "1 × {size}",
+    "duoTitle": "{count} × {size} — the duo",
+    "price": "€{price}",
+    "duoFlag": "−{percent}% applied at checkout",
+    "duoCta": "Build the duo",
+    "includedTitle": "What is included",
+    "includedThis": "{name} — 50ml",
+    "includedNext": "Pick your second bottle in the builder"
+  },
+  "shopNav": {
+    "label": "Shop categories",
+    "all": "All perfumes",
+    "bestsellers": "Bestsellers",
+    "new": "New arrivals",
+    "sets": "Build a set"
+  },
+  "shopFilters": {
+    "searchPlaceholder": "Search scents, brands, notes",
+    "searchLabel": "Search the catalogue",
+    "sort": "Sort",
+    "sorts": {
+      "saving": "Biggest saving",
+      "name": "Name A–Z"
+    },
+    "gender": "Gender",
+    "family": "Scent family",
+    "collections": "Collections",
+    "clear": "Clear",
+    "empty": "Nothing matches those filters. Try clearing one.",
+    "fragrantica": "Look up {name} on Fragrantica"
+  },
+  "shopPromo": {
+    "eyebrow": "Make it a set",
+    "title": "Two bottles. Better price.",
+    "badge": "Up to −{percent}%",
+    "cta": "Build your set"
+  },
+  "sets": {
+    "eyebrow": "Gift sets",
+    "headline": "Sets for",
+    "headlineEm": "everyone.",
+    "intro": "Every set is just bottles from the catalogue with the bundle discount applied. Build your own, or take one we already put together.",
+    "bottles": "{count} bottles",
+    "custom": {
+      "cta": "Pick your bottles",
+      "2": {
+        "title": "Duo set — you choose",
+        "body": "Any two of the twenty-two. Pick them yourself in the builder and the discount applies at checkout."
+      },
+      "3": {
+        "title": "Trio set — you choose",
+        "body": "Any three of the twenty-two. A bigger set takes a bigger cut off every bottle in it."
+      }
+    },
+    "presetEyebrow": "Ready made",
+    "presetTitle": "Already put together.",
+    "presetBody": "Selections we like. Choosing one loads those bottles into the builder — swap any of them before you buy.",
+    "presets": {
+      "fresh-duo": "The fresh pair",
+      "warm-duo": "The warm pair",
+      "sweet-duo": "The sweet pair",
+      "her-trio": "Three for her",
+      "him-trio": "Three for him",
+      "discovery-five": "The discovery five"
+    }
+  },
+  "nav": {
+    "perfumes": "Perfumes",
+    "about": "About",
+    "shopAll": "Shop all perfumes",
+    "giftSet": "Gift set",
+    "duoSet": "Duo set",
+    "trioSet": "Trio set",
+    "allSets": "All gift sets",
+    "discoverySet": "Discovery set",
+    "byGender": "Shop by gender",
+    "edits": "The edits",
+    "families": "Scent families",
+    "journal": "Journal",
+    "whoWeAre": "Who we are",
+    "help": "Help",
+    "aboutUs": "About us",
+    "craft": "How it is made",
+    "faq": "FAQ",
+    "contact": "Contact us",
+    "shipping": "Shipping & returns",
+    "makeABundle": "Make a bundle",
+    "makeADiscoverySet": "Make a discovery set"
   }
 }
