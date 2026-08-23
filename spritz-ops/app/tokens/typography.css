@@ -1,0 +1,66 @@
+/* VENDORED from spritz-site/app/tokens/typography.css by scripts/sync-ds.mjs — do not edit here. */
+/* ==========================================================================
+   SPRITZ v2 — typography
+   Two families, no exceptions. v2 pushes scale and weight: display type is
+   Alegreya 800/900, smashed tight (leading 0.82, tracking -0.03em), often
+   broken mid-word by paint or stickers. Arimo does everything a finger touches.
+   ========================================================================== */
+:root {
+  --sp-font-sans: "Arimo", ui-sans-serif, system-ui, sans-serif;
+  --sp-font-serif: "Alegreya", Georgia, "Times New Roman", serif;
+
+  /* Fluid scale — bigger ceiling than v1 */
+  --sp-text-xs: 0.75rem;
+  --sp-text-sm: 0.875rem;
+  --sp-text-base: clamp(1rem, 0.96rem + 0.2vw, 1.0625rem);
+  --sp-text-lg: clamp(1.125rem, 1.05rem + 0.4vw, 1.375rem);
+  --sp-text-xl: clamp(1.5rem, 1.3rem + 1vw, 2.25rem);
+  --sp-text-2xl: clamp(2rem, 1.4rem + 2.8vw, 4.25rem);
+  --sp-text-hero: clamp(3rem, 0.5rem + 11vw, 11rem);
+
+  /* Display settings */
+  --sp-display-leading: 0.82;
+  --sp-display-tracking: -0.03em;
+}
+
+.sp-sans { font-family: var(--sp-font-sans); }
+.sp-serif { font-family: var(--sp-font-serif); }
+
+/* Display — the v2 headline voice: huge, tight, smashed. */
+.sp-display {
+  font-family: var(--sp-font-serif);
+  font-weight: 900;
+  line-height: var(--sp-display-leading);
+  letter-spacing: var(--sp-display-tracking);
+  text-wrap: balance;
+}
+
+/* Eyebrow / kicker — small tracked-out label above every block. */
+.sp-eyebrow {
+  font-family: var(--sp-font-sans);
+  font-size: var(--sp-text-xs);
+  font-weight: 700;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--sp-muted);
+}
+
+/* Scrawl — marker-note voice for asides, prices crossed out, sticker copy.
+   Arimo bold italic, uppercase, slightly rotated by the element that uses it.
+   Never for body text, never more than ~6 words. */
+.sp-scrawl {
+  font-family: var(--sp-font-sans);
+  font-weight: 700;
+  font-style: italic;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+}
+
+/* Label voice — the lowercase French scent names, exactly as printed on the
+   bottles ("essence de safran et ambre"). Never translated, never capitalised. */
+.sp-label-name {
+  font-family: var(--sp-font-sans);
+  font-weight: 400;
+  text-transform: lowercase;
+}
+.sp-label-name strong { font-weight: 700; }

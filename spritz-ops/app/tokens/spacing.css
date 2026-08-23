@@ -1,0 +1,23 @@
+/* VENDORED from spritz-site/app/tokens/spacing.css by scripts/sync-ds.mjs — do not edit here. */
+/* SPRITZ v2 — spacing, shape */
+:root {
+  --sp-gutter: clamp(1rem, 0.5rem + 2vw, 2.5rem);
+  --sp-section: clamp(3rem, 2rem + 4vw, 6rem);
+  --sp-space-1: 0.25rem;
+  --sp-space-2: 0.5rem;
+  --sp-space-3: 0.75rem;
+  --sp-space-4: 1rem;
+  --sp-space-6: 1.5rem;
+  --sp-space-8: 2rem;
+  --sp-space-12: 3rem;
+
+  /* Shape: pills for CTAs, near-square cards. Street, not soft. */
+  --sp-radius: 999px;
+  --sp-radius-card: 4px;
+  --sp-radius-sticker: 999px;
+
+  /* Hard offset shadows — the v2 "pasted-on" look. No blur, ever. */
+  --sp-shadow-hard: 5px 5px 0 var(--sp-ink);
+  --sp-shadow-hard-sm: 3px 3px 0 var(--sp-ink);
+  --sp-shadow-hard-lift: 7px 7px 0 var(--sp-ink);
+}
