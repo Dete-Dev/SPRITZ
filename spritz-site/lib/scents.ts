@@ -12,7 +12,13 @@
  * - `price` is the line price from Financiar/perfume_sku_calculator.xlsx.
  * - `hasStory` marks the five with hand-written editorial in messages/*.json.
  *   The rest render from label facts only until that copy is written.
+ * - `retailPrice` is the designer original's approximate EUR street price,
+ *   hand-estimated from EU retailer listings (not live data). It only feeds
+ *   the "€X cheaper than the original" sticker — round numbers on purpose.
  */
+
+export type ScentFamily = "fresh" | "floral" | "warm" | "sweet";
+export type ScentGender = "her" | "him" | "unisex";
 
 export interface Scent {
   key: string;
@@ -28,6 +34,12 @@ export interface Scent {
   noteWords: string[];
   /** The designer fragrance this one answers to. */
   inspiredBy: string;
+  /** Scent family, used by the shop filter chips. */
+  family: ScentFamily;
+  /** Who the designer original is marketed to; "unisex" when both. */
+  gender: ScentGender;
+  /** Approx. EUR retail of the original (see header note). */
+  retailPrice: number;
   /** Colour sampled from the printed label stripe. */
   accent: string;
   /** Same colour, used for stripes, sprays and card bands. */
@@ -57,6 +69,9 @@ export const SCENTS: Scent[] = [
     name: "âme de mer et bergamote",
     noteWords: ["mer", "bergamote"],
     inspiredBy: "Armani Acqua di Gio Parfum",
+    family: "fresh",
+    gender: "him",
+    retailPrice: 130,
     accent: "#3bc7f9",
     stripe: "#3bc7f9",
     price: 100,
@@ -72,6 +87,9 @@ export const SCENTS: Scent[] = [
     name: "éclat de citron et cardamome",
     noteWords: ["citron", "cardamome"],
     inspiredBy: "Azzaro Wanted",
+    family: "fresh",
+    gender: "him",
+    retailPrice: 105,
     accent: "#c8d32b",
     stripe: "#c8d32b",
     price: 100,
@@ -87,6 +105,9 @@ export const SCENTS: Scent[] = [
     name: "essence de cognac et bergamote",
     noteWords: ["cognac", "bergamote"],
     inspiredBy: "Kilian Angels' Share On The Rocks",
+    family: "warm",
+    gender: "unisex",
+    retailPrice: 230,
     accent: "#d58335",
     stripe: "#d58335",
     price: 100,
@@ -102,6 +123,9 @@ export const SCENTS: Scent[] = [
     name: "âme de amande et tonka",
     noteWords: ["amande", "tonka"],
     inspiredBy: "Carolina Herrera Good Girl Velvet Fatale",
+    family: "sweet",
+    gender: "her",
+    retailPrice: 120,
     accent: "#7c1a3a",
     stripe: "#7c1a3a",
     price: 100,
@@ -117,6 +141,9 @@ export const SCENTS: Scent[] = [
     name: "bois de cèdre et menthe",
     noteWords: ["cèdre", "menthe"],
     inspiredBy: "Chanel Bleu de Chanel",
+    family: "fresh",
+    gender: "him",
+    retailPrice: 145,
     accent: "#35b68d",
     stripe: "#35b68d",
     price: 100,
@@ -132,6 +159,9 @@ export const SCENTS: Scent[] = [
     name: "voile de ylang et jasmin",
     noteWords: ["ylang", "jasmin"],
     inspiredBy: "Chanel No. 5",
+    family: "floral",
+    gender: "her",
+    retailPrice: 160,
     accent: "#c99b2d",
     stripe: "#c99b2d",
     price: 100,
@@ -147,6 +177,9 @@ export const SCENTS: Scent[] = [
     name: "voile d'ananas et bouleau",
     noteWords: ["ananas", "bouleau"],
     inspiredBy: "Creed Absolu Aventus",
+    family: "fresh",
+    gender: "him",
+    retailPrice: 330,
     accent: "#dac249",
     stripe: "#dac249",
     price: 100,
@@ -162,6 +195,9 @@ export const SCENTS: Scent[] = [
     name: "bois de oud et safran",
     noteWords: ["oud", "safran"],
     inspiredBy: "Creed Oud Zarian",
+    family: "warm",
+    gender: "unisex",
+    retailPrice: 350,
     accent: "#c97d2b",
     stripe: "#c97d2b",
     price: 100,
@@ -177,6 +213,9 @@ export const SCENTS: Scent[] = [
     name: "bouquet de gardénia et mandarin",
     noteWords: ["gardénia", "mandarin"],
     inspiredBy: "Gucci Flora Gorgeous Gardenia Intense",
+    family: "floral",
+    gender: "her",
+    retailPrice: 140,
     accent: "#fda654",
     stripe: "#fda654",
     price: 100,
@@ -192,6 +231,9 @@ export const SCENTS: Scent[] = [
     name: "voile de cerise et rose",
     noteWords: ["cerise", "rose"],
     inspiredBy: "Kayali Lovefest Burning Cherry",
+    family: "sweet",
+    gender: "her",
+    retailPrice: 120,
     accent: "#fa7db3",
     stripe: "#fa7db3",
     price: 100,
@@ -207,6 +249,9 @@ export const SCENTS: Scent[] = [
     name: "âme de iris et bergamote",
     noteWords: ["iris", "bergamote"],
     inspiredBy: "Lancôme La Vie Est Belle",
+    family: "sweet",
+    gender: "her",
+    retailPrice: 130,
     accent: "#c66a8b",
     stripe: "#c66a8b",
     price: 100,
@@ -222,6 +267,9 @@ export const SCENTS: Scent[] = [
     name: "essence de safran et ambre",
     noteWords: ["safran", "ambre"],
     inspiredBy: "MFK Baccarat Rouge 540",
+    family: "warm",
+    gender: "unisex",
+    retailPrice: 250,
     accent: "#951929",
     stripe: "#951929",
     price: 100,
@@ -237,6 +285,9 @@ export const SCENTS: Scent[] = [
     name: "essence de jasmin et cashmeran",
     noteWords: ["jasmin", "cashmeran"],
     inspiredBy: "Mugler Alien Extraintense",
+    family: "floral",
+    gender: "her",
+    retailPrice: 130,
     accent: "#8b54a5",
     stripe: "#8b54a5",
     price: 100,
@@ -252,6 +303,9 @@ export const SCENTS: Scent[] = [
     name: "voile de cuir et menthe",
     noteWords: ["cuir", "menthe"],
     inspiredBy: "Paco Rabanne 1 Million Gold for Him",
+    family: "warm",
+    gender: "him",
+    retailPrice: 125,
     accent: "#6b492e",
     stripe: "#6b492e",
     price: 100,
@@ -267,6 +321,9 @@ export const SCENTS: Scent[] = [
     name: "voile de poivre noir et ambre",
     noteWords: ["poivre noir", "ambre"],
     inspiredBy: "Paco Rabanne Invictus Victory",
+    family: "warm",
+    gender: "him",
+    retailPrice: 115,
     accent: "#136a39",
     stripe: "#136a39",
     price: 100,
@@ -282,6 +339,9 @@ export const SCENTS: Scent[] = [
     name: "bois de oud et santal",
     noteWords: ["oud", "santal"],
     inspiredBy: "Tom Ford Oud Wood",
+    family: "warm",
+    gender: "unisex",
+    retailPrice: 280,
     accent: "#c97d5a",
     stripe: "#c97d5a",
     price: 100,
@@ -297,6 +357,9 @@ export const SCENTS: Scent[] = [
     name: "éclat de menthe et tonka",
     noteWords: ["menthe", "tonka"],
     inspiredBy: "Versace Eros",
+    family: "fresh",
+    gender: "him",
+    retailPrice: 115,
     accent: "#69c788",
     stripe: "#69c788",
     price: 100,
@@ -312,6 +375,9 @@ export const SCENTS: Scent[] = [
     name: "essence de rose et jasmin",
     noteWords: ["rose", "jasmin"],
     inspiredBy: "Xerjoff Alexandria II",
+    family: "floral",
+    gender: "unisex",
+    retailPrice: 380,
     accent: "#b5268c",
     stripe: "#b5268c",
     price: 100,
@@ -327,6 +393,9 @@ export const SCENTS: Scent[] = [
     name: "fleur de lavande et vanille",
     noteWords: ["lavande", "vanille"],
     inspiredBy: "YSL Libre",
+    family: "floral",
+    gender: "her",
+    retailPrice: 150,
     accent: "#8f7fc4",
     stripe: "#8f7fc4",
     price: 100,
@@ -342,6 +411,9 @@ export const SCENTS: Scent[] = [
     name: "nuit de truffe et chocolat",
     noteWords: ["truffe", "chocolat"],
     inspiredBy: "Tom Ford Black Orchid",
+    family: "sweet",
+    gender: "unisex",
+    retailPrice: 175,
     accent: "#6c4225",
     stripe: "#6c4225",
     price: 100,
@@ -357,6 +429,9 @@ export const SCENTS: Scent[] = [
     name: "feu de cuir et tabac",
     noteWords: ["cuir", "tabac"],
     inspiredBy: "Viktor & Rolf Spicebomb Dark Leather",
+    family: "warm",
+    gender: "him",
+    retailPrice: 130,
     accent: "#8a4a22",
     stripe: "#8a4a22",
     price: 100,
@@ -372,6 +447,9 @@ export const SCENTS: Scent[] = [
     name: "noir de vanille et café",
     noteWords: ["vanille", "café"],
     inspiredBy: "YSL Black Opium",
+    family: "sweet",
+    gender: "her",
+    retailPrice: 140,
     accent: "#caa42b",
     stripe: "#caa42b",
     price: 100,
@@ -380,6 +458,46 @@ export const SCENTS: Scent[] = [
     shopifyVariantId: "",
   },
 ];
+
+
+/**
+ * Editorial selections used by the shop sub-menu and the homepage rails.
+ * These are curation, not computed metrics — the shop has no order history
+ * to rank by yet, so the house picks the shelf.
+ */
+export const BESTSELLER_KEYS: readonly string[] = [
+  "safran-ambre",
+  "truffe-chocolat",
+  "cerise-rose",
+  "oud-santal",
+  "mer-bergamote",
+  "vanille-cafe",
+];
+
+/** Most recent additions to the catalogue, newest first. */
+export const NEW_ARRIVAL_KEYS: readonly string[] = [
+  "truffe-chocolat",
+  "safran-ambre",
+  "cerise-rose",
+  "ananas-bouleau",
+];
+
+/**
+ * Fragrantica lookup for the designer original a scent answers to.
+ *
+ * Built as a search URL rather than a stored per-product id: there is no
+ * Fragrantica id in the catalogue, and a search on the exact designer name
+ * always resolves, where a hand-copied id would rot.
+ */
+export function fragranticaUrl(inspiredBy: string): string {
+  return `https://www.fragrantica.com/search/?query=${encodeURIComponent(inspiredBy)}`;
+}
+
+/** Percent saved against the designer original, rounded. */
+export function savingPercent(scent: Scent): number {
+  if (scent.retailPrice <= 0) return 0;
+  return Math.round(((scent.retailPrice - scent.price) / scent.retailPrice) * 100);
+}
 
 export const SCENT_KEYS = SCENTS.map((s) => s.key);
 
