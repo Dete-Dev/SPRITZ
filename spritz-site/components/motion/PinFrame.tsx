@@ -8,6 +8,7 @@ import {
   useTransform,
   useReducedMotion,
 } from "framer-motion";
+import SprayBurst from "@/components/motion/SprayBurst";
 
 /**
  * The pinned stage — the home page's one engineered peak.
@@ -30,6 +31,9 @@ import {
  * Panels arrive as ReactNode props rather than a render prop: functions cannot
  * cross the server/client boundary, so this keeps <SplitPromo/> a server
  * component and ships none of its markup to the browser.
+ *
+ * The peak also carries the page's signature move, <SprayBurst/>. The method
+ * this page follows gives the peak the asset budget, and this is it.
  */
 export default function PinFrame({
   left,
@@ -110,6 +114,10 @@ function PinnedStage({ left, right }: { left: ReactNode; right: ReactNode }) {
         >
           {right}
         </motion.div>
+
+        {/* The page's one bespoke move. Raw progress, not the spring: the
+            plume should answer the wheel directly. */}
+        <SprayBurst progress={scrollYProgress} />
       </div>
     </div>
   );
