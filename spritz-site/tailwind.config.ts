@@ -5,6 +5,20 @@ import type { Config } from "tailwindcss";
  * Token values live in app/tokens/*.css (vendored from the design system
  * package, single source of truth). This file only exposes them to utilities.
  */
+/**
+ * The palette lives in CSS custom properties, and a bare `var()` gives Tailwind
+ * nothing to blend, so every opacity modifier (`text-cream/85`, `bg-ink/40`,
+ * `via-ink/70`) silently generated no rule at all — the class simply did not
+ * exist. Routing each token through `color-mix` restores them.
+ */
+const token = (name: string): string =>
+  // Tailwind accepts a resolver function wherever a colour string goes, but its
+  // published types only describe the string form, hence the cast.
+  ((({ opacityValue }: { opacityValue?: string }) =>
+    opacityValue === undefined
+      ? `var(${name})`
+      : `color-mix(in srgb, var(${name}) calc(${opacityValue} * 100%), transparent)`) as unknown) as string;
+
 const config: Config = {
   content: [
     "./app/**/*.{js,ts,jsx,tsx,mdx}",
@@ -14,29 +28,29 @@ const config: Config = {
     extend: {
       colors: {
         // Guideline palette
-        ink: "var(--sp-ink)",
-        blue: "var(--sp-blue)",
-        red: "var(--sp-red)",
-        yellow: "var(--sp-yellow)",
-        pink: "var(--sp-pink)",
-        green: "var(--sp-green)",
+        ink: token("--sp-ink"),
+        blue: token("--sp-blue"),
+        red: token("--sp-red"),
+        yellow: token("--sp-yellow"),
+        pink: token("--sp-pink"),
+        green: token("--sp-green"),
         // Neutrals
-        paper: "var(--sp-paper)",
-        "paper-2": "var(--sp-paper-2)",
-        line: "var(--sp-line)",
-        muted: "var(--sp-muted)",
+        paper: token("--sp-paper"),
+        "paper-2": token("--sp-paper-2"),
+        line: token("--sp-line"),
+        muted: token("--sp-muted"),
         // Ink-surface neutrals
-        "ink-2": "var(--sp-ink-2)",
-        "ink-line": "var(--sp-ink-line)",
-        cream: "var(--sp-cream)",
+        "ink-2": token("--sp-ink-2"),
+        "ink-line": token("--sp-ink-line"),
+        cream: token("--sp-cream"),
         // Scent colourways
-        ananas: "var(--sp-scent-ananas)",
-        cerise: "var(--sp-scent-cerise)",
-        menthe: "var(--sp-scent-menthe)",
-        safran: "var(--sp-scent-safran)",
-        truffe: "var(--sp-scent-truffe)",
+        ananas: token("--sp-scent-ananas"),
+        cerise: token("--sp-scent-cerise"),
+        menthe: token("--sp-scent-menthe"),
+        safran: token("--sp-scent-safran"),
+        truffe: token("--sp-scent-truffe"),
         // Legacy alias — unmigrated sections still say `text-ivory` on ink.
-        ivory: "var(--sp-cream)",
+        ivory: token("--sp-cream"),
       },
       fontFamily: {
         sans: ["var(--sp-font-sans)"],

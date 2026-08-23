@@ -1,20 +1,53 @@
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import VideoHero from "@/components/VideoHero";
-import CtaBand from "@/components/ui/CtaBand";
-import BundleBuilder from "@/components/bundle/BundleBuilder";
-import StorySection from "@/components/StorySection";
-import MarqueeQuote from "@/components/MarqueeQuote";
-import FragranceSection from "@/components/FragranceSection";
-import ScentFinder from "@/components/finder/ScentFinder";
-import CraftSection from "@/components/CraftSection";
-import ReserveSection from "@/components/ReserveSection";
+import InspiredByTicker from "@/components/InspiredByTicker";
+import ScentRail from "@/components/ScentRail";
+import GenderTiles from "@/components/GenderTiles";
+import UspMarquee from "@/components/UspMarquee";
+import SplitPromo from "@/components/SplitPromo";
+import BlogBanner from "@/components/BlogBanner";
+import SocialProof from "@/components/SocialProof";
+import FaqSection from "@/components/FaqSection";
 import SiteFooter from "@/components/SiteFooter";
 
 /**
- * Landing page rhythm follows the design system: the video parallax lands in
- * a CTA, then every content block is followed by another ask, so the visitor
- * is never more than one screen from a buy button.
+ * Homepage — the section order comes straight from the redesign brief:
+ *
+ *   §1 hero + centred SHOP ALL      §5 USP marquee
+ *   §2 "inspired by" band           §6 50/50 split promo
+ *   §3 best sellers rail            §7 featured rail
+ *   §4 women / men / unisex         §8 journal banner
+ *                                   §9 social proof + FAQ + footer
+ *
+ * Brief §1's sticky search bar and 20% badge are mounted in the locale
+ * layout, so they follow the visitor onto every other page too.
  */
+
+/** §3 — the shelf openers. Kept apart from the featured set below. */
+const BEST_SELLERS = [
+  "safran-ambre",
+  "truffe-chocolat",
+  "cerise-rose",
+  "oud-santal",
+  "mer-bergamote",
+  "vanille-cafe",
+] as const;
+
+/** §7 — a different selection, as the brief requires. */
+const FEATURED = [
+  "cuir-tabac",
+  "lavande-vanille",
+  "citron-cardamome",
+  "gardenia-mandarin",
+  "poivre-ambre",
+  "amande-tonka",
+] as const;
+
+const BEST_SELLER_BADGES: Record<string, string> = {
+  "safran-ambre": "bestseller",
+  "truffe-chocolat": "new",
+};
+
 export default async function Page({
   params,
 }: {
@@ -23,64 +56,57 @@ export default async function Page({
   const { locale } = await params;
   setRequestLocale(locale);
   const t = await getTranslations();
-  const b = await getTranslations("bands");
+  const best = await getTranslations("bestSellers");
+  const feat = await getTranslations("featured");
 
   return (
     <main id="top">
+      {/* §1 */}
       <VideoHero />
 
-      <section id="bundle" className="px-gutter pt-14 md:pt-20">
-        <div className="mx-auto max-w-5xl">
-          <BundleBuilder />
-        </div>
-      </section>
+      {/* §2 */}
+      <InspiredByTicker leadWord={t("common.tickerLead")} />
 
-      <StorySection />
-      <MarqueeQuote text={t("marquee")} />
-
-      <CtaBand
-        eyebrow={b("dupes.eyebrow")}
-        title={b("dupes.title")}
-        titleMark={b("dupes.titleMark")}
-        body={b("dupes.body")}
-        primaryLabel={b("dupes.primary")}
-        primaryHref="/shop"
-        secondaryLabel={b("dupes.secondary")}
-        secondaryHref="#bundle"
-        stripe="var(--sp-blue)"
+      {/* §3 */}
+      <ScentRail
+        id="best-sellers"
+        scentKeys={BEST_SELLERS}
+        title={best("headline")}
+        titleMark={best("headlineEm")}
+        markColor="var(--sp-yellow)"
+        badges={BEST_SELLER_BADGES}
+        pan
       />
 
-      <FragranceSection />
+      {/* §4 */}
+      <GenderTiles />
 
-      <CtaBand
-        eyebrow={b("finder.eyebrow")}
-        title={b("finder.title")}
-        titleMark={b("finder.titleMark")}
-        body={b("finder.body")}
-        primaryLabel={b("finder.primary")}
-        primaryHref="#finder"
-        secondaryLabel={b("finder.secondary")}
-        secondaryHref="/shop"
-        stripe="var(--sp-pink)"
+      {/* §5 */}
+      <UspMarquee />
+
+      {/* §6 */}
+      <SplitPromo />
+
+      {/* §7 */}
+      <ScentRail
+        id="featured"
+        scentKeys={FEATURED}
+        title={feat("headline")}
+        titleMark={feat("headlineEm")}
+        markColor="var(--sp-pink)"
+        surface="paper-2"
+        stagger
+        tilt
       />
 
-      <ScentFinder />
-      <CraftSection />
+      {/* §8 */}
+      <BlogBanner />
 
-      <CtaBand
-        eyebrow={b("closer.eyebrow")}
-        title={b("closer.title")}
-        titleMark={b("closer.titleMark")}
-        body={b("closer.body")}
-        primaryLabel={b("closer.primary")}
-        primaryHref="/shop"
-        secondaryLabel={b("closer.secondary")}
-        secondaryHref="#bundle"
-        stripe="var(--sp-yellow)"
-        tone="ink"
-      />
-
-      <ReserveSection />
+      {/* §9 */}
+      <SocialProof />
+      <div id="faq">
+        <FaqSection limit={3} />
+      </div>
       <SiteFooter />
     </main>
   );

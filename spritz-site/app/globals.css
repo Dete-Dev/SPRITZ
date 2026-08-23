@@ -141,3 +141,51 @@ html.header-on-dark .header-control:hover {
 html.header-on-dark .header-text {
   --header-fg: var(--sp-cream);
 }
+
+/* --------------------------------------------------------------------------
+   Inspired-by ticker (DUPPÉ-style band under the hero). Two identical tracks
+   scroll left; each is exactly one content-width, so −100% loops seamlessly.
+   Reduced motion: the global kill-switch in tokens/motion.css freezes it.
+   -------------------------------------------------------------------------- */
+.sp-ticker {
+  display: flex;
+  overflow: hidden;
+}
+.sp-ticker__track {
+  display: flex;
+  flex: none;
+  align-items: center;
+  animation: sp-ticker-scroll 80s linear infinite;
+}
+@keyframes sp-ticker-scroll {
+  to {
+    transform: translateX(-100%);
+  }
+}
+
+/* Elements queued for an anime.js entrance start hidden (no flash before the
+   IntersectionObserver fires). lib/motion.ts removes the class as it animates. */
+.sp-pre-enter {
+  opacity: 0;
+}
+
+/* Cards on the featured rail (brief §7) answer the pointer. Gated in CSS
+   rather than in JS: touch devices report false hovers on tap, and reduced
+   motion must drop the angle itself, not just the transition that eases it.
+   The custom properties are written by the pointermove handler in ScentRail. */
+@media (prefers-reduced-motion: no-preference) and (hover: hover) and (pointer: fine) {
+  .sp-tilt {
+    transform: perspective(900px) rotateX(var(--sp-tilt-x, 0deg))
+      rotateY(var(--sp-tilt-y, 0deg));
+    transition: transform var(--sp-normal) var(--sp-ease);
+  }
+}
+
+/* Horizontal product rails (brief §3 Best Sellers, §7 Featured) hide their
+   scrollbar — the round arrow buttons and swipe carry the affordance. */
+.sp-rail {
+  scrollbar-width: none;
+}
+.sp-rail::-webkit-scrollbar {
+  display: none;
+}
