@@ -68,10 +68,12 @@ export default function BundleSlots({
                     type="button"
                     onClick={() => onRemove(i)}
                     aria-label={tCart("remove")}
-                    initial={{ opacity: 0, scale: 0.85 }}
+                    initial={{ opacity: 0, scale: 0.6 }}
                     animate={{ opacity: 1, scale: 1 }}
                     exit={{ opacity: 0, scale: 0.85 }}
-                    transition={{ duration: 0.25, ease: [0.16, 1, 0.3, 1] }}
+                    /* Spring with one visible overshoot — the bottle "drops"
+                       into the slot rather than fading in. */
+                    transition={{ type: "spring", stiffness: 480, damping: 17 }}
                     className="group absolute inset-0 flex items-center justify-center"
                   >
                     <Image

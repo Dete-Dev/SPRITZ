@@ -1,7 +1,7 @@
 /* SPRITZ v2 — spacing, shape */
 :root {
   --sp-gutter: clamp(1rem, 0.5rem + 2vw, 2.5rem);
-  --sp-section: clamp(4rem, 2.5rem + 6vw, 9rem);
+  --sp-section: clamp(3rem, 2rem + 4vw, 6rem);
   --sp-space-1: 0.25rem;
   --sp-space-2: 0.5rem;
   --sp-space-3: 0.75rem;

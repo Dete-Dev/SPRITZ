@@ -1,37 +1,73 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useTranslations } from "next-intl";
-import { motion, useScroll, useSpring, useTransform } from "framer-motion";
-import { Link } from "@/i18n/navigation";
+import {
+  motion,
+  useReducedMotion,
+  useScroll,
+  useSpring,
+  useTransform,
+} from "framer-motion";
+import { Link, usePathname } from "@/i18n/navigation";
 
 /**
- * SPRITZ floating wordmark — jumps across the viewport AND color-cycles
- * through the five scent label tones as the user scrolls.
+ * The jumping, colour-cycling SPRITZ mark as background texture: faint,
+ * blended into the page, and dead to the pointer. Home page only, because
+ * that page is editorial; the shop routes keep a clean field.
  *
- * Position: 6-stop spring-damped jump path (top-center → upper-right →
- * middle-left → lower-right → upper-left → back to top-center).
+ * The brand mark you click lives in the toolbar (<FloatingHeader/>).
  *
- * Color: 7-stop framer interpolation through the five brand colours, ending
- * cream so the mark stays visible on the ink footer. The first stop is the
- * resting colour at the top of the page — ink on paper sections, cream when
- * the header sits over an ink section (v2 opens on the ink video hero, where
- * a black mark would disappear).
+ * "Behind the content" is done with blending and opacity, not z-order: every
+ * section on this site paints an opaque background (bg-paper, sp-surface-ink),
+ * so a mark genuinely behind them would simply never be seen.
  *
- * Implementation note: the wordmark is rendered as a CSS mask-image over
- * an animated `background-color`, NOT as an <img>. This is how a single
- * graffiti shape can change color smoothly — the PNG/WebP supplies the
- * silhouette, the bg-color supplies the fill, framer-motion drives the
- * fill through the color stops.
+ * Implementation note: rendered as a CSS mask-image over an animated
+ * `background-color`, NOT as an <img> — that is how one graffiti shape can
+ * change colour smoothly.
  */
-export default function JumpingWordmark() {
-  const t = useTranslations("header");
-  const { scrollYProgress } = useScroll();
 
-  // <HeaderThemeWatcher/> toggles `.header-on-dark` on <html> whenever an
-  // ink section is under the header. The wordmark's fill is an inline motion
-  // style, so CSS can't theme it — read the class instead.
+/** The five loud brand colours, in cycling order. */
+const CYCLE = ["#e8b83c", "#f178ac", "#1652c2", "#e5143c", "#16a85f"] as const;
+
+/** Laps through CYCLE per full page scroll. Higher = faster colour change. */
+const COLOUR_LAPS = 3;
+
+/** How far below the fold the footer starts the fade, in pixels. */
+const FOOTER_LEAD = 900;
+
+const CREAM = "#f4ede2";
+const INK = "#0a0a0a";
+
+/** Shared mask styling for both copies of the mark. */
+const MASK = {
+  aspectRatio: "1600 / 846",
+  WebkitMaskImage: "url('/brand/wordmark-sm.webp')",
+  maskImage: "url('/brand/wordmark-sm.webp')",
+  WebkitMaskSize: "contain",
+  maskSize: "contain",
+  WebkitMaskRepeat: "no-repeat",
+  maskRepeat: "no-repeat",
+  WebkitMaskPosition: "center",
+  maskPosition: "center",
+} as const;
+
+export default function JumpingWordmark() {
+  return <RoamingWatermark />;
+}
+
+/**
+ * The jumping mark as background texture. Same path and the same colour
+ * cycle as before — only recessive, and it can never take a click.
+ */
+function RoamingWatermark() {
+  const pathname = usePathname();
+  const { scrollYProgress } = useScroll();
+  const reducedMotion = useReducedMotion();
   const onDark = useHeaderOnDark();
+
+  /* usePathname() is locale-stripped, so the home page is exactly "/". */
+  const active = pathname === "/" && !reducedMotion;
 
   const progress = useSpring(scrollYProgress, {
     stiffness: 90,
@@ -60,46 +96,76 @@ export default function JumpingWordmark() {
   ]);
   const rotate = useTransform(progress, [...POS_STOPS], [0, -7, 11, -9, 6, 0]);
 
-  // Color stops — independent from position so all 5 scent colors fit.
-  const COLOR_STOPS = [0, 0.167, 0.333, 0.5, 0.667, 0.833, 1] as const;
-  // v2 runs the five brand colours loud rather than the muted label tints.
-  const backgroundColor = useTransform(progress, [...COLOR_STOPS], [
-    onDark ? "#f4ede2" : "#0a0a0a", // resting colour: cream on ink, ink on paper
-    "#e8b83c", // yellow — ananas colourway
-    "#f178ac", // pink — cerise
-    "#1652c2", // blue — menthe
-    "#e5143c", // red — safran
-    "#16a85f", // green — truffe
-    "#f4ede2", // cream — keeps the wordmark visible on the ink footer
-  ]);
+  /* Colour stops, evenly spaced: resting colour, then COLOUR_LAPS laps of the
+     palette, then cream for the ink footer. */
+  const [colourStops, colourValues] = useMemo(() => {
+    const values = [
+      onDark ? CREAM : INK,
+      ...Array.from({ length: COLOUR_LAPS }, () => CYCLE).flat(),
+      CREAM,
+    ];
+    const stops = values.map((_, i) => i / (values.length - 1));
+    return [stops, values] as const;
+  }, [onDark]);
+
+  const backgroundColor = useTransform(progress, colourStops, colourValues);
+
+  if (!active) return null;
 
   return (
-    <motion.div
-      className="pointer-events-auto fixed left-1/2 top-6 z-50 -translate-x-1/2 md:top-8"
-      style={{ x, y, rotate, willChange: "transform" }}
+    /* z-10 keeps it under every control (header, pill, menus, bars) while
+       still painting over the page's own opaque sections. */
+    <div
+      aria-hidden
+      className="pointer-events-none fixed left-1/2 top-10 z-10 -translate-x-1/2 md:top-14"
     >
-      <Link href="/" aria-label={t("home")} className="block">
-        {/* Wordmark rendered via CSS mask so its color can animate.
-            aspect-ratio matches wordmark-sm.webp (1600 × 846 → ~1.891 : 1). */}
+      <motion.div
+        style={{ x, y, rotate, willChange: "transform" }}
+      >
         <motion.div
-          aria-hidden
-          className="h-10 md:h-12"
+          className="h-32 opacity-[0.13] md:h-52"
           style={{
+            ...MASK,
             backgroundColor,
-            aspectRatio: "1600 / 846",
-            WebkitMaskImage: "url('/brand/wordmark-sm.webp')",
-            maskImage: "url('/brand/wordmark-sm.webp')",
-            WebkitMaskSize: "contain",
-            maskSize: "contain",
-            WebkitMaskRepeat: "no-repeat",
-            maskRepeat: "no-repeat",
-            WebkitMaskPosition: "center",
-            maskPosition: "center",
+            mixBlendMode: onDark ? "screen" : "multiply",
           }}
         />
-      </Link>
-    </motion.div>
+      </motion.div>
+    </div>
   );
+}
+
+/**
+ * True once the footer is close enough to matter. The bottom margin means it
+ * flips while the footer is still well below the fold, so the watermark has
+ * finished fading by the time anyone sees the footer.
+ */
+function useNearFooter(pathname: string): boolean {
+  const [near, setNear] = useState(false);
+
+  /* Keyed on pathname: this lives in the layout and survives client-side
+     navigation, so without it we would keep watching the previous page's
+     footer node after a route change.
+
+     IntersectionObserver rather than a scroll listener: the page is already
+     scroll-heavy with Lenis and framer springs running, and this costs
+     nothing per frame. The bottom rootMargin makes it flip while the footer
+     is still well below the fold, so the mark has finished fading before the
+     footer wordmark comes into view. */
+  useEffect(() => {
+    setNear(false);
+    const footer = document.querySelector("footer");
+    if (!footer) return;
+
+    const io = new IntersectionObserver(
+      ([entry]) => setNear(entry.isIntersecting),
+      { rootMargin: `0px 0px ${FOOTER_LEAD}px 0px` },
+    );
+    io.observe(footer);
+    return () => io.disconnect();
+  }, [pathname]);
+
+  return near;
 }
 
 /** True while `<html>` carries `.header-on-dark`. */

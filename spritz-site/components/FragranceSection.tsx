@@ -52,6 +52,14 @@ export default function FragranceSection() {
                 scent={scent}
                 priceLabel={tCommon("price", { price: scent.price })}
                 inspiredByLabel={tCommon("inspiredBy", { name: scent.inspiredBy })}
+                /* Below €20 the flex reads as an anti-flex — skip the banner. */
+                savingsLabel={
+                  scent.retailPrice - scent.price >= 20
+                    ? tCommon("cheaperThan", {
+                        amount: scent.retailPrice - scent.price,
+                      })
+                    : undefined
+                }
                 note={t(`shortNotes.${scent.key}`)}
                 badge={BADGES[scent.key]}
               />

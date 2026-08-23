@@ -1,6 +1,6 @@
 import { getTranslations } from "next-intl/server";
 import type { Scent } from "@/lib/scents";
-import PurchaseOptions from "@/components/scent/PurchaseOptions";
+import SizeSelector from "@/components/scent/SizeSelector";
 import AddToBundleButton from "@/components/bundle/AddToBundleButton";
 import LabelName from "@/components/ui/LabelName";
 import { Sticker } from "@/components/ui/vandal";
@@ -10,69 +10,81 @@ interface BuyBoxProps {
 }
 
 /**
- * Sticky-on-desktop product buy box.
+ * Sticky-on-desktop product buy box — brief §13.
  *
- * Primary CTA is Add to Bag — wires the scent's `shopifyVariantId` into the
- * cart context. When the variant id is empty (Shopify store not set up
- * yet), the button label switches to "Store launching soon" and click is a
- * no-op. Filling in `shopifyVariantId` in lib/scents.ts is enough to make
- * the button live — no other code change required.
+ * Order follows the brief: name, then "inspired by X (retail price Y)" —
+ * the whole dupe pitch in one line — then our price with the saving against
+ * the original, then the pack selector, then the trust bullets.
+ *
+ * The Add-to-bag button lives inside <SizeSelector/>, because which CTA
+ * belongs there depends on which pack is chosen. It goes live the moment
+ * `shopifyVariantId` is filled in on lib/scents.ts; no other change needed.
  */
 export default async function BuyBox({ scent }: BuyBoxProps) {
   const t = await getTranslations("scentPage");
   const tCommon = await getTranslations("common");
 
   const bullets = t.raw("bullets") as string[];
-  const priceFormatted = String(scent.price);
+  const saving = scent.retailPrice - scent.price;
 
   return (
     <div className="md:sticky md:top-28">
-      <p className="sp-eyebrow mb-5">
-        {tCommon("inspiredBy", { name: scent.inspiredBy })}
-      </p>
-
       {/* The name is set exactly as printed on the bottle: lowercase French,
           note words bold (rule 7). */}
-      <h1 className="sp-display mb-7 text-[clamp(2.2rem,4vw,4rem)] lowercase">
+      <h1 className="sp-display mb-5 text-[clamp(2.2rem,4vw,4rem)] lowercase">
         <LabelName name={scent.name} noteWords={scent.noteWords} />
       </h1>
 
-      <Sticker tilt={-4} variant="fill" fill={scent.stripe}>
-        {scent.size} · eau de parfum
-      </Sticker>
+      {/* Brief §13 — inspired-by plus the original's retail price is the
+          essential line; without the comparison the price means nothing. */}
+      <p className="font-sans text-sm text-muted">
+        {tCommon("inspiredBy", { name: scent.inspiredBy })}{" "}
+        <span className="text-ink">
+          {t("retailPrice", { price: scent.retailPrice })}
+        </span>
+      </p>
 
-      {/* Price + size row */}
-      <div className="mb-8 mt-8 flex items-end gap-10 border-t-2 border-ink pt-6">
-        <div>
-          <p className="sp-eyebrow mb-2">{t("priceLabel")}</p>
-          <p className="font-sans text-3xl font-bold">
-            {priceFormatted}{" "}
-            <span className="text-base font-normal text-muted">
-              {t("currency")}
-            </span>
-          </p>
-        </div>
-        <div>
-          <p className="sp-eyebrow mb-2">{t("sizeLabel")}</p>
-          <p className="font-sans text-3xl font-bold">
-            {scent.size}{" "}
-            <span className="text-base font-normal text-muted">
-              {t("edpLabel")}
-            </span>
-          </p>
-        </div>
+      <div className="mt-6">
+        <Sticker tilt={-4} variant="fill" fill={scent.stripe}>
+          {scent.size} · eau de parfum
+        </Sticker>
       </div>
 
-      {/* One-time vs subscription + Add to Bag. Renders just the CTA until
-          a subscription app publishes selling plans for this variant. */}
-      <PurchaseOptions
-        variantId={scent.shopifyVariantId}
-        price={scent.price}
-        className="max-w-md"
-      />
+      {/* Price + saving */}
+      <div className="mb-8 mt-8 border-t-2 border-ink pt-6">
+        <div className="flex items-end gap-10">
+          <div>
+            <p className="sp-eyebrow mb-2">{t("priceLabel")}</p>
+            <p className="font-sans text-3xl font-bold">
+              {scent.price}{" "}
+              <span className="text-base font-normal text-muted">
+                {t("currency")}
+              </span>
+            </p>
+          </div>
+          <div>
+            <p className="sp-eyebrow mb-2">{t("sizeLabel")}</p>
+            <p className="font-sans text-3xl font-bold">
+              {scent.size}{" "}
+              <span className="text-base font-normal text-muted">
+                {t("edpLabel")}
+              </span>
+            </p>
+          </div>
+        </div>
 
-      {/* Secondary CTA — start/extend a discounted bundle without leaving
-          the product page. Surfaces the persistent bundle bar. */}
+        {/* Below €20 the flex reads as an anti-flex — skip the line. */}
+        {saving >= 20 ? (
+          <p className="mt-4 inline-block bg-ink px-3 py-1.5 font-sans text-[10px] font-bold uppercase tracking-[0.12em] text-paper">
+            {tCommon("cheaperThan", { amount: saving })}
+          </p>
+        ) : null}
+      </div>
+
+      {/* Pack selector + the matching CTA (brief §13/§15). */}
+      <SizeSelector scent={scent} />
+
+      {/* Secondary CTA — extend a bigger set without leaving the page. */}
       <div className="mt-3 max-w-md">
         <AddToBundleButton scentKey={scent.key} />
       </div>

@@ -1,10 +1,12 @@
+import { Suspense } from "react";
 import type { Metadata } from "next";
 import { getTranslations, setRequestLocale } from "next-intl/server";
-import BundleBuilder from "@/components/bundle/BundleBuilder";
-import ScentCard from "@/components/ui/ScentCard";
+import ShopGrid from "@/components/shop/ShopGrid";
+import ShopSubmenu from "@/components/shop/ShopSubmenu";
+import BundlePromoCard from "@/components/shop/BundlePromoCard";
+import TierBanner from "@/components/scent/TierBanner";
 import SiteFooter from "@/components/SiteFooter";
 import { Mark, Sticker, Spray } from "@/components/ui/vandal";
-import { SCENTS } from "@/lib/scents";
 
 export async function generateMetadata({
   params,
@@ -19,16 +21,15 @@ export async function generateMetadata({
   };
 }
 
-/** Copy stickers, keyed by scent — same two as the home grid. */
-const BADGES: Record<string, string> = {
-  "safran-ambre": "bestseller",
-  "truffe-chocolat": "new",
-};
-
 /**
- * The shop. Paper world throughout: the full five as cards, then the bundle
- * builder as the closing ask. Filtering lives on the home page's finder, so
- * this page stays a plain shelf — five products don't need facets.
+ * The shop — brief §11.
+ *
+ *   TierBanner   — the thin fixed promo bar
+ *   ShopSubmenu  — the horizontal category row
+ *   ShopGrid     — search + sort on the left, quick filters on the right,
+ *                  the catalogue below with a set promo tile dealt in
+ *
+ * Paper world throughout. Bundling lives on its own page at /bundle.
  */
 export default async function ShopPage({
   params,
@@ -38,13 +39,15 @@ export default async function ShopPage({
   const { locale } = await params;
   setRequestLocale(locale);
   const t = await getTranslations("shop");
-  const tFive = await getTranslations("five");
   const tCommon = await getTranslations("common");
 
   return (
     <>
+      {/* Brief §11 — the thin promo bar, fixed at the top of the shop. */}
+      <TierBanner />
+
       <main className="min-h-screen bg-paper">
-        <section className="relative overflow-hidden px-gutter pb-section pt-36 md:pt-44">
+        <section className="relative overflow-hidden px-gutter pb-section pt-28 md:pt-32">
           <Spray
             color="var(--sp-red)"
             opacity={0.28}
@@ -62,28 +65,18 @@ export default async function ShopPage({
               </Sticker>
             </div>
 
-            <ul className="mt-14 grid grid-cols-2 items-stretch gap-5 sm:grid-cols-3 lg:grid-cols-5">
-              {SCENTS.map((scent, idx) => (
-                <li key={scent.key}>
-                  <ScentCard
-                    scent={scent}
-                    priceLabel={tCommon("price", { price: scent.price })}
-                    inspiredByLabel={tCommon("inspiredBy", { name: scent.inspiredBy })}
-                    note={tFive(`shortNotes.${scent.key}`)}
-                    badge={BADGES[scent.key]}
-                    priority={idx < 3}
-                  />
-                </li>
-              ))}
-            </ul>
+            {/* useSearchParams in both needs the boundary. */}
+            <Suspense>
+              <div className="mt-12">
+                <ShopSubmenu />
+              </div>
+              {/* The promo tile is rendered on the server and dealt into the
+                  client grid as a prop. */}
+              <ShopGrid promoCard={<BundlePromoCard />} />
+            </Suspense>
           </div>
         </section>
 
-        <section id="bundle" className="px-gutter pb-section">
-          <div className="mx-auto max-w-5xl">
-            <BundleBuilder />
-          </div>
-        </section>
       </main>
 
       <SiteFooter />

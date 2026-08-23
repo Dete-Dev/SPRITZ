@@ -39,6 +39,8 @@ interface BundleContextValue {
   variantsMissing: boolean;
   addScent: (key: string) => void;
   removeAt: (index: number) => void;
+  /** Replace the whole set at once — used to apply a preset gift set. */
+  loadSet: (keys: string[]) => void;
   clear: () => void;
   addAllToCart: () => Promise<void>;
 }
@@ -85,6 +87,13 @@ export function BundleProvider({ children }: { children: ReactNode }) {
     (index: number) => persist(slots.filter((_, i) => i !== index)),
     [slots, persist],
   );
+  /* Replaces rather than appends: applying a preset should give exactly
+     that set, not add it on top of whatever was already in progress. */
+  const loadSet = useCallback(
+    (keys: string[]) =>
+      persist(keys.filter((k) => SCENTS.some((s) => s.key === k))),
+    [persist],
+  );
   const clear = useCallback(() => persist([]), [persist]);
 
   const groupedEntries = useMemo(() => {
@@ -129,6 +138,7 @@ export function BundleProvider({ children }: { children: ReactNode }) {
     variantsMissing,
     addScent,
     removeAt,
+    loadSet,
     clear,
     addAllToCart,
   };

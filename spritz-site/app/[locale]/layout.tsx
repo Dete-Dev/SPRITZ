@@ -4,6 +4,7 @@ import { getTranslations, setRequestLocale } from "next-intl/server";
 import { notFound } from "next/navigation";
 import { routing } from "@/i18n/routing";
 import FloatingHeader from "@/components/FloatingHeader";
+import PromoBadge from "@/components/PromoBadge";
 import HeaderThemeWatcher from "@/components/HeaderThemeWatcher";
 import JumpingWordmark from "@/components/JumpingWordmark";
 import SmoothScroll from "@/components/SmoothScroll";
@@ -64,6 +65,7 @@ export default async function LocaleLayout({
               <FloatingHeader />
               <JumpingWordmark />
               {children}
+              <PromoBadge />
               <CartDrawer />
               <BundleBar />
             </BundleProvider>

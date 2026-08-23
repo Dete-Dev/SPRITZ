@@ -16,7 +16,7 @@ export default function LanguageToggle() {
 
   return (
     <div
-      className="header-text pointer-events-auto inline-flex items-center gap-1 text-[10px] font-bold uppercase tracking-[0.2em]"
+      className="inline-flex shrink-0 items-center gap-1 text-[10px] font-bold uppercase tracking-[0.2em] text-ink"
       role="group"
       aria-label="Language"
     >

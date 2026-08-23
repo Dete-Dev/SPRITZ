@@ -1,28 +1,41 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
+import { animate } from "animejs";
 import { useTranslations } from "next-intl";
-import { SCENTS } from "@/lib/scents";
+import {
+  SCENTS,
+  type ScentFamily,
+  type ScentGender,
+} from "@/lib/scents";
 import { useCart } from "@/components/cart/CartProvider";
+import Chip from "@/components/ui/Chip";
 import Cta from "@/components/ui/Cta";
-import { Mark, Sticker, StripeBand } from "@/components/ui/vandal";
+import { Sticker } from "@/components/ui/vandal";
+import { prefersReducedMotion } from "@/lib/motion";
 import { useBundle } from "./BundleProvider";
 import BundleSlots from "./BundleSlots";
 
 /**
- * Slot-style bundle builder (Dossier-inspired). Reads the shared bundle
- * state from BundleProvider, so the set is the same one the persistent bar
- * carries across pages. Tap a scent to drop it into the next slot; tier
- * rewards (−10/−15/−20%) show on the slots. One CTA adds the whole set.
+ * Slot-style bundle builder (Dossier-inspired) — the tool half of the
+ * /bundle page, which owns the heading furniture around it. Reads the
+ * shared bundle state from BundleProvider, so the set is the same one the
+ * persistent bar carries across pages. Tap a scent to drop it into the next
+ * slot; tier rewards (−10/−15/−20%) show on the slots. One CTA adds the set.
  *
  * The total is a client estimate from lib/bundle.ts; the authoritative
  * discount is applied by the Shopify Function at checkout (discountNote).
  */
+const FAMILIES: ScentFamily[] = ["fresh", "floral", "warm", "sweet"];
+const GENDERS: ScentGender[] = ["her", "him", "unisex"];
+
 export default function BundleBuilder() {
   const t = useTranslations("bundle");
   const tCart = useTranslations("cart");
   const tCommon = useTranslations("common");
+  const tShop = useTranslations("shop");
+  const tFamilies = useTranslations("families");
   const { isReady, loading } = useCart();
   const {
     slots,
@@ -37,6 +50,34 @@ export default function BundleBuilder() {
 
   const [justAdded, setJustAdded] = useState(false);
   const [error, setError] = useState<string | null>(null);
+
+  // Picker filters — local state on purpose: the shop page owns the
+  // `?family=` URL params, this widget lives on the landing.
+  const [family, setFamily] = useState<ScentFamily | null>(null);
+  const [gender, setGender] = useState<ScentGender | null>(null);
+  const pickable = SCENTS.filter(
+    (s) => (!family || s.family === family) && (!gender || s.gender === gender)
+  );
+
+  // One-shot wobble on the tier sticker each time a better tier unlocks.
+  const tierStickerRef = useRef<HTMLDivElement | null>(null);
+  const prevPercentOff = useRef(0);
+  useEffect(() => {
+    const pct = unlocked?.percentOff ?? 0;
+    if (
+      pct > prevPercentOff.current &&
+      tierStickerRef.current &&
+      !prefersReducedMotion()
+    ) {
+      animate(tierStickerRef.current, {
+        rotate: [0, -4, 3, -2, 0],
+        scale: [1, 1.1, 1],
+        duration: 550,
+        ease: "inOutQuad",
+      });
+    }
+    prevPercentOff.current = pct;
+  }, [unlocked]);
 
   const notReady = !isReady || variantsMissing;
   const canSubmit = isReady && !variantsMissing && slots.length > 0 && !loading;
@@ -54,20 +95,8 @@ export default function BundleBuilder() {
   }
 
   return (
-    <div className="overflow-hidden rounded-card border-2 border-ink bg-paper shadow-hard">
-      <StripeBand color="var(--sp-red)" height={14} />
-
-      <div className="px-5 py-8 md:px-10 md:py-10">
-      <div className="mb-7">
-        <h2 className="sp-display text-d-2xl">
-          <Mark color="var(--sp-yellow)">{t("headline")}</Mark>
-        </h2>
-        <p className="mt-5 max-w-xl font-sans text-base text-muted">
-          {t("intro")}
-        </p>
-      </div>
-
-      <div className="mb-7">
+    <div>
+      <div ref={tierStickerRef} className="mb-7 w-fit">
         <Sticker tilt={-3} variant="ink" fill="var(--sp-red)">
           {tCommon("tiers")}
         </Sticker>
@@ -78,8 +107,35 @@ export default function BundleBuilder() {
       {/* Scent picker — tap a bottle to drop it into the next slot. */}
       <div className="mt-7">
         <p className="sp-eyebrow mb-3">{t("addScent")}</p>
+
+        {/* Filter chips — same language as the shop grid. */}
+        <div className="mb-4 flex flex-wrap items-center gap-2">
+          <Chip selected={!family} onClick={() => setFamily(null)}>
+            {tShop("filterAll")}
+          </Chip>
+          {FAMILIES.map((f) => (
+            <Chip
+              key={f}
+              selected={family === f}
+              onClick={() => setFamily(family === f ? null : f)}
+            >
+              {tFamilies(`names.${f}`)}
+            </Chip>
+          ))}
+          <span aria-hidden className="mx-2 h-6 w-0.5 bg-ink/20" />
+          {GENDERS.map((g) => (
+            <Chip
+              key={g}
+              selected={gender === g}
+              onClick={() => setGender(gender === g ? null : g)}
+            >
+              {tShop(`genders.${g}`)}
+            </Chip>
+          ))}
+        </div>
+
         <div className="flex flex-wrap gap-2">
-          {SCENTS.map((scent) => (
+          {pickable.map((scent) => (
             <button
               key={scent.key}
               type="button"
@@ -157,9 +213,6 @@ export default function BundleBuilder() {
           )}
         </div>
       </div>
-      </div>
-
-      <StripeBand color="var(--sp-red)" height={14} />
     </div>
   );
 }
