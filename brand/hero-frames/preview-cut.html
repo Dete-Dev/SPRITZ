@@ -1,0 +1,116 @@
+<!doctype html>
+<meta charset="utf-8">
+<title>SPRITZ hero — 10s cut preview</title>
+<style>
+  :root{ --ink:#0e0e0e; --paper:#f4f1ea; --red:#d8394a; --line:#2a2a2a; }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--ink);color:var(--paper);
+       font:14px/1.5 ui-sans-serif,system-ui,sans-serif;padding:32px}
+  h1{font-size:19px;margin:0 0 4px;letter-spacing:.01em}
+  .sub{color:#8b8b8b;margin:0 0 26px;font-size:13px}
+  .stage{position:relative;width:100%;max-width:1400px;aspect-ratio:21/9;
+         overflow:hidden;background:#000;border:2px solid var(--line)}
+  video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+  .bar{display:flex;gap:10px;align-items:center;margin:18px 0 0;flex-wrap:wrap;max-width:1400px}
+  button{background:var(--paper);color:var(--ink);border:0;padding:9px 16px;
+         font:bold 11px/1 ui-sans-serif,system-ui,sans-serif;letter-spacing:.12em;
+         text-transform:uppercase;cursor:pointer}
+  button[aria-pressed=true]{background:var(--red);color:#fff}
+  .read{margin-left:auto;font-family:ui-monospace,monospace;color:#8b8b8b;font-size:12px}
+  .track{position:relative;height:26px;margin-top:12px;max-width:1400px;
+         background:#1c1c1c;border:1px solid var(--line)}
+  .keep{position:absolute;top:0;bottom:0;background:#2f6f4f}
+  .cut{position:absolute;top:0;bottom:0;background:#4a2020;
+       background-image:repeating-linear-gradient(45deg,transparent,transparent 5px,#6a2c2c 5px,#6a2c2c 10px)}
+  .play{position:absolute;top:-3px;bottom:-3px;width:2px;background:var(--red)}
+  .lab{position:absolute;top:32px;font-size:10px;color:#7a7a7a;font-family:ui-monospace,monospace}
+  .legend{margin-top:34px;color:#7a7a7a;font-size:12px;max-width:640px}
+  .legend b{color:var(--paper)}
+</style>
+
+<h1>SPRITZ hero — the 10-second cut</h1>
+<p class="sub">Plays the real file and skips the two cut sections. Nothing re-encoded, so this is exactly the quality you already have. Framed 21:9, the same as the live hero.</p>
+
+<div class="stage">
+  <video id="v" muted playsinline preload="auto"
+         src="../../spritz-site/public/video/hero.mp4"></video>
+</div>
+
+<div class="bar">
+  <button id="mode" aria-pressed="true">Cut · 10.0s</button>
+  <button id="orig" aria-pressed="false">Original · 15.4s</button>
+  <button id="pp">Pause</button>
+  <span class="read" id="read">–</span>
+</div>
+
+<div class="track" id="track"><div class="play" id="play"></div></div>
+
+<p class="legend">
+  <b>Green</b> is kept. <b>Red hatching</b> is cut — the couple at the start
+  (0.00–2.92) and the skater (7.92–10.40). In cut mode the playhead jumps the
+  red bands, which is exactly what the final edit will do.
+</p>
+
+<script>
+  const DUR = 15.433;
+  const CUTS = [[0, 2.92], [7.92, 10.40]];
+  const SEGS = [[2.92, 7.92], [10.40, 15.40]];
+
+  const v = document.getElementById("v");
+  const read = document.getElementById("read");
+  const play = document.getElementById("play");
+  const track = document.getElementById("track");
+  let cutMode = true;
+
+  // Paint the timeline once.
+  const band = (a, b, cls) => {
+    const d = document.createElement("div");
+    d.className = cls;
+    d.style.left = (a / DUR * 100) + "%";
+    d.style.width = ((b - a) / DUR * 100) + "%";
+    track.appendChild(d);
+  };
+  SEGS.forEach(([a, b]) => band(a, b, "keep"));
+  CUTS.forEach(([a, b]) => band(a, b, "cut"));
+  track.appendChild(play);
+
+  /* The whole trick: on every frame, if the head is inside a cut band,
+     jump it to the end of that band. Skipping beats re-encoding. */
+  function step() {
+    const t = v.currentTime;
+    if (cutMode) {
+      for (const [a, b] of CUTS) {
+        if (t >= a && t < b) { v.currentTime = b; break; }
+      }
+      if (t >= 15.40) v.currentTime = SEGS[0][0];
+    }
+    play.style.left = (v.currentTime / DUR * 100) + "%";
+    read.textContent = v.currentTime.toFixed(2) + "s  /  " +
+      (cutMode ? "10.00s cut" : "15.43s original");
+    requestAnimationFrame(step);
+  }
+  requestAnimationFrame(step);
+
+  const setMode = (cut) => {
+    cutMode = cut;
+    document.getElementById("mode").setAttribute("aria-pressed", cut);
+    document.getElementById("orig").setAttribute("aria-pressed", !cut);
+    v.currentTime = cut ? SEGS[0][0] : 0;
+    v.play();
+  };
+  document.getElementById("mode").onclick = () => setMode(true);
+  document.getElementById("orig").onclick = () => setMode(false);
+  document.getElementById("pp").onclick = (e) => {
+    if (v.paused) { v.play(); e.target.textContent = "Pause"; }
+    else { v.pause(); e.target.textContent = "Play"; }
+  };
+
+  v.loop = true;
+  v.currentTime = SEGS[0][0];
+  // Autoplay is refused in a background window, so label the button honestly
+  // rather than saying "Pause" over a paused video.
+  v.play().then(
+    () => { document.getElementById("pp").textContent = "Pause"; },
+    () => { document.getElementById("pp").textContent = "Play"; },
+  );
+</script>
