@@ -236,7 +236,23 @@
     "emptySelection": "Pick at least one",
     "addToBundle": "Add to bundle",
     "barLabel": "Your bundle",
-    "clear": "Clear"
+    "clear": "Clear",
+    "shape": {
+      "exit": "Leave the set",
+      "needs": "{count} to go — add a {size}",
+      "ready": "Set complete — −{percent}% is in the price",
+      "duo": {
+        "sticker": "Duo set · 50ml + 15ml · −{percent}%",
+        "headline": "Your duo, your call.",
+        "intro": "Pick the 50ml you want to wear, then the 15ml you want in your bag. Two bottles, one price, −10% already in it."
+      },
+      "trio": {
+        "sticker": "Discovery trio · 3 × 15ml · −{percent}%",
+        "headline": "Three to try.",
+        "intro": "Pick any three 15ml. The cheapest way to find out which one you want in 50ml. −15% already in the price."
+      },
+      "eyebrow": "Build your set"
+    }
   },
   "scentPage": {
     "size": "50ml · eau de parfum",
@@ -244,7 +260,9 @@
     "back": "← All scents",
     "currency": "EUR",
     "priceLabel": "Price",
+    "priceFromLabel": "Price from",
     "sizeLabel": "Size",
+    "sizeFromLabel": "Size from",
     "edpLabel": "eau de parfum",
     "notify": "Notify me when in stock",
     "notifyPlaceholder": "your@email.com",
@@ -444,7 +462,7 @@
   },
   "common": {
     "price": "€{price}",
-    "allUnder": "all 50ml · all €100",
+    "allUnder": "50ml · €100 each",
     "viewScent": "View scent",
     "tiers": "2 → −10% · 3 → −15% · 5 → −20%",
     "inspiredBy": "inspired by {name}",
@@ -482,7 +500,7 @@
       },
       "size": {
         "q": "What size are the bottles?",
-        "a": "One size, one price: every scent is a 50ml eau de parfum at €100. No minis or decants for now — the bundle is the way to try several."
+        "a": "The 50ml eau de parfum is €100. Add a 15ml of the same scent and the pair is €126. A 15ml is only sold inside a set, never on its own."
       },
       "bundle": {
         "q": "How does the bundle discount work?",
@@ -594,15 +612,14 @@
     "tier": "{count}+ bottles · −{percent}%"
   },
   "packSelector": {
-    "legend": "Choose your pack",
-    "singleTitle": "1 × {size}",
-    "duoTitle": "{count} × {size} — the duo",
+    "legend": "Choose your size",
+    "singleTitle": "{size}",
+    "travelTitle": "{size} + 15ml — Travel Set",
     "price": "€{price}",
-    "duoFlag": "−{percent}% applied at checkout",
-    "duoCta": "Build the duo",
+    "travelFlag": "−{percent}% vs. buying the two apart",
     "includedTitle": "What is included",
-    "includedThis": "{name} — 50ml",
-    "includedNext": "Pick your second bottle in the builder"
+    "includedBottle": "{name} — {size}",
+    "includedCompanion": "{name} — 15ml, for your bag"
   },
   "shopNav": {
     "label": "Shop categories",
@@ -636,29 +653,34 @@
     "eyebrow": "Gift sets",
     "headline": "Sets for",
     "headlineEm": "everyone.",
-    "intro": "Every set is just bottles from the catalogue with the bundle discount applied. Build your own, or take one we already put together.",
+    "intro": "Two sizes, eleven ready-made pairings, and two you build yourself. Every set has its discount already in the price.",
     "bottles": "{count} bottles",
     "custom": {
       "cta": "Pick your bottles",
-      "2": {
+      "duo": {
         "title": "Duo set — you choose",
-        "body": "Any two of the twenty-two. Pick them yourself in the builder and the discount applies at checkout."
+        "body": "Any 50ml from the twenty-two, plus any 15ml to keep in your bag. Pick both yourself in the builder."
       },
-      "3": {
-        "title": "Trio set — you choose",
-        "body": "Any three of the twenty-two. A bigger set takes a bigger cut off every bottle in it."
+      "trio": {
+        "title": "Discovery trio — you choose",
+        "body": "Three 15ml bottles, any three of the twenty-two. The cheapest way to find the one you want in 50ml."
       }
     },
     "presetEyebrow": "Ready made",
     "presetTitle": "Already put together.",
-    "presetBody": "Selections we like. Choosing one loads those bottles into the builder — swap any of them before you buy.",
+    "presetBody": "Pairings we like — a 50ml to wear and a 15ml for your bag. Each one is a set you buy as it is.",
     "presets": {
-      "fresh-duo": "The fresh pair",
-      "warm-duo": "The warm pair",
-      "sweet-duo": "The sweet pair",
-      "her-trio": "Three for her",
-      "him-trio": "Three for him",
-      "discovery-five": "The discovery five"
+      "signature-duo": "Signature Duo",
+      "nightfall": "Nightfall",
+      "cherry-noir": "Cherry Noir",
+      "liquid-gold": "Liquid Gold",
+      "velvet-hour": "Velvet Hour",
+      "off-duty": "Off-Duty",
+      "bloom-burn": "Bloom & Burn",
+      "smoke-signal": "Smoke Signal",
+      "after-hours": "After Hours",
+      "desert-rose": "Desert Rose",
+      "reset": "Reset"
     }
   },
   "nav": {

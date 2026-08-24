@@ -54,7 +54,7 @@ export default async function BuyBox({ scent }: BuyBoxProps) {
       <div className="mb-8 mt-8 border-t-2 border-ink pt-6">
         <div className="flex items-end gap-10">
           <div>
-            <p className="sp-eyebrow mb-2">{t("priceLabel")}</p>
+            <p className="sp-eyebrow mb-2">{t("priceFromLabel")}</p>
             <p className="font-sans text-3xl font-bold">
               {scent.price}{" "}
               <span className="text-base font-normal text-muted">
@@ -63,7 +63,7 @@ export default async function BuyBox({ scent }: BuyBoxProps) {
             </p>
           </div>
           <div>
-            <p className="sp-eyebrow mb-2">{t("sizeLabel")}</p>
+            <p className="sp-eyebrow mb-2">{t("sizeFromLabel")}</p>
             <p className="font-sans text-3xl font-bold">
               {scent.size}{" "}
               <span className="text-base font-normal text-muted">

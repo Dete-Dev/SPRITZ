@@ -2,86 +2,69 @@
 
 import { useState } from "react";
 import { useTranslations } from "next-intl";
-import { useRouter } from "@/i18n/navigation";
-import { useBundle } from "@/components/bundle/BundleProvider";
 import AddToCartButton from "@/components/cart/AddToCartButton";
-import Cta from "@/components/ui/Cta";
-import { BUNDLE_TIERS } from "@/lib/bundle";
 import type { Scent } from "@/lib/scents";
+import {
+  TRAVEL_SET_PERCENT_OFF,
+  travelSetPrice,
+  travelSetSubtotal,
+  type SizeKey,
+} from "@/lib/sizes";
 
 /**
- * Pack selector — brief §13's pill-type size selector.
+ * Size selector — catalog spec §1, products 1-22.
  *
- * The brief's reference offers "50ML + 15ML" and "50ML". SPRITZ has one size
- * and no 15ml SKU, so the two options are the two real ways to buy: a single
- * bottle, or the duo — two bottles at the first bundle tier. Choosing the duo
- * drops this scent into the shared bundle and hands over to the builder to
- * pick the second, rather than inventing a set product that does not exist.
+ * Two real variants: the plain 50ml, or the Travel Set, which adds a 15ml of
+ * the same scent. Both are their own Shopify SKU, so both add straight to the
+ * cart; neither routes through the bundle builder. The Travel Set price
+ * already contains its discount (see lib/sizes) — it does not stack with the
+ * cart-wide tiers.
  *
  * Radio-card treatment matches PurchaseOptions' PlanRow so the two selectors
  * on this page read as one control family.
  */
-type Pack = "single" | "duo";
-
-/** The first tier is the duo (2 bottles); fall back if tiers are re-cut. */
-const DUO_TIER = BUNDLE_TIERS[0];
-
 export default function SizeSelector({ scent }: { scent: Scent }) {
   const t = useTranslations("packSelector");
   const tCart = useTranslations("cart");
-  const { addScent } = useBundle();
-  const router = useRouter();
 
-  const [pack, setPack] = useState<Pack>("single");
+  const [size, setSize] = useState<SizeKey>("50ml");
 
-  const duoQty = DUO_TIER?.minQuantity ?? 2;
-  const duoPercent = DUO_TIER?.percentOff ?? 0;
-  const duoFull = scent.price * duoQty;
-  const duoTotal = duoFull - Math.round((duoFull * duoPercent) / 100);
-
-  function startDuo() {
-    addScent(scent.key);
-    router.push("/bundle");
-  }
+  const travelFull = travelSetSubtotal(scent.price);
+  const travelTotal = travelSetPrice(scent.price);
+  const travel = size === "travel";
 
   return (
     <div className="max-w-md">
       <fieldset>
         <legend className="sp-eyebrow mb-3">{t("legend")}</legend>
 
-        <PackRow
-          checked={pack === "single"}
-          onSelect={() => setPack("single")}
+        <SizeRow
+          checked={!travel}
+          onSelect={() => setSize("50ml")}
           title={t("singleTitle", { size: scent.size })}
           price={t("price", { price: scent.price })}
         />
-        <PackRow
-          checked={pack === "duo"}
-          onSelect={() => setPack("duo")}
-          title={t("duoTitle", { count: duoQty, size: scent.size })}
-          price={t("price", { price: duoTotal })}
-          was={t("price", { price: duoFull })}
-          flag={t("duoFlag", { percent: duoPercent })}
+        <SizeRow
+          checked={travel}
+          onSelect={() => setSize("travel")}
+          title={t("travelTitle", { size: scent.size })}
+          price={t("price", { price: travelTotal })}
+          was={t("price", { price: travelFull })}
+          flag={t("travelFlag", { percent: TRAVEL_SET_PERCENT_OFF })}
         />
       </fieldset>
 
       <div className="mt-5">
-        {pack === "single" ? (
-          <AddToCartButton
-            variantId={scent.shopifyVariantId}
-            label={tCart("addToBag")}
-            addedLabel={tCart("added")}
-            notReadyLabel={tCart("notReady")}
-          />
-        ) : (
-          <Cta onClick={startDuo} variant="primary" block>
-            {t("duoCta")}
-          </Cta>
-        )}
+        <AddToCartButton
+          variantId={travel ? (scent.travelVariantId ?? "") : scent.shopifyVariantId}
+          label={tCart("addToBag")}
+          addedLabel={tCart("added")}
+          notReadyLabel={tCart("notReady")}
+        />
       </div>
 
       {/* Brief §15 — what the set actually contains, stated before you commit. */}
-      {pack === "duo" ? (
+      {travel ? (
         <div className="mt-4 rounded-card border-2 border-ink bg-paper-2 px-5 py-4">
           <p className="sp-eyebrow mb-3">{t("includedTitle")}</p>
           <ul className="space-y-2 font-sans text-[13px] text-muted">
@@ -91,14 +74,19 @@ export default function SizeSelector({ scent }: { scent: Scent }) {
                 className="h-2.5 w-2.5 shrink-0 rounded-full"
                 style={{ backgroundColor: scent.stripe }}
               />
-              <span className="text-ink">{t("includedThis", { name: scent.name })}</span>
+              <span className="text-ink">
+                {t("includedBottle", { name: scent.name, size: scent.size })}
+              </span>
             </li>
             <li className="flex items-center gap-2.5">
               <span
                 aria-hidden
-                className="h-2.5 w-2.5 shrink-0 rounded-full border-2 border-dashed border-ink/40"
+                className="h-2 w-2 shrink-0 rounded-full"
+                style={{ backgroundColor: scent.stripe }}
               />
-              <span>{t("includedNext")}</span>
+              <span className="text-ink">
+                {t("includedCompanion", { name: scent.name })}
+              </span>
             </li>
           </ul>
         </div>
@@ -107,7 +95,7 @@ export default function SizeSelector({ scent }: { scent: Scent }) {
   );
 }
 
-function PackRow({
+function SizeRow({
   checked,
   onSelect,
   title,
@@ -133,7 +121,7 @@ function PackRow({
     >
       <input
         type="radio"
-        name="pack-option"
+        name="size-option"
         checked={checked}
         onChange={onSelect}
         className="sr-only"

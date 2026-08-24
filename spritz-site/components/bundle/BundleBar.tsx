@@ -27,6 +27,7 @@ export default function BundleBar() {
     slots,
     count,
     estimate,
+    shape,
     next,
     unlocked,
     variantsMissing,
@@ -75,7 +76,12 @@ export default function BundleBar() {
           <div className="mx-auto flex max-w-6xl flex-col gap-3 px-4 py-3 md:flex-row md:items-center md:gap-6 md:px-8 md:py-4">
             {/* Slots */}
             <div className="min-w-0 flex-1">
-              <BundleSlots slots={slots} onRemove={removeAt} compact />
+              <BundleSlots
+                slots={slots}
+                onRemove={removeAt}
+                shapeSizes={shape?.slots}
+                compact
+              />
             </div>
 
             {/* Progress + total */}

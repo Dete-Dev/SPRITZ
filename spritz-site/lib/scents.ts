@@ -58,6 +58,20 @@ export interface Scent {
    * `gid://shopify/ProductVariant/1234567890`
    */
   shopifyVariantId: string;
+  /**
+   * Variant ID for the 50ml + 15ml Travel Set (catalog spec §1).
+   *
+   * Same story as `shopifyVariantId`: undefined until the variant exists in
+   * Shopify admin, at which point the Travel Set option goes live on its own.
+   * Priced by `travelSetPrice()` in ./sizes — the admin price must match.
+   */
+  travelVariantId?: string;
+  /**
+   * Variant ID for the loose 15ml, used only inside the build-your-own sets
+   * (catalog spec products 34 and 35). Not offered on the product page —
+   * a 15ml is never sold on its own, only as part of a set.
+   */
+  ml15VariantId?: string;
 }
 
 export const SCENTS: Scent[] = [

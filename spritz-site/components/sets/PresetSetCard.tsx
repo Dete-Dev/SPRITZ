@@ -2,42 +2,39 @@
 
 import Image from "next/image";
 import { useTranslations } from "next-intl";
-import { useRouter } from "@/i18n/navigation";
-import { useBundle } from "@/components/bundle/BundleProvider";
+import AddToCartButton from "@/components/cart/AddToCartButton";
 import { Sticker, StripeBand } from "@/components/ui/vandal";
-import type { ResolvedSet } from "@/lib/sets";
+import type { ResolvedDuoSet } from "@/lib/sets";
 
 /**
- * A ready-made set — brief §12's preset grid, and §15's "what is included"
- * readout: the bottles are named on the card, not hidden behind a box shot.
+ * A curated set — catalog spec products 23-33, and §15's "what is included"
+ * readout: both bottles are named on the card with their size, not hidden
+ * behind a box shot.
  *
- * Choosing one loads exactly those bottles into the builder, where they can
- * still be swapped. Price is the ordinary tier price for that many bottles.
+ * The set is one SKU, so this adds straight to the cart. Its price already
+ * carries the discount (lib/sizes), which is why nothing here touches the
+ * cart-wide tiers.
  */
-export default function PresetSetCard({ set }: { set: ResolvedSet }) {
+export default function PresetSetCard({ set }: { set: ResolvedDuoSet }) {
   const t = useTranslations("sets");
   const tCommon = useTranslations("common");
-  const { loadSet } = useBundle();
-  const router = useRouter();
+  const tCart = useTranslations("cart");
 
-  const stripe = set.scents[0]?.stripe ?? "var(--sp-red)";
-
-  function choose() {
-    loadSet(set.scentKeys);
-    router.push("/bundle");
-  }
+  const stripe = set.anchor.stripe;
+  const bottles = [
+    { scent: set.anchor, size: set.anchor.size },
+    { scent: set.companion, size: "15ml" },
+  ];
 
   return (
-    <button
-      type="button"
-      onClick={choose}
-      className="sp-lift flex h-full w-full flex-col overflow-hidden rounded-card border-2 border-ink bg-paper text-left shadow-hard-sm"
-    >
+    <article className="sp-lift flex h-full w-full flex-col overflow-hidden rounded-card border-2 border-ink bg-paper text-left shadow-hard-sm">
       <div className="relative flex items-end justify-center gap-1.5 bg-paper-2 px-4 pt-6">
-        {set.scents.slice(0, 3).map((scent) => (
+        {bottles.map(({ scent }, i) => (
           <span
             key={scent.key}
-            className="relative block w-1/3 max-w-[5rem]"
+            /* The companion is the 15ml — draw it smaller so the card shows
+               the size difference before you read the list. */
+            className={i === 0 ? "relative block w-1/3 max-w-[5rem]" : "relative block w-1/4 max-w-[3.4rem]"}
             style={{ aspectRatio: "1 / 1.6" }}
           >
             <Image
@@ -65,9 +62,9 @@ export default function PresetSetCard({ set }: { set: ResolvedSet }) {
           {t(`presets.${set.key}`)}
         </p>
 
-        {/* Brief §15 — a preset says exactly what you receive. */}
+        {/* Spec §15 — a set says exactly what you receive, size included. */}
         <ul className="mt-3 space-y-1">
-          {set.scents.map((scent) => (
+          {bottles.map(({ scent, size }) => (
             <li
               key={scent.key}
               className="flex items-center gap-2 font-sans text-[13px] text-muted"
@@ -78,19 +75,30 @@ export default function PresetSetCard({ set }: { set: ResolvedSet }) {
                 style={{ backgroundColor: scent.stripe }}
               />
               <span className="truncate">{scent.name}</span>
+              <span className="ml-auto shrink-0 font-bold text-ink">{size}</span>
             </li>
           ))}
         </ul>
 
-        <div className="mt-auto flex items-baseline gap-2 pt-4">
-          <span className="sp-strike font-sans text-sm text-muted">
-            {tCommon("price", { price: set.subtotal })}
-          </span>
-          <span className="font-sans text-lg font-bold">
-            {tCommon("price", { price: set.total })}
-          </span>
+        <div className="mt-auto pt-4">
+          <div className="flex items-baseline gap-2">
+            <span className="sp-strike font-sans text-sm text-muted">
+              {tCommon("price", { price: set.subtotal })}
+            </span>
+            <span className="font-sans text-lg font-bold">
+              {tCommon("price", { price: set.total })}
+            </span>
+          </div>
+          <div className="mt-3">
+            <AddToCartButton
+              variantId={set.shopifyVariantId ?? ""}
+              label={tCart("addToBag")}
+              addedLabel={tCart("added")}
+              notReadyLabel={tCart("notReady")}
+            />
+          </div>
         </div>
       </div>
-    </button>
+    </article>
   );
 }

@@ -1,10 +1,11 @@
 import type { Metadata } from "next";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import BundleBuilder from "@/components/bundle/BundleBuilder";
+import BundleHeading from "@/components/bundle/BundleHeading";
 import BundleIncluded from "@/components/bundle/BundleIncluded";
 import SiteFooter from "@/components/SiteFooter";
 import Cta from "@/components/ui/Cta";
-import { Mark, Spray } from "@/components/ui/vandal";
+import { Spray } from "@/components/ui/vandal";
 import { SCENTS } from "@/lib/scents";
 
 export async function generateMetadata({
@@ -46,13 +47,7 @@ export default async function BundlePage({
           />
 
           <div className="relative mx-auto max-w-5xl">
-            <p className="sp-eyebrow">{t("eyebrow")}</p>
-            <h1 className="sp-display mt-5 text-d-2xl">
-              <Mark color="var(--sp-yellow)">{t("headline")}</Mark>
-            </h1>
-            <p className="mt-6 max-w-xl font-sans text-d-lg text-muted">
-              {t("intro")}
-            </p>
+            <BundleHeading />
 
             <div className="mt-12">
               <BundleBuilder />

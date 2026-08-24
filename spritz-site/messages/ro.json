@@ -236,7 +236,23 @@
     "emptySelection": "Alege cel puțin una",
     "addToBundle": "Adaugă în set",
     "barLabel": "Setul tău",
-    "clear": "Golește"
+    "clear": "Golește",
+    "shape": {
+      "exit": "Ieși din set",
+      "needs": "Încă {count} — adaugă un {size}",
+      "ready": "Set complet — −{percent}% e deja în preț",
+      "duo": {
+        "sticker": "Set duo · 50ml + 15ml · −{percent}%",
+        "headline": "Duo-ul tău, alegerea ta.",
+        "intro": "Alege 50ml-ul pe care vrei să-l porți, apoi 15ml-ul pe care îl vrei în geantă. Două sticle, un preț, cu −10% deja inclus."
+      },
+      "trio": {
+        "sticker": "Trio descoperire · 3 × 15ml · −{percent}%",
+        "headline": "Trei de încercat.",
+        "intro": "Alege oricare trei sticle de 15ml. Cel mai ieftin fel de a afla pe care îl vrei în 50ml. −15% deja în preț."
+      },
+      "eyebrow": "Fă-ți setul"
+    }
   },
   "scentPage": {
     "size": "50ml · eau de parfum",
@@ -244,7 +260,9 @@
     "back": "← Toate parfumurile",
     "currency": "EUR",
     "priceLabel": "Preț",
+    "priceFromLabel": "Preț de la",
     "sizeLabel": "Mărime",
+    "sizeFromLabel": "Mărime de la",
     "edpLabel": "eau de parfum",
     "notify": "Anunță-mă când e în stoc",
     "notifyPlaceholder": "adresa@ta.ro",
@@ -444,7 +462,7 @@
   },
   "common": {
     "price": "{price} €",
-    "allUnder": "toate 50ml · toate 100 €",
+    "allUnder": "50ml · 100 € fiecare",
     "viewScent": "Vezi parfumul",
     "tiers": "2 → −10% · 3 → −15% · 5 → −20%",
     "inspiredBy": "inspirat de {name}",
@@ -482,7 +500,7 @@
       },
       "size": {
         "q": "Ce mărime au sticlele?",
-        "a": "O singură mărime, un singur preț: fiecare parfum este un eau de parfum de 50ml la 100 €. Fără mini-uri sau decanturi deocamdată — bundle-ul e felul în care încerci mai multe."
+        "a": "Eau de parfum-ul de 50ml costă 100 €. Adaugi un 15ml din același parfum și perechea costă 126 €. Un 15ml se vinde doar în set, niciodată singur."
       },
       "bundle": {
         "q": "Cum funcționează reducerea la bundle?",
@@ -594,15 +612,14 @@
     "tier": "{count}+ sticle · −{percent}%"
   },
   "packSelector": {
-    "legend": "Alege pachetul",
-    "singleTitle": "1 × {size}",
-    "duoTitle": "{count} × {size} — duo-ul",
+    "legend": "Alege mărimea",
+    "singleTitle": "{size}",
+    "travelTitle": "{size} + 15ml — Travel Set",
     "price": "{price} €",
-    "duoFlag": "−{percent}% se aplică la checkout",
-    "duoCta": "Fă-ți duo-ul",
+    "travelFlag": "−{percent}% față de cumpărate separat",
     "includedTitle": "Ce conține",
-    "includedThis": "{name} — 50ml",
-    "includedNext": "Alege a doua sticlă în configurator"
+    "includedBottle": "{name} — {size}",
+    "includedCompanion": "{name} — 15ml, pentru geantă"
   },
   "shopNav": {
     "label": "Categorii magazin",
@@ -636,29 +653,34 @@
     "eyebrow": "Seturi cadou",
     "headline": "Seturi pentru",
     "headlineEm": "oricine.",
-    "intro": "Orice set înseamnă sticle din catalog cu reducerea de bundle aplicată. Fă-ți-l singur sau ia unul deja pus la punct.",
+    "intro": "Două mărimi, unsprezece perechi gata făcute și două pe care ți le faci singur. Fiecare set are reducerea deja în preț.",
     "bottles": "{count} sticle",
     "custom": {
       "cta": "Alege sticlele",
-      "2": {
+      "duo": {
         "title": "Set duo — alegi tu",
-        "body": "Oricare două dintre cele douăzeci și două. Le alegi în configurator, iar reducerea se aplică la checkout."
+        "body": "Orice 50ml din cele douăzeci și două, plus orice 15ml pentru geantă. Le alegi pe amândouă în configurator."
       },
-      "3": {
-        "title": "Set trio — alegi tu",
-        "body": "Oricare trei dintre cele douăzeci și două. Un set mai mare taie mai mult din fiecare sticlă."
+      "trio": {
+        "title": "Trio descoperire — alegi tu",
+        "body": "Trei sticle de 15ml, oricare trei din cele douăzeci și două. Cel mai ieftin fel de a găsi parfumul pe care îl vrei în 50ml."
       }
     },
     "presetEyebrow": "Gata făcute",
     "presetTitle": "Deja puse la punct.",
-    "presetBody": "Combinații care ne plac. Dacă alegi una, sticlele intră în configurator — poți schimba oricare înainte să cumperi.",
+    "presetBody": "Perechi care ne plac — un 50ml de purtat și un 15ml pentru geantă. Fiecare e un set pe care îl cumperi așa cum e.",
     "presets": {
-      "fresh-duo": "Perechea proaspătă",
-      "warm-duo": "Perechea caldă",
-      "sweet-duo": "Perechea dulce",
-      "her-trio": "Trei pentru ea",
-      "him-trio": "Trei pentru el",
-      "discovery-five": "Cele cinci de descoperire"
+      "signature-duo": "Signature Duo",
+      "nightfall": "Nightfall",
+      "cherry-noir": "Cherry Noir",
+      "liquid-gold": "Liquid Gold",
+      "velvet-hour": "Velvet Hour",
+      "off-duty": "Off-Duty",
+      "bloom-burn": "Bloom & Burn",
+      "smoke-signal": "Smoke Signal",
+      "after-hours": "After Hours",
+      "desert-rose": "Desert Rose",
+      "reset": "Reset"
     }
   },
   "nav": {

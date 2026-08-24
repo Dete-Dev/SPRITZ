@@ -5,10 +5,13 @@ import { AnimatePresence, motion } from "framer-motion";
 import { useTranslations } from "next-intl";
 import { SCENTS } from "@/lib/scents";
 import { BUNDLE_TIERS } from "@/lib/bundle";
+import type { BundleSlot } from "./BundleProvider";
 
 interface BundleSlotsProps {
-  /** Ordered scent keys currently in the bundle, one per filled slot. */
-  slots: string[];
+  /** Ordered bottles currently in the bundle, one per filled slot. */
+  slots: BundleSlot[];
+  /** Fixed composition when building a shaped set; drives the empty slots. */
+  shapeSizes?: readonly string[];
   /** Remove the bottle at slot index (shifts the rest left). */
   onRemove: (index: number) => void;
   /** Smaller slots for the persistent bottom bar. */
@@ -27,9 +30,14 @@ export default function BundleSlots({
   slots,
   onRemove,
   compact = false,
+  shapeSizes,
 }: BundleSlotsProps) {
   const tCart = useTranslations("cart");
-  const slotCount = Math.max(TOP_TIER_QTY, slots.length + 1);
+  /* A shaped set shows exactly its own slots — no growing row, no tier
+     rewards, because its discount does not come from the tiers. */
+  const slotCount = shapeSizes
+    ? shapeSizes.length
+    : Math.max(TOP_TIER_QTY, slots.length + 1);
 
   return (
     <div
@@ -39,11 +47,12 @@ export default function BundleSlots({
     >
       {Array.from({ length: slotCount }, (_, i) => {
         const position = i + 1;
-        const scentKey = slots[i];
-        const scent = scentKey
-          ? SCENTS.find((s) => s.key === scentKey)
+        const slot = slots[i];
+        const scent = slot
+          ? SCENTS.find((s) => s.key === slot.key)
           : undefined;
-        const tier = TIER_BY_QTY.get(position);
+        const tier = shapeSizes ? undefined : TIER_BY_QTY.get(position);
+        const sizeLabel = slot?.size ?? shapeSizes?.[i];
 
         return (
           <div
@@ -106,6 +115,19 @@ export default function BundleSlots({
                   >
                     −{tier.percentOff}%
                   </motion.span>
+                ) : shapeSizes ? (
+                  <motion.span
+                    key="wants"
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    className={`px-1 font-sans font-bold uppercase tracking-[0.06em] text-muted ${
+                      compact
+                        ? "text-[0.55rem]"
+                        : "text-[clamp(0.65rem,1.2vw,0.85rem)]"
+                    }`}
+                  >
+                    + {sizeLabel}
+                  </motion.span>
                 ) : (
                   <motion.span
                     key="plus"
@@ -127,6 +149,16 @@ export default function BundleSlots({
               >
                 {position}
               </span>
+
+              {scent && sizeLabel ? (
+                <span
+                  className={`absolute left-0 top-0 bg-ink px-1.5 py-0.5 font-sans font-bold uppercase tracking-[0.08em] text-paper ${
+                    compact ? "text-[7px]" : "text-[10px]"
+                  }`}
+                >
+                  {sizeLabel}
+                </span>
+              ) : null}
             </div>
           </div>
         );

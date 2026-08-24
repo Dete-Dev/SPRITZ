@@ -6,7 +6,6 @@ import TierBanner from "@/components/scent/TierBanner";
 import SiteFooter from "@/components/SiteFooter";
 import Reveal from "@/components/Reveal";
 import { Mark, Spray } from "@/components/ui/vandal";
-import { BUNDLE_TIERS } from "@/lib/bundle";
 import { resolvedSets } from "@/lib/sets";
 
 export async function generateMetadata({
@@ -42,8 +41,6 @@ export default async function SetsPage({
   setRequestLocale(locale);
   const t = await getTranslations("sets");
 
-  const duo = BUNDLE_TIERS.find((tier) => tier.minQuantity === 2);
-  const trio = BUNDLE_TIERS.find((tier) => tier.minQuantity === 3);
   const presets = resolvedSets();
 
   return (
@@ -72,8 +69,7 @@ export default async function SetsPage({
               <Reveal>
                 <div id="duo" className="scroll-mt-32">
                 <CustomSetCard
-                  size={2}
-                  percentOff={duo?.percentOff ?? 10}
+                  shapeKey="duo"
                   stripe="var(--sp-blue)"
                   previewKeys={["mer-bergamote", "cedre-menthe"]}
                 />
@@ -82,8 +78,7 @@ export default async function SetsPage({
               <Reveal delay={100}>
                 <div id="trio" className="scroll-mt-32">
                 <CustomSetCard
-                  size={3}
-                  percentOff={trio?.percentOff ?? 15}
+                  shapeKey="trio"
                   stripe="var(--sp-pink)"
                   previewKeys={["cerise-rose", "safran-ambre", "truffe-chocolat"]}
                 />

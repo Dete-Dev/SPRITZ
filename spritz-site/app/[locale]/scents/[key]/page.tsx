@@ -46,7 +46,7 @@ export async function generateMetadata({
   const t = await getTranslations({ locale, namespace: "common" });
   return {
     title: `SPRITZ — ${scent.name}`,
-    description: `${scent.name} — ${t("inspiredBy", { name: scent.inspiredBy })}. 50ml eau de parfum, €${scent.price}.`,
+    description: `${scent.name} — ${t("inspiredBy", { name: scent.inspiredBy })}. ${scent.size} eau de parfum, €${scent.price}.`,
   };
 }
 

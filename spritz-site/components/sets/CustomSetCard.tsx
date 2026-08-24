@@ -7,43 +7,53 @@ import { useBundle } from "@/components/bundle/BundleProvider";
 import Cta from "@/components/ui/Cta";
 import { Sticker, StripeBand } from "@/components/ui/vandal";
 import { SCENTS } from "@/lib/scents";
+import { bottlePrice, SET_SHAPES, type SetShapeKey } from "@/lib/sizes";
 
 /**
- * One of the two headline offers — brief §12's Duo Set Custom and Trio Set
- * Custom. These are the biggest thing on the page because they are the only
- * sets SPRITZ actually sells: you pick the bottles, the tier does the maths.
+ * One of the two build-your-own offers — catalog spec products 34 and 35.
+ * The duo is any 50ml plus any 15ml; the trio is three 15ml. They are the
+ * biggest tiles on the page because they are the only sets where the
+ * customer picks the bottles.
  *
- * Starts a clean set at the requested size and hands over to the builder, so
- * nobody inherits a half-finished bundle from an earlier visit.
+ * Starts a clean set of that shape and hands over to the builder, so nobody
+ * inherits a half-finished bundle from an earlier visit. Price comes from
+ * the shape itself — never a hardcoded bottle price.
  */
 export default function CustomSetCard({
-  size,
-  percentOff,
+  shapeKey,
   stripe,
   previewKeys,
 }: {
-  /** Bottles in this offer — 2 for the duo, 3 for the trio. */
-  size: number;
-  percentOff: number;
+  /** Which build-your-own set this is — "duo" (34) or "trio" (35). */
+  shapeKey: SetShapeKey;
   stripe: string;
   /** Bottles shown as the illustration; purely decorative. */
   previewKeys: string[];
 }) {
   const t = useTranslations("sets");
   const tCommon = useTranslations("common");
-  const { clear } = useBundle();
+  const { startShape } = useBundle();
   const router = useRouter();
 
+  const shape = SET_SHAPES.find((s) => s.key === shapeKey);
   const preview = previewKeys
     .map((k) => SCENTS.find((s) => s.key === k))
     .filter(Boolean)
     .slice(0, 3);
 
-  const full = size * 100;
+  const size = shape?.slots.length ?? 0;
+  const percentOff = shape?.percentOff ?? 0;
+  /* Priced from the real bottles the shape asks for, so a 15ml never gets
+     charged as a 50ml. */
+  const base = SCENTS[0]?.price ?? 0;
+  const full = (shape?.slots ?? []).reduce(
+    (sum, slotSize) => sum + bottlePrice(base, slotSize),
+    0,
+  );
   const total = full - Math.round((full * percentOff) / 100);
 
   function start() {
-    clear();
+    startShape(shapeKey);
     router.push("/bundle");
   }
 
@@ -77,9 +87,9 @@ export default function CustomSetCard({
       </div>
 
       <div className="flex flex-1 flex-col p-6 md:p-8">
-        <h3 className="sp-display text-d-xl">{t(`custom.${size}.title`)}</h3>
+        <h3 className="sp-display text-d-xl">{t(`custom.${shapeKey}.title`)}</h3>
         <p className="mt-3 font-sans text-base text-muted">
-          {t(`custom.${size}.body`)}
+          {t(`custom.${shapeKey}.body`)}
         </p>
 
         <div className="mt-6 flex items-baseline gap-3">

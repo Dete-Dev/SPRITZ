@@ -43,8 +43,11 @@ export default function BundleBuilder() {
     next,
     unlocked,
     variantsMissing,
+    shape,
+    remainingSizes,
     addScent,
     removeAt,
+    clear,
     addAllToCart,
   } = useBundle();
 
@@ -80,7 +83,9 @@ export default function BundleBuilder() {
   }, [unlocked]);
 
   const notReady = !isReady || variantsMissing;
-  const canSubmit = isReady && !variantsMissing && slots.length > 0 && !loading;
+  const shapeComplete = !shape || slots.length === shape.slots.length;
+  const canSubmit =
+    isReady && !variantsMissing && slots.length > 0 && shapeComplete && !loading;
 
   async function handleAddAll(): Promise<void> {
     if (!canSubmit) return;
@@ -96,13 +101,28 @@ export default function BundleBuilder() {
 
   return (
     <div>
-      <div ref={tierStickerRef} className="mb-7 w-fit">
+      <div ref={tierStickerRef} className="mb-7 flex w-fit items-center gap-3">
         <Sticker tilt={-3} variant="ink" fill="var(--sp-red)">
-          {tCommon("tiers")}
+          {shape
+            ? t(`shape.${shape.key}.sticker`, { percent: shape.percentOff })
+            : tCommon("tiers")}
         </Sticker>
+        {shape ? (
+          <button
+            type="button"
+            onClick={clear}
+            className="font-sans text-[11px] font-bold uppercase tracking-[0.12em] text-muted underline underline-offset-4 hover:text-ink"
+          >
+            {t("shape.exit")}
+          </button>
+        ) : null}
       </div>
 
-      <BundleSlots slots={slots} onRemove={removeAt} />
+      <BundleSlots
+        slots={slots}
+        onRemove={removeAt}
+        shapeSizes={shape?.slots}
+      />
 
       {/* Scent picker — tap a bottle to drop it into the next slot. */}
       <div className="mt-7">
@@ -171,7 +191,14 @@ export default function BundleBuilder() {
       <div className="mt-9 flex flex-col gap-5 border-t-2 border-ink pt-6 md:flex-row md:items-end md:justify-between">
         <div>
           <p className="sp-eyebrow">
-            {next
+            {shape
+              ? remainingSizes.length > 0
+                ? t("shape.needs", {
+                    count: remainingSizes.length,
+                    size: remainingSizes[0],
+                  })
+                : t("shape.ready", { percent: shape.percentOff })
+              : next
               ? t("tierProgress", {
                   count: next.remaining,
                   percent: next.tier.percentOff,

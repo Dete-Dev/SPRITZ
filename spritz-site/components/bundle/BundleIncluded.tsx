@@ -4,6 +4,7 @@ import Image from "next/image";
 import { useTranslations } from "next-intl";
 import { useBundle } from "./BundleProvider";
 import { SCENTS } from "@/lib/scents";
+import { bottlePrice } from "@/lib/sizes";
 
 /**
  * "What is included" — brief §15, the preset-set readout applied to the
@@ -32,12 +33,12 @@ export default function BundleIncluded() {
       </div>
 
       <ul className="divide-y divide-line">
-        {slots.map((key, idx) => {
-          const scent = SCENTS.find((s) => s.key === key);
+        {slots.map((slot, idx) => {
+          const scent = SCENTS.find((s) => s.key === slot.key);
           if (!scent) return null;
           return (
             <li
-              key={`${key}-${idx}`}
+              key={`${slot.key}-${slot.size}-${idx}`}
               className="flex items-center gap-4 px-5 py-3"
             >
               <span className="relative h-12 w-9 shrink-0">
@@ -54,11 +55,11 @@ export default function BundleIncluded() {
                   {scent.name}
                 </span>
                 <span className="block truncate font-sans text-xs text-muted">
-                  {tCommon("inspiredBy", { name: scent.inspiredBy })}
+                  {slot.size} · {tCommon("inspiredBy", { name: scent.inspiredBy })}
                 </span>
               </span>
               <span className="shrink-0 font-sans text-sm font-bold">
-                {tCommon("price", { price: scent.price })}
+                {tCommon("price", { price: bottlePrice(scent.price, slot.size) })}
               </span>
             </li>
           );

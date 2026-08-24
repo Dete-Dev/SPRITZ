@@ -22,7 +22,7 @@ export default function AddToBundleButton({
 }: AddToBundleButtonProps) {
   const t = useTranslations("bundle");
   const { addScent, slots } = useBundle();
-  const countOfThis = slots.filter((k) => k === scentKey).length;
+  const countOfThis = slots.filter((s) => s.key === scentKey).length;
 
   return (
     <Cta

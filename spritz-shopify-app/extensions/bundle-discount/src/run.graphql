@@ -12,6 +12,10 @@ query RunInput {
         __typename
         ... on ProductVariant {
           id
+          title
+          product {
+            hasAnyTag(tags: ["spritz-set"])
+          }
         }
       }
     }
