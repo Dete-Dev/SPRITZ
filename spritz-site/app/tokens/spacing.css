@@ -13,6 +13,8 @@
   /* Shape: pills for CTAs, near-square cards. Street, not soft. */
   --sp-radius: 999px;
   --sp-radius-card: 4px;
+  /* Product photos only — brief §3/§7/§11 ask for visibly rounded shots. */
+  --sp-radius-photo: 1.25rem;
   --sp-radius-sticker: 999px;
 
   /* Hard offset shadows — the v2 "pasted-on" look. No blur, ever. */

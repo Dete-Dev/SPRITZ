@@ -5,13 +5,26 @@ import { Link } from "@/i18n/navigation";
 import NavMenu from "./NavMenu";
 
 /**
- * The ABOUT menu — brief §16. Two columns, WHO WE ARE and HELP, exactly the
- * shape of the reference.
- *
- * "Refer a friend" from the reference has no destination on this site yet, so
- * it is left out rather than shipped as a dead link; the columns carry the
- * pages that exist instead.
+ * The ABOUT menu — brief §16. Two columns, exactly the reference:
+ * WHO WE ARE → About Us, Refer a Friend · HELP → Contact Us, FAQ.
  */
+const COLUMNS = [
+  {
+    key: "whoWeAre",
+    links: [
+      { key: "aboutUs", href: "/about" },
+      { key: "referFriend", href: "/refer" },
+    ],
+  },
+  {
+    key: "help",
+    links: [
+      { key: "contact", href: "/contact" },
+      { key: "faq", href: "/faq" },
+    ],
+  },
+] as const;
+
 export default function AboutMenu() {
   const t = useTranslations("nav");
 
@@ -22,47 +35,20 @@ export default function AboutMenu() {
   return (
     <NavMenu label={t("about")} align="right" panelClassName="w-[min(26rem,88vw)]">
       <div className="grid grid-cols-2 gap-8 p-6">
-        <div>
-          <p className={group}>{t("whoWeAre")}</p>
-          <ul className="mt-3">
-            <li>
-              <Link href="/#story" className={item}>
-                {t("aboutUs")}
-              </Link>
-            </li>
-            <li>
-              <Link href="/#craft" className={item}>
-                {t("craft")}
-              </Link>
-            </li>
-            <li>
-              <Link href="/journal" className={item}>
-                {t("journal")}
-              </Link>
-            </li>
-          </ul>
-        </div>
-
-        <div>
-          <p className={group}>{t("help")}</p>
-          <ul className="mt-3">
-            <li>
-              <Link href="/#faq" className={item}>
-                {t("faq")}
-              </Link>
-            </li>
-            <li>
-              <Link href="/#reserve" className={item}>
-                {t("contact")}
-              </Link>
-            </li>
-            <li>
-              <Link href="/#faq" className={item}>
-                {t("shipping")}
-              </Link>
-            </li>
-          </ul>
-        </div>
+        {COLUMNS.map((col) => (
+          <div key={col.key}>
+            <p className={group}>{t(col.key)}</p>
+            <ul className="mt-3">
+              {col.links.map((l) => (
+                <li key={l.key}>
+                  <Link href={l.href} className={item}>
+                    {t(l.key)}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+        ))}
       </div>
     </NavMenu>
   );

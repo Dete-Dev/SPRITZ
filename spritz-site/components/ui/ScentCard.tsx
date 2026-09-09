@@ -6,6 +6,7 @@ import { animate, stagger, utils } from "animejs";
 import { Link } from "@/i18n/navigation";
 import LabelName from "@/components/ui/LabelName";
 import { StripeBand, Sticker } from "@/components/ui/vandal";
+import { readableInk } from "@/lib/color";
 import { prefersReducedMotion, springPop } from "@/lib/motion";
 import { fragranticaUrl } from "@/lib/scents";
 import type { Scent } from "@/lib/scents";
@@ -14,7 +15,7 @@ import type { Scent } from "@/lib/scents";
  * The product card. Everywhere a scent appears in a grid — the five on the
  * home page, the shop, "more from the five" — it is this card.
  *
- * Vandal treatment: 2px ink border, near-square corners, hard offset shadow,
+ * Vandal treatment: 2px ink border, rounded photo (brief §3), hard offset shadow,
  * and the scent's own stripe colourway banded across the bottom of the image.
  * Hovering lifts it and hardens the shadow (`.sp-lift`), so it reads as a
  * sticker pasted on the page rather than a floating panel — and the note
@@ -48,7 +49,7 @@ export default function ScentCard({
   note?: string;
   /** "inspired by <designer>" — the whole dupe pitch, already localised. */
   inspiredByLabel?: string;
-  /** DUPPÉ-style banner over the image foot: "€230 cheaper than the original". */
+  /** Orange line under the price: "45% cheaper than the luxury brand". */
   savingsLabel?: string;
   /** Optional corner sticker ("Bestseller", "Nou"). */
   badge?: string;
@@ -92,7 +93,7 @@ export default function ScentCard({
       <Link
         href={`/scents/${scent.key}`}
         aria-label={scent.name}
-        className="sp-lift relative block overflow-hidden rounded-card border-2 border-ink bg-paper shadow-hard-sm"
+        className="sp-lift relative block overflow-hidden rounded-photo border-2 border-ink bg-paper shadow-hard-sm"
       >
         {badge ? (
           <Sticker
@@ -141,11 +142,6 @@ export default function ScentCard({
             </span>
           ))}
 
-          {savingsLabel ? (
-            <p className="absolute inset-x-0 bottom-0 z-10 bg-ink px-2 py-1.5 text-center font-sans text-[9px] font-bold uppercase leading-tight tracking-[0.12em] text-paper">
-              {savingsLabel}
-            </p>
-          ) : null}
         </div>
 
         <StripeBand color={scent.stripe} height={12} />
@@ -176,8 +172,26 @@ export default function ScentCard({
       {note ? (
         <p className="mt-1.5 font-sans text-sm text-muted">{note}</p>
       ) : null}
-      {/* mt-auto keeps every price on the same baseline across a ragged row. */}
-      <p className="mt-auto pt-2 font-sans text-[15px] font-bold">{priceLabel}</p>
+      {/* Same bubble as the hover note words, so the price reads as part of
+          the same slapped-on kit. mt-auto keeps every price on the same
+          baseline across a ragged row; readableInk flips the type to cream on
+          the dark stripes, where .sp-sticker--fill's black would fail AA. */}
+      <p className="mt-auto pt-2">
+        <Sticker
+          tilt={-2}
+          variant="fill"
+          fill={scent.stripe}
+          style={{ color: readableInk(scent.stripe) }}
+        >
+          {priceLabel}
+        </Sticker>
+      </p>
+      {/* Brief §11.2 — the orange saving line sits under our price. */}
+      {savingsLabel ? (
+        <p className="mt-2 font-sans text-[11px] font-bold uppercase leading-tight tracking-[0.1em] text-orange">
+          {savingsLabel}
+        </p>
+      ) : null}
     </div>
   );
 }

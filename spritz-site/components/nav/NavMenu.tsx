@@ -12,8 +12,7 @@ import { AnimatePresence, motion } from "framer-motion";
  * because a keyboard activation fires `click` with no pointer event and the
  * two menus would otherwise both sit open.
  *
- * The panel floats above the pill bar and the travelling wordmark (both z-50),
- * hence z-[60]. It is a floating panel, never a bar — the header keeps its
+ * The panel floats above the pill bar (z-50), hence z-[60]. It is a floating panel, never a bar — the header keeps its
  * locked no-banner layout.
  */
 

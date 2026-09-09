@@ -12,6 +12,8 @@
   --sp-yellow: #e8b83c;
   --sp-pink: #f178ac;
   --sp-green: #16a85f;
+  /* Text-only accent for the shop saving line (brief §11). Never a button. */
+  --sp-orange: #f26b1d;
 
   /* Neutrals */
   --sp-paper: #ffffff;

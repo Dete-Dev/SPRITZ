@@ -179,7 +179,7 @@ export default function BundleBuilder() {
                   style={{ backgroundColor: scent.stripe }}
                 />
                 <span className="font-sans text-[11px] font-bold uppercase tracking-[0.1em]">
-                  {scent.key}
+                  {scent.name}
                 </span>
               </span>
             </button>

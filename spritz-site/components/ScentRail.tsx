@@ -110,7 +110,7 @@ export default function ScentRail({
     const el = railRef.current;
     if (!el) return;
     const card = el.querySelector(":scope > li");
-    const step = card ? card.clientWidth + 20 : el.clientWidth * 0.8;
+    const step = card ? card.clientWidth + 12 : el.clientWidth * 0.8;
     el.scrollBy({ left: step * direction, behavior: "smooth" });
   }
 
@@ -141,11 +141,11 @@ export default function ScentRail({
     <section
       ref={sectionRef}
       id={id}
-      className={`${surface === "paper" ? "bg-paper" : "bg-paper-2"} pb-section pt-10`}
+      className={`${surface === "paper" ? "bg-paper" : "bg-paper-2"} pb-6 pt-10`}
     >
       <div className="mx-auto max-w-6xl px-gutter">
-        {/* Arrows are taken out of flow so a long title stays centred on the
-            section; the sm padding reserves their width so it never runs
+        {/* Brief §3 — the message sits top-left, arrows top-right. The sm
+            padding reserves the arrows' width so a long title never runs
             underneath them. */}
         <div className="relative">
           {/* `overflow-x-clip`, not `overflow-hidden`: the highlighter swash
@@ -153,7 +153,7 @@ export default function ScentRail({
               shear it off. Clipping only the travelling axis keeps it. */}
           <div className="overflow-x-clip">
             <motion.h2
-              className="sp-display text-center text-d-2xl sm:px-28"
+              className="sp-display text-left text-d-2xl sm:pr-28"
               style={pan && !reduce ? { x: headingX } : undefined}
             >
               {title}
@@ -193,7 +193,7 @@ export default function ScentRail({
       <ul
         ref={railRef}
         onScroll={syncEdges}
-        className="sp-rail mt-4 flex snap-x snap-mandatory gap-5 overflow-x-auto px-gutter pb-2"
+        className="sp-rail mt-4 flex snap-x snap-mandatory gap-3 overflow-x-auto px-gutter pb-2"
       >
         {scents.map((scent, idx) => (
           <li

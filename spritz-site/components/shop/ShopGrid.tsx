@@ -150,8 +150,9 @@ export default function ShopGrid({
             />
           </div>
 
+          {/* Brief §11.3 — "Sort & Filter" on the left, next to search. */}
           <FilterDropdown
-            label={tFilters("sort")}
+            label={tFilters("sortFilter")}
             value={sort === "featured" ? null : sort}
             onChange={(v) => setSort((v as Sort) ?? "featured")}
             clearLabel={tFilters("clear")}

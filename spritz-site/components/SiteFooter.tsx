@@ -36,12 +36,11 @@ export default function SiteFooter() {
             <p className="sp-eyebrow mb-5">{t("house")}</p>
             <ul className="space-y-2.5">
               <li><Link href="/shop" className={link}>{t("houseLinks.shop")}</Link></li>
-              <li><Link href="/bundle" className={link}>{t("houseLinks.bundle")}</Link></li>
               <li><Link href="/sets" className={link}>{t("houseLinks.sets")}</Link></li>
-              <li><Link href="/#story" className={link}>{t("houseLinks.story")}</Link></li>
-              <li><Link href="/#craft" className={link}>{t("houseLinks.craft")}</Link></li>
+              <li><Link href="/bundle" className={link}>{t("houseLinks.bundle")}</Link></li>
+              <li><Link href="/about" className={link}>{t("houseLinks.about")}</Link></li>
+              <li><Link href="/refer" className={link}>{t("houseLinks.refer")}</Link></li>
               <li><Link href="/journal" className={link}>{t("houseLinks.journal")}</Link></li>
-              <li><Link href="/#reserve" className={link}>{t("houseLinks.reserve")}</Link></li>
             </ul>
           </nav>
 
@@ -61,9 +60,9 @@ export default function SiteFooter() {
           <nav aria-label={t("information")} className="md:text-right">
             <p className="sp-eyebrow mb-5">{t("information")}</p>
             <ul className="space-y-2.5">
-              <li><Link href="/#faq" className={link}>{t("infoLinks.faq")}</Link></li>
-              <li><Link href="/#reserve" className={link}>{t("infoLinks.contact")}</Link></li>
-              <li><Link href="/#craft" className={link}>{t("infoLinks.shipping")}</Link></li>
+              <li><Link href="/faq" className={link}>{t("infoLinks.faq")}</Link></li>
+              <li><Link href="/contact" className={link}>{t("infoLinks.contact")}</Link></li>
+              <li><Link href="/faq#shipping" className={link}>{t("infoLinks.shipping")}</Link></li>
               <li><Link href="#" className={link}>{t("terms")}</Link></li>
               <li><Link href="#" className={link}>{t("privacy")}</Link></li>
               <li>

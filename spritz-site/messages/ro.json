@@ -151,7 +151,7 @@
   "footer": {
     "tagline": "Douăzeci și două de parfumuri, în loturi mici. Se livrează sezonul acesta.",
     "scents": "Parfumuri",
-    "house": "Casa",
+    "house": "Despre noi",
     "houseLinks": {
       "story": "Poveste",
       "five": "Catalogul",
@@ -160,7 +160,9 @@
       "shop": "Magazin",
       "bundle": "Fă-ți setul",
       "journal": "Jurnal",
-      "sets": "Seturi cadou"
+      "sets": "Seturi cadou",
+      "about": "Despre noi",
+      "refer": "Recomandă un prieten"
     },
     "correspondence": "Corespondență",
     "correspondenceBody": "Un singur mesaj când pleacă sticlele. Nimic altceva.",
@@ -184,9 +186,9 @@
     "headline": "Toate douăzeci și două.",
     "filterAll": "Toate",
     "genders": {
-      "her": "pentru ea",
-      "him": "pentru el",
-      "unisex": "unisex"
+      "her": "Femei",
+      "him": "Bărbați",
+      "unisex": "Unisex"
     },
     "count": "{count, plural, one {# parfum} few {# parfumuri} other {# de parfumuri}}"
   },
@@ -278,13 +280,13 @@
     "notesIntro": "Cum miroase de fapt, strat după strat. Notele de vârf apar primele și dispar repede; baza e ceea ce porți până seara.",
     "noteLayers": {
       "top": "Vârf",
-      "heart": "Inimă",
+      "heart": "Mijloc",
       "base": "Bază"
     },
     "noteLayerDescriptions": {
-      "top": "Deschiderea — ce simți în primele zece minute.",
-      "heart": "Unde se așază parfumul, după o oră.",
-      "base": "Ce rămâne pe piele după cină."
+      "top": "Primele note pe care le simți",
+      "heart": "Inima parfumului",
+      "base": "Notele care rămân toată ziua"
     },
     "wear": "Cum se poartă",
     "wearBody": "Un puf pe fiecare încheietură, unul la baza gâtului. Nu freca. Reaplică după patru ore dacă vrei să se simtă tare.",
@@ -294,7 +296,7 @@
     "notesIntroLabel": "Cele două note scrise pe sticlă. Piramida completă e în lucru.",
     "retailPrice": "(preț retail {price} €)",
     "thisPerfumeIs": "Parfumul ăsta e:",
-    "mainNotes": "Note principale",
+    "mainNotes": "Note principale:",
     "aboutFallback": "Făcut în loturi mici în București, turnat manual în sticlă de 50ml și numerotat pe capac. Piramida completă de note pentru acesta încă se scrie — până atunci, cele două note de pe etichetă sunt rezumatul onest.",
     "shippingHint": "Livrare gratuită de la 2 sticle. Retur gratuit.",
     "layeredIntro": "Sunt din aceeași familie, deci se combină fără să se bată cap în cap. Două sticle iau deja 10% reducere.",
@@ -312,19 +314,22 @@
       "story2": "Mesteacănul ține totul în loc. Nu lasă fructul să devină desert; face sticla să miroase a ceva ce un adult ar purta la cină.",
       "notes": {
         "top": [
-          "Coajă de ananas",
-          "Bergamotă de Calabria",
-          "Piper roz"
+          "ananas",
+          "bergamotă",
+          "coacăze negre",
+          "măr verde"
         ],
         "heart": [
-          "Sevă de mesteacăn",
-          "Frunză de violetă",
-          "Iasomie sambac"
+          "mesteacăn",
+          "paciuli",
+          "iasomie",
+          "trandafir"
         ],
         "base": [
-          "Lemn de cedru",
-          "Mosc alb",
-          "Vetiver"
+          "mosc",
+          "mușchi de stejar",
+          "ambră gri",
+          "vanilie"
         ]
       }
     },
@@ -333,19 +338,22 @@
       "story2": "Construit ca un parfum din anii '90, dar mai ușor. Stă bine pe vreme rece. Nu îl pune dacă vrei să fii discretă.",
       "notes": {
         "top": [
-          "Cireșe negre",
-          "Zmeură",
-          "Coajă de lime"
+          "cireșe arse",
+          "zmeură",
+          "bergamotă"
         ],
         "heart": [
-          "Trandafir damascena",
-          "Iris",
-          "Floare de migdal"
+          "pralină",
+          "heliotrop",
+          "trandafir de Damasc",
+          "iasomie sambac"
         ],
         "base": [
-          "Tonka",
-          "Lemn de santal",
-          "Mosc alb"
+          "palo santo",
+          "lemn de guaiac",
+          "fava tonka",
+          "balsam de Peru",
+          "paciuli"
         ]
       }
     },
@@ -354,19 +362,21 @@
       "story2": "Cel mai liniștit din cele cinci. Se citește proaspăt fără să fie o colonie. Stă bine pe oricine.",
       "notes": {
         "top": [
-          "Mentă verde",
-          "Coajă de lămâie",
-          "Rădăcină de ghimbir"
+          "grepfrut",
+          "lămâie",
+          "mentă",
+          "piper roz"
         ],
         "heart": [
-          "Lemn de cedru",
-          "Mușcată",
-          "Cardamom"
+          "ghimbir",
+          "nucșoară",
+          "iasomie"
         ],
         "base": [
-          "Patchouli",
-          "Vetiver",
-          "Mușchi alb"
+          "cedru",
+          "lemn de santal",
+          "tămâie",
+          "vetiver"
         ]
       }
     },
@@ -375,19 +385,17 @@
       "story2": "Cel mai cald din cele cinci. Rezistă mai mult decât celelalte. Pe acesta îl ținem pentru după apus.",
       "notes": {
         "top": [
-          "Fire de șofran",
-          "Bergamotă",
-          "Piper roz"
+          "șofran",
+          "iasomie",
+          "migdale amare"
         ],
         "heart": [
-          "Iasomie",
-          "Trandafir damasc",
-          "Scorțișoară"
+          "lemn ambrat",
+          "ambră gri"
         ],
         "base": [
-          "Rășină de chihlimbar",
-          "Lemn de santal",
-          "Acord de oud"
+          "cedru",
+          "rășină de brad"
         ]
       }
     },
@@ -396,19 +404,354 @@
       "story2": "Cel mai greu din cele cinci. Nu îl pune în iulie. Nu pune altceva în februarie.",
       "notes": {
         "top": [
-          "Coajă de bergamotă",
-          "Piper roz",
-          "Cardamom"
+          "trufă",
+          "coacăze negre",
+          "ylang-ylang",
+          "bergamotă"
         ],
         "heart": [
-          "Trufă neagră",
-          "Iasomie",
-          "Iris"
+          "orhidee neagră",
+          "condimente",
+          "lemn de lotus"
         ],
         "base": [
-          "Cacao amară",
-          "Vanilie",
-          "Patchouli"
+          "paciuli",
+          "ciocolată neagră",
+          "vanilie",
+          "tămâie",
+          "lemn de santal"
+        ]
+      }
+    },
+    "vanille-cafe": {
+      "notes": {
+        "top": [
+          "pară",
+          "piper roz",
+          "floare de portocal"
+        ],
+        "heart": [
+          "cafea",
+          "iasomie",
+          "migdale amare",
+          "lemn dulce"
+        ],
+        "base": [
+          "vanilie",
+          "paciuli",
+          "cedru"
+        ]
+      }
+    },
+    "cuir-tabac": {
+      "notes": {
+        "top": [
+          "piper negru",
+          "nucșoară"
+        ],
+        "heart": [
+          "tămâie",
+          "scorțișoară"
+        ],
+        "base": [
+          "piele neagră",
+          "tutun"
+        ]
+      }
+    },
+    "amande-tonka": {
+      "notes": {
+        "top": [
+          "migdale",
+          "cafea",
+          "lămâie",
+          "bergamotă"
+        ],
+        "heart": [
+          "tuberoză",
+          "iasomie",
+          "trandafir bulgăresc",
+          "floare de portocal"
+        ],
+        "base": [
+          "pralină",
+          "cacao",
+          "fava tonka",
+          "vanilie",
+          "lemn de santal"
+        ]
+      }
+    },
+    "jasmin-cashmeran": {
+      "notes": {
+        "top": [
+          "iasomie sambac"
+        ],
+        "heart": [
+          "lemn cashmeran"
+        ],
+        "base": [
+          "ambră albă"
+        ]
+      }
+    },
+    "mer-bergamote": {
+      "notes": {
+        "top": [
+          "note marine",
+          "bergamotă"
+        ],
+        "heart": [
+          "rozmarin",
+          "salvie",
+          "mușcată"
+        ],
+        "base": [
+          "paciuli",
+          "tămâie",
+          "lemn ambrat"
+        ]
+      }
+    },
+    "ylang-jasmin": {
+      "notes": {
+        "top": [
+          "aldehide",
+          "ylang-ylang",
+          "neroli",
+          "bergamotă"
+        ],
+        "heart": [
+          "iasomie",
+          "trandafir",
+          "lăcrămioare",
+          "iris"
+        ],
+        "base": [
+          "lemn de santal",
+          "vetiver",
+          "vanilie",
+          "ambră",
+          "mosc"
+        ]
+      }
+    },
+    "lavande-vanille": {
+      "notes": {
+        "top": [
+          "bergamotă",
+          "mandarină",
+          "coacăze negre",
+          "lavandin"
+        ],
+        "heart": [
+          "lavandă",
+          "floare de portocal",
+          "iasomie"
+        ],
+        "base": [
+          "vanilie",
+          "fava tonka",
+          "cedru",
+          "mosc"
+        ]
+      }
+    },
+    "rose-jasmin": {
+      "notes": {
+        "top": [
+          "lemn de trandafir",
+          "lavandă",
+          "măr",
+          "scorțișoară"
+        ],
+        "heart": [
+          "trandafir bulgăresc",
+          "lăcrămioare",
+          "cedru"
+        ],
+        "base": [
+          "oud laoțian",
+          "lemn de santal",
+          "ambră",
+          "vanilie",
+          "mosc"
+        ]
+      }
+    },
+    "cuir-menthe": {
+      "notes": {
+        "top": [
+          "mandarină roșie",
+          "grepfrut",
+          "mentă"
+        ],
+        "heart": [
+          "trandafir",
+          "scorțișoară",
+          "condimente"
+        ],
+        "base": [
+          "piele",
+          "ambră",
+          "note lemnoase",
+          "paciuli"
+        ]
+      }
+    },
+    "cognac-bergamote": {
+      "notes": {
+        "top": [
+          "portocală amară",
+          "grepfrut",
+          "lămâie",
+          "bergamotă",
+          "aldehide"
+        ],
+        "heart": [
+          "coniac",
+          "scorțișoară",
+          "caramel"
+        ],
+        "base": [
+          "fava tonka",
+          "stejar",
+          "lemn de santal",
+          "smirnă"
+        ]
+      }
+    },
+    "oud-safran": {
+      "notes": {
+        "top": [
+          "condimente",
+          "tămâie",
+          "ghimbir",
+          "bergamotă"
+        ],
+        "heart": [
+          "trandafir de mai (rose centifolia)"
+        ],
+        "base": [
+          "oud",
+          "lemn de santal",
+          "paciuli",
+          "smirnă",
+          "lemn dulce",
+          "fava tonka"
+        ]
+      }
+    },
+    "oud-santal": {
+      "notes": {
+        "top": [
+          "lemn de trandafir",
+          "cardamom",
+          "piper de Sichuan"
+        ],
+        "heart": [
+          "oud",
+          "lemn de santal",
+          "vetiver"
+        ],
+        "base": [
+          "fava tonka",
+          "vanilie",
+          "ambră"
+        ]
+      }
+    },
+    "iris-bergamote": {
+      "notes": {
+        "top": [
+          "coacăze negre",
+          "pară",
+          "bergamotă"
+        ],
+        "heart": [
+          "iris",
+          "iasomie",
+          "floare de portocal"
+        ],
+        "base": [
+          "pralină",
+          "vanilie",
+          "paciuli",
+          "fava tonka"
+        ]
+      }
+    },
+    "gardenia-mandarin": {
+      "notes": {
+        "top": [
+          "mandarină de Italia"
+        ],
+        "heart": [
+          "gardenie",
+          "hedione",
+          "magnolie"
+        ],
+        "base": [
+          "lemn de santal",
+          "vanilie",
+          "paciuli"
+        ]
+      }
+    },
+    "menthe-tonka": {
+      "notes": {
+        "top": [
+          "mentă",
+          "măr verde",
+          "lămâie"
+        ],
+        "heart": [
+          "fava tonka",
+          "mușcată",
+          "ambroxan"
+        ],
+        "base": [
+          "vanilie",
+          "vetiver",
+          "mușchi de stejar",
+          "cedru"
+        ]
+      }
+    },
+    "poivre-ambre": {
+      "notes": {
+        "top": [
+          "piper roz",
+          "lămâie"
+        ],
+        "heart": [
+          "tămâie (olibanum)",
+          "lavandă"
+        ],
+        "base": [
+          "vanilie",
+          "fava tonka",
+          "ambră"
+        ]
+      }
+    },
+    "citron-cardamome": {
+      "notes": {
+        "top": [
+          "lămâie",
+          "ghimbir",
+          "cardamom",
+          "mentă"
+        ],
+        "heart": [
+          "vetiver",
+          "ienupăr",
+          "mușcată"
+        ],
+        "base": [
+          "fava tonka",
+          "lemn ambrat",
+          "lemn de santal"
         ]
       }
     }
@@ -468,7 +811,7 @@
     "inspiredBy": "inspirat de {name}",
     "tickerLead": "inspirat de",
     "cheaperThan": "cu {amount} € mai ieftin ca originalul",
-    "cheaperPercent": "{percent}% mai ieftin decât originalul"
+    "cheaperPercent": "Cu {percent}% mai ieftin decât brandul de lux"
   },
   "drops": {
     "eyebrow": "Proaspăt de pe masa de lucru",
@@ -559,19 +902,19 @@
   },
   "usps": {
     "ingredients": "Ingrediente premium",
-    "pricing": "Preț corect",
+    "pricing": "Prețuri accesibile",
     "lasting": "Parfumuri rezistente",
-    "variety": "Douăzeci și două de opțiuni"
+    "variety": "Varietate de opțiuni"
   },
   "split": {
     "singleEyebrow": "Sticla — 50ml",
     "singleTitle": "O sticlă. O sută de euro.",
     "singleCta": "Vezi parfumul",
-    "setEyebrow": "Setul — două sau mai multe",
+    "setEyebrow": "Duo Set — 50ml + 15ml",
     "setTitle": "Două sticle, zece la sută reducere.",
     "setBody": "Alege oricare două dintre cele douăzeci și două, iar reducerea se aplică la checkout. Trei iau 15%, cinci iau 20%.",
     "setBadge": "−10% la două",
-    "setCta": "Fă-ți setul"
+    "setCta": "Vezi seturile"
   },
   "proof": {
     "headline": "Douăzeci și două de parfumuri. Un preț corect.",
@@ -619,14 +962,18 @@
     "travelFlag": "−{percent}% față de cumpărate separat",
     "includedTitle": "Ce conține",
     "includedBottle": "{name} — {size}",
-    "includedCompanion": "{name} — 15ml, pentru geantă"
+    "includedCompanion": "{name} — 15ml, pentru geantă",
+    "setLabel": "{size} + 15ml"
   },
   "shopNav": {
     "label": "Categorii magazin",
     "all": "Toate parfumurile",
     "bestsellers": "Cele mai vândute",
     "new": "Nou apărute",
-    "sets": "Fă-ți setul"
+    "sets": "Fă-ți setul",
+    "duo": "Duo set",
+    "discovery": "Discovery set",
+    "gift": "Gift set"
   },
   "shopFilters": {
     "searchPlaceholder": "Caută parfumuri, branduri, note",
@@ -641,7 +988,8 @@
     "collections": "Colecții",
     "clear": "Șterge",
     "empty": "Nimic nu se potrivește cu filtrele astea. Încearcă să scoți unul.",
-    "fragrantica": "Caută {name} pe Fragrantica"
+    "fragrantica": "Caută {name} pe Fragrantica",
+    "sortFilter": "Sortare & Filtre"
   },
   "shopPromo": {
     "eyebrow": "Fă-l set",
@@ -704,6 +1052,55 @@
     "contact": "Contact",
     "shipping": "Livrare și retur",
     "makeABundle": "Fă-ți setul",
-    "makeADiscoverySet": "Fă-ți setul de descoperire"
+    "makeADiscoverySet": "Creează-ți discovery set-ul",
+    "referFriend": "Recomandă un prieten"
+  },
+  "setPage": {
+    "eyebrow": "Duo set — 50ml + 15ml",
+    "back": "← Toate seturile cadou",
+    "details": "Vezi detalii",
+    "included": "Ce conține setul",
+    "contents": "{anchor} de 50ml cu {companion} de 15ml, împreună în cutie."
+  },
+  "aboutPage": {
+    "metaTitle": "SPRITZ — Despre noi",
+    "metaDescription": "Cine face SPRITZ și cum sunt create cele douăzeci și două de parfumuri, în loturi mici, la București.",
+    "eyebrow": "Cine suntem",
+    "headline": "Douăzeci și două de parfumuri,",
+    "headlineEm": "un preț corect."
+  },
+  "faqPage": {
+    "metaTitle": "SPRITZ — Întrebări frecvente",
+    "metaDescription": "Răspunsuri directe despre dupe-uri, persistență, dimensiuni, seturi, livrare și retururi.",
+    "eyebrow": "Ajutor"
+  },
+  "contactPage": {
+    "metaTitle": "SPRITZ — Contact",
+    "metaDescription": "Scrie-ne — comenzi, parfumuri, seturi, orice.",
+    "eyebrow": "Ajutor",
+    "headline": "Vorbește cu",
+    "headlineEm": "un om.",
+    "body": "Un singur inbox, citit de oamenii care toarnă sticlele. Comenzi, întrebări despre parfumuri, sfaturi pentru seturi — scrie-ne și răspundem.",
+    "emailLabel": "Email",
+    "email": "hello@spritz.ro",
+    "hoursLabel": "Răspundem",
+    "hours": "Luni–vineri, 10:00–18:00 (București). De obicei în aceeași zi.",
+    "shipping": "Livrare gratuită la orice comandă în România și UE. Retur în 30 de zile, fără întrebări.",
+    "ctaFaq": "Citește FAQ"
+  },
+  "referPage": {
+    "metaTitle": "SPRITZ — Recomandă un prieten",
+    "metaDescription": "Împarte SPRITZ cu un prieten. Primește 20% reducere la prima comandă.",
+    "eyebrow": "Cine suntem",
+    "headline": "Parfumurile bune",
+    "headlineEm": "se dau mai departe.",
+    "body": "Trimite un prieten la SPRITZ. Primește 20% reducere la prima sticlă cu codul de bun venit, iar tu primești meritul pentru recomandare.",
+    "steps": [
+      "Spune-i unui prieten despre SPRITZ și trimite-l aici.",
+      "Se abonează din badge-ul din colț și primește codul de −20%.",
+      "Alege o sticlă sau un set — codul se aplică la checkout."
+    ],
+    "footnote": "Codul de −20% este oferta de bun venit din popup-ul de newsletter. Creditul pentru cel care recomandă se lansează odată cu magazinul.",
+    "cta": "Vezi toate parfumurile"
   }
 }

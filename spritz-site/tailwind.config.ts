@@ -34,6 +34,7 @@ const config: Config = {
         yellow: token("--sp-yellow"),
         pink: token("--sp-pink"),
         green: token("--sp-green"),
+        orange: token("--sp-orange"),
         // Neutrals
         paper: token("--sp-paper"),
         "paper-2": token("--sp-paper-2"),
@@ -70,6 +71,7 @@ const config: Config = {
       },
       borderRadius: {
         card: "var(--sp-radius-card)",
+        photo: "var(--sp-radius-photo)",
       },
       boxShadow: {
         hard: "var(--sp-shadow-hard)",

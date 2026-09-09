@@ -6,7 +6,6 @@ import { routing } from "@/i18n/routing";
 import FloatingHeader from "@/components/FloatingHeader";
 import PromoBadge from "@/components/PromoBadge";
 import HeaderThemeWatcher from "@/components/HeaderThemeWatcher";
-import JumpingWordmark from "@/components/JumpingWordmark";
 import SmoothScroll from "@/components/SmoothScroll";
 import { CartProvider } from "@/components/cart/CartProvider";
 import CartDrawer from "@/components/cart/CartDrawer";
@@ -63,7 +62,6 @@ export default async function LocaleLayout({
               <SmoothScroll />
               <HeaderThemeWatcher />
               <FloatingHeader />
-              <JumpingWordmark />
               {children}
               <PromoBadge />
               <CartDrawer />

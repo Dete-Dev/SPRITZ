@@ -5,14 +5,20 @@ import { useTranslations } from "next-intl";
 import { Link, usePathname } from "@/i18n/navigation";
 
 /**
- * The horizontal category row under the header — brief §11.
+ * The horizontal category row under the header — brief §11, in exactly the
+ * brief's order: All Perfumes · Duo Set · Discovery Set · Gift Set ·
+ * Bestsellers.
  *
- * The brief lists Duo Set / Discovery Set / Gift Set as separate categories.
- * SPRITZ sells one size and builds every set in the bundle configurator, so
- * those three collapse into one honest entry that goes there; the rest are
- * real views of the catalogue driven by the `edit` URL param.
+ * All / Bestsellers are views of this catalogue (the `edit` URL param). The
+ * three set entries go to the gift-sets page: Duo Set is the custom 50ml+15ml
+ * offer, Discovery Set is the 3×15ml trio (catalog §35 names it that), Gift
+ * Set is the whole page.
  */
-const EDITS = ["bestsellers", "new"] as const;
+const SET_LINKS = [
+  { key: "duo", href: "/sets#duo" },
+  { key: "discovery", href: "/sets#trio" },
+  { key: "gift", href: "/sets" },
+] as const;
 
 export default function ShopSubmenu() {
   const t = useTranslations("shopNav");
@@ -22,6 +28,8 @@ export default function ShopSubmenu() {
 
   const item =
     "shrink-0 whitespace-nowrap border-b-2 pb-2 font-sans text-[11px] font-bold uppercase tracking-[0.14em] transition-colors";
+  const idle = "border-transparent text-muted hover:text-ink";
+  const on = "border-ink text-ink";
 
   /** Keep every other filter when switching view. */
   function hrefFor(edit: string | null): string {
@@ -37,29 +45,21 @@ export default function ShopSubmenu() {
       aria-label={t("label")}
       className="sp-rail -mx-1 flex gap-7 overflow-x-auto border-b-2 border-ink px-1"
     >
-      <Link
-        href={hrefFor(null)}
-        className={`${item} ${!active ? "border-ink text-ink" : "border-transparent text-muted hover:text-ink"}`}
-      >
+      <Link href={hrefFor(null)} className={`${item} ${!active ? on : idle}`}>
         {t("all")}
       </Link>
 
-      {EDITS.map((edit) => (
-        <Link
-          key={edit}
-          href={hrefFor(edit)}
-          className={`${item} ${active === edit ? "border-ink text-ink" : "border-transparent text-muted hover:text-ink"}`}
-        >
-          {t(edit)}
+      {SET_LINKS.map(({ key, href }) => (
+        <Link key={key} href={href} className={`${item} ${idle}`}>
+          {t(key)}
         </Link>
       ))}
 
-      {/* Sets live on their own page — custom offers plus ready-made ones. */}
       <Link
-        href="/sets"
-        className={`${item} border-transparent text-red hover:text-ink`}
+        href={hrefFor("bestsellers")}
+        className={`${item} ${active === "bestsellers" ? on : idle}`}
       >
-        {t("sets")}
+        {t("bestsellers")}
       </Link>
     </nav>
   );

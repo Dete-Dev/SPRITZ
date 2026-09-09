@@ -4,28 +4,19 @@ import Cta from "@/components/ui/Cta";
 /**
  * SPRITZ landing hero — brief §1.
  *
- * Full-bleed film, wordmark centred over it (rendered by <JumpingWordmark/>),
- * and the one ask the brief wants: a centred SHOP ALL at the bottom of the
- * frame, in red — the only CTA colour in the system.
+ * Full-bleed film and the one ask the brief wants: a centred SHOP ALL at the
+ * bottom of the frame, in red — the only CTA colour in the system. The film
+ * carries the frame on its own; the roaming wordmark that used to park here
+ * has been removed.
  *
  * The floating search pill and the sticky 20% badge are mounted in the locale
  * layout, so they ride every page rather than living here.
  *
  * Video assets: /public/video/hero.{webm,mp4} with hero-poster.webp behind.
  *
- * The frame is 64:27 (2.370), which is what "21:9" actually means in hardware:
- * 2560×1080. Source the film at exactly that and the crop is zero. A literal
- * 21/9 box (2.333) is very slightly narrower and shaves ~1.6% off each side,
- * so the two must agree. At 1920×1080 (16:9) the browser crops the top and
- * bottom away to fill, which is what it did before and why the shot never sat
- * where it was framed. `max-h` keeps an ultrawide
- * window from pushing the hero past the fold, and `min-h` stops a phone from
- * rendering a 160px letterbox; in both of those the crop returns, by design.
- *
- * `preload="metadata"` on purpose: the film is ~3.8MB and this is the first
- * thing on the page, so `auto` spent a phone's whole connection on it before
- * anything below the fold could load. The poster carries the frame until the
- * video is ready — which is what the poster is for.
+ * The film is the original 16:9 cut (the 21:9 re-cut was reverted). It fills
+ * 86vh with object-cover; on very wide windows the top and bottom crop, by
+ * design.
  */
 export default function VideoHero() {
   const t = useTranslations("landing");
@@ -34,14 +25,14 @@ export default function VideoHero() {
     <section
       data-header-bg="dark"
       aria-label={t("heroLabel")}
-      className="relative aspect-[64/27] max-h-[86vh] min-h-[26rem] w-full overflow-hidden bg-ink"
+      className="relative h-[86vh] min-h-[34rem] w-full overflow-hidden bg-ink"
     >
       <video
         autoPlay
         muted
         loop
         playsInline
-        preload="metadata"
+        preload="auto"
         poster="/video/hero-poster.webp"
         className="absolute inset-0 h-full w-full object-cover"
       >

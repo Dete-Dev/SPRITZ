@@ -21,8 +21,10 @@ export const CHARACTERS = ["sweet", "dry", "fresh", "dark"] as const;
 export { SCENT_KEYS };
 
 interface ScentDetailMessages {
-  story1: string;
-  story2: string;
+  /** Only the five editorial scents carry a story. */
+  story1?: string;
+  story2?: string;
+  /** All twenty-two carry a pyramid (scripts/ingest-notes.mjs). */
   notes: { top: string[]; heart: string[]; base: string[] };
 }
 
@@ -47,9 +49,8 @@ export function getScentKnowledge(locale: FinderLocale): ScentKnowledge[] {
     string,
     ScentDetailMessages
   >;
-  // Only five scents carry hand-written editorial so far; the rest are
-  // described to the model by their label name and the designer fragrance
-  // they answer to. Nothing is invented on their behalf.
+  // Every scent carries its Top / Heart / Base pyramid from the catalog;
+  // only five carry hand-written story copy. Nothing is invented.
   return SCENTS.map((scent) => {
     const detail = details[scent.key];
     return {

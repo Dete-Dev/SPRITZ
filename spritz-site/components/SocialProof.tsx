@@ -19,7 +19,7 @@ export default function SocialProof() {
   const t = useTranslations("proof");
 
   return (
-    <section className="bg-paper-2 px-gutter py-section">
+    <section className="bg-paper-2 px-gutter py-6">
       <div className="mx-auto grid max-w-6xl items-center gap-12 md:grid-cols-2 md:gap-16">
         <h2 className="sp-display text-[clamp(2.2rem,5.5vw,4.5rem)] leading-[0.95]">
           {t("headline")}

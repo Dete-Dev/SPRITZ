@@ -10,7 +10,7 @@ interface BuyBoxProps {
 }
 
 /**
- * Sticky-on-desktop product buy box — brief §13.
+ * Product buy box — brief §13. The gallery beside it is the sticky part.
  *
  * Order follows the brief: name, then "inspired by X (retail price Y)" —
  * the whole dupe pitch in one line — then our price with the saving against
@@ -28,7 +28,7 @@ export default async function BuyBox({ scent }: BuyBoxProps) {
   const saving = scent.retailPrice - scent.price;
 
   return (
-    <div className="md:sticky md:top-28">
+    <div>
       {/* The name is set exactly as printed on the bottle: lowercase French,
           note words bold (rule 7). */}
       <h1 className="sp-display mb-5 text-[clamp(2.2rem,4vw,4rem)] lowercase">

@@ -23,7 +23,7 @@ export default function FaqSection({ limit }: { limit?: number } = {}) {
   }));
 
   return (
-    <section className="bg-paper px-gutter py-section">
+    <section className="bg-paper px-gutter py-6">
       <div className="mx-auto max-w-3xl">
         <h2 className="sp-display text-center text-d-2xl">
           {t("headline")} <Mark color="var(--sp-blue)">{t("headlineEm")}</Mark>

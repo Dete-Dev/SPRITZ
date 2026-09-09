@@ -25,8 +25,8 @@ import SprayBurst from "@/components/motion/SprayBurst";
  *  - `svh`, not `vh`. The mobile URL bar collapses mid-scroll and a `vh` frame
  *    jumps when it does. The panel heights are in `svh` too, so their offsets
  *    never depend on the column width the way a percentage margin would.
- *  - No `z-index`. Anything at 10 or above paints over <JumpingWordmark/>, and
- *    the fixed <BundleBar/> at z-40 must stay on top.
+ *  - No `z-index`. Nothing here needs to win a stacking fight, and the fixed
+ *    <BundleBar/> at z-40 must stay on top.
  *
  * Panels arrive as ReactNode props rather than a render prop: functions cannot
  * cross the server/client boundary, so this keeps <SplitPromo/> a server
@@ -84,9 +84,8 @@ function PinnedStage({ left, right }: { left: ReactNode; right: ReactNode }) {
     offset: ["start start", "end end"],
   });
 
-  // The house spring, matching <JumpingWordmark/>. The pin is the one place a
-  // spring earns its keep: the panels should feel weighted, not welded to the
-  // wheel.
+  // The house spring. The pin is the one place a spring earns its keep: the
+  // panels should feel weighted, not welded to the wheel.
   const p = useSpring(scrollYProgress, {
     stiffness: 90,
     damping: 18,

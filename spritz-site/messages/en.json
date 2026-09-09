@@ -151,7 +151,7 @@
   "footer": {
     "tagline": "Twenty-two scents, made in small batches. Ships this season.",
     "scents": "Scents",
-    "house": "House",
+    "house": "About us",
     "houseLinks": {
       "story": "Story",
       "five": "The catalogue",
@@ -160,7 +160,9 @@
       "shop": "Shop",
       "bundle": "Build a set",
       "journal": "Journal",
-      "sets": "Gift sets"
+      "sets": "Gift sets",
+      "about": "About us",
+      "refer": "Refer a friend"
     },
     "correspondence": "Correspondence",
     "correspondenceBody": "One note when the bottles ship. Nothing else.",
@@ -184,9 +186,9 @@
     "headline": "All twenty-two.",
     "filterAll": "All",
     "genders": {
-      "her": "for her",
-      "him": "for him",
-      "unisex": "unisex"
+      "her": "Women",
+      "him": "Men",
+      "unisex": "Unisex"
     },
     "count": "{count, plural, one {# scent} other {# scents}}"
   },
@@ -278,13 +280,13 @@
     "notesIntro": "What it actually smells like, layer by layer. Top notes hit first and fade fastest; the base is what you wear into the evening.",
     "noteLayers": {
       "top": "Top",
-      "heart": "Heart",
+      "heart": "Middle",
       "base": "Base"
     },
     "noteLayerDescriptions": {
-      "top": "The opening — what you smell in the first ten minutes.",
-      "heart": "Where the scent settles, an hour in.",
-      "base": "What's left on your skin after dinner."
+      "top": "The first notes you smell",
+      "heart": "The heart of the perfume",
+      "base": "The notes that linger all day"
     },
     "wear": "How to wear it",
     "wearBody": "Spray once on each wrist, once at the base of the throat. Don't rub. Re-apply after about four hours if you want it loud.",
@@ -294,7 +296,7 @@
     "notesIntroLabel": "The two notes printed on this bottle. The full pyramid is being written.",
     "retailPrice": "(retail price €{price})",
     "thisPerfumeIs": "This perfume is:",
-    "mainNotes": "Main notes",
+    "mainNotes": "Main notes:",
     "aboutFallback": "Made in small batches in Bucharest, hand-poured into 50ml glass and numbered on the cap. The full note breakdown for this one is still being written — the two notes printed on the label are the honest summary until then.",
     "shippingHint": "Free shipping with 2+ bottles. Free returns.",
     "layeredIntro": "These sit in the same family, so they layer without fighting each other. Two bottles already take 10% off.",
@@ -312,19 +314,22 @@
       "story2": "Birch bark holds the whole thing together. It keeps the fruit from being a dessert; it makes the bottle smell like something an adult might wear to dinner.",
       "notes": {
         "top": [
-          "Pineapple rind",
-          "Calabrian bergamot",
-          "Pink pepper"
+          "pineapple",
+          "bergamot",
+          "blackcurrant",
+          "green apple"
         ],
         "heart": [
-          "Birch sap",
-          "Violet leaf",
-          "Jasmine sambac"
+          "birch",
+          "patchouli",
+          "jasmine",
+          "rose"
         ],
         "base": [
-          "Cedarwood",
-          "White musk",
-          "Vetiver"
+          "musk",
+          "oakmoss",
+          "ambergris",
+          "vanilla"
         ]
       }
     },
@@ -333,19 +338,22 @@
       "story2": "Built like a perfume from the 90s, but lighter. Wears well in cold weather. Don't put it on if you're trying to be subtle.",
       "notes": {
         "top": [
-          "Black cherry",
-          "Raspberry",
-          "Lime zest"
+          "burning cherry",
+          "raspberry",
+          "bergamot"
         ],
         "heart": [
-          "Damascena rose",
-          "Iris",
-          "Almond blossom"
+          "praline",
+          "heliotrope",
+          "damask rose",
+          "jasmine sambac"
         ],
         "base": [
-          "Tonka bean",
-          "Sandalwood",
-          "White musk"
+          "palo santo",
+          "guaiac wood",
+          "tonka bean",
+          "Peru balsam",
+          "patchouli"
         ]
       }
     },
@@ -354,19 +362,21 @@
       "story2": "The quietest one in the five. Reads as fresh without being a cologne. Looks good on anyone.",
       "notes": {
         "top": [
-          "Spearmint",
-          "Lemon zest",
-          "Ginger root"
+          "grapefruit",
+          "lemon",
+          "mint",
+          "pink pepper"
         ],
         "heart": [
-          "Cedarwood",
-          "Geranium",
-          "Cardamom"
+          "ginger",
+          "nutmeg",
+          "jasmine"
         ],
         "base": [
-          "Patchouli",
-          "Vetiver",
-          "White moss"
+          "cedar",
+          "sandalwood",
+          "incense",
+          "vetiver"
         ]
       }
     },
@@ -375,19 +385,17 @@
       "story2": "The warmest of the five. Wears longer than the others. We saved this one for after sundown.",
       "notes": {
         "top": [
-          "Saffron threads",
-          "Bergamot",
-          "Pink pepper"
+          "saffron",
+          "jasmine",
+          "bitter almond"
         ],
         "heart": [
-          "Jasmine",
-          "Damask rose",
-          "Cinnamon"
+          "amberwood",
+          "ambergris"
         ],
         "base": [
-          "Amber resin",
-          "Sandalwood",
-          "Oud accord"
+          "cedar",
+          "fir resin"
         ]
       }
     },
@@ -396,19 +404,354 @@
       "story2": "Heaviest of the five. Don't reach for it in July. Don't reach for anything else in February.",
       "notes": {
         "top": [
-          "Bergamot zest",
-          "Pink pepper",
-          "Cardamom"
+          "truffle",
+          "blackcurrant",
+          "ylang-ylang",
+          "bergamot"
         ],
         "heart": [
-          "Black truffle",
-          "Jasmine",
-          "Iris"
+          "black orchid",
+          "spice",
+          "lotus wood"
         ],
         "base": [
-          "Dark cocoa",
-          "Vanilla bean",
-          "Patchouli"
+          "patchouli",
+          "dark chocolate",
+          "vanilla",
+          "incense",
+          "sandalwood"
+        ]
+      }
+    },
+    "vanille-cafe": {
+      "notes": {
+        "top": [
+          "pear",
+          "pink pepper",
+          "orange blossom"
+        ],
+        "heart": [
+          "coffee",
+          "jasmine",
+          "bitter almond",
+          "licorice"
+        ],
+        "base": [
+          "vanilla",
+          "patchouli",
+          "cedar"
+        ]
+      }
+    },
+    "cuir-tabac": {
+      "notes": {
+        "top": [
+          "black pepper",
+          "nutmeg"
+        ],
+        "heart": [
+          "incense",
+          "cinnamon"
+        ],
+        "base": [
+          "dark leather",
+          "tobacco"
+        ]
+      }
+    },
+    "amande-tonka": {
+      "notes": {
+        "top": [
+          "almond",
+          "coffee",
+          "lemon",
+          "bergamot"
+        ],
+        "heart": [
+          "tuberose",
+          "jasmine",
+          "Bulgarian rose",
+          "orange blossom"
+        ],
+        "base": [
+          "praline",
+          "cacao",
+          "tonka bean",
+          "vanilla",
+          "sandalwood"
+        ]
+      }
+    },
+    "jasmin-cashmeran": {
+      "notes": {
+        "top": [
+          "jasmine sambac"
+        ],
+        "heart": [
+          "cashmeran wood"
+        ],
+        "base": [
+          "white amber"
+        ]
+      }
+    },
+    "mer-bergamote": {
+      "notes": {
+        "top": [
+          "marine notes",
+          "bergamot"
+        ],
+        "heart": [
+          "rosemary",
+          "sage",
+          "geranium"
+        ],
+        "base": [
+          "patchouli",
+          "incense",
+          "amberwood"
+        ]
+      }
+    },
+    "ylang-jasmin": {
+      "notes": {
+        "top": [
+          "aldehydes",
+          "ylang-ylang",
+          "neroli",
+          "bergamot"
+        ],
+        "heart": [
+          "jasmine",
+          "rose",
+          "lily of the valley",
+          "orris"
+        ],
+        "base": [
+          "sandalwood",
+          "vetiver",
+          "vanilla",
+          "amber",
+          "musk"
+        ]
+      }
+    },
+    "lavande-vanille": {
+      "notes": {
+        "top": [
+          "bergamot",
+          "mandarin",
+          "blackcurrant",
+          "lavandin"
+        ],
+        "heart": [
+          "lavender",
+          "orange blossom",
+          "jasmine"
+        ],
+        "base": [
+          "vanilla",
+          "tonka bean",
+          "cedar",
+          "musk"
+        ]
+      }
+    },
+    "rose-jasmin": {
+      "notes": {
+        "top": [
+          "rosewood",
+          "lavender",
+          "apple",
+          "cinnamon"
+        ],
+        "heart": [
+          "Bulgarian rose",
+          "lily of the valley",
+          "cedar"
+        ],
+        "base": [
+          "Laotian oud",
+          "sandalwood",
+          "amber",
+          "vanilla",
+          "musk"
+        ]
+      }
+    },
+    "cuir-menthe": {
+      "notes": {
+        "top": [
+          "blood mandarin",
+          "grapefruit",
+          "peppermint"
+        ],
+        "heart": [
+          "rose",
+          "cinnamon",
+          "spices"
+        ],
+        "base": [
+          "leather",
+          "amber",
+          "woods",
+          "patchouli"
+        ]
+      }
+    },
+    "cognac-bergamote": {
+      "notes": {
+        "top": [
+          "bitter orange",
+          "grapefruit",
+          "lemon",
+          "bergamot",
+          "aldehydes"
+        ],
+        "heart": [
+          "cognac",
+          "cinnamon",
+          "caramel"
+        ],
+        "base": [
+          "tonka bean",
+          "oak",
+          "sandalwood",
+          "myrrh"
+        ]
+      }
+    },
+    "oud-safran": {
+      "notes": {
+        "top": [
+          "spices",
+          "frankincense",
+          "ginger",
+          "bergamot"
+        ],
+        "heart": [
+          "May rose (rose centifolia)"
+        ],
+        "base": [
+          "oud",
+          "sandalwood",
+          "patchouli",
+          "myrrh",
+          "licorice",
+          "tonka bean"
+        ]
+      }
+    },
+    "oud-santal": {
+      "notes": {
+        "top": [
+          "rosewood",
+          "cardamom",
+          "Sichuan pepper"
+        ],
+        "heart": [
+          "oud",
+          "sandalwood",
+          "vetiver"
+        ],
+        "base": [
+          "tonka bean",
+          "vanilla",
+          "amber"
+        ]
+      }
+    },
+    "iris-bergamote": {
+      "notes": {
+        "top": [
+          "blackcurrant",
+          "pear",
+          "bergamot"
+        ],
+        "heart": [
+          "iris",
+          "jasmine",
+          "orange blossom"
+        ],
+        "base": [
+          "praline",
+          "vanilla",
+          "patchouli",
+          "tonka bean"
+        ]
+      }
+    },
+    "gardenia-mandarin": {
+      "notes": {
+        "top": [
+          "Italian mandarin"
+        ],
+        "heart": [
+          "gardenia",
+          "hedione",
+          "magnolia"
+        ],
+        "base": [
+          "sandalwood",
+          "vanilla",
+          "patchouli"
+        ]
+      }
+    },
+    "menthe-tonka": {
+      "notes": {
+        "top": [
+          "mint",
+          "green apple",
+          "lemon"
+        ],
+        "heart": [
+          "tonka bean",
+          "geranium",
+          "ambroxan"
+        ],
+        "base": [
+          "vanilla",
+          "vetiver",
+          "oakmoss",
+          "cedar"
+        ]
+      }
+    },
+    "poivre-ambre": {
+      "notes": {
+        "top": [
+          "pink pepper",
+          "lemon"
+        ],
+        "heart": [
+          "frankincense (olibanum)",
+          "lavender"
+        ],
+        "base": [
+          "vanilla",
+          "tonka bean",
+          "amber"
+        ]
+      }
+    },
+    "citron-cardamome": {
+      "notes": {
+        "top": [
+          "lemon",
+          "ginger",
+          "cardamom",
+          "mint"
+        ],
+        "heart": [
+          "vetiver",
+          "juniper",
+          "geranium"
+        ],
+        "base": [
+          "tonka bean",
+          "amberwood",
+          "sandalwood"
         ]
       }
     }
@@ -468,7 +811,7 @@
     "inspiredBy": "inspired by {name}",
     "tickerLead": "inspired by",
     "cheaperThan": "€{amount} cheaper than the original",
-    "cheaperPercent": "{percent}% cheaper than the original"
+    "cheaperPercent": "{percent}% cheaper than the luxury brand"
   },
   "drops": {
     "eyebrow": "Fresh off the bench",
@@ -559,19 +902,19 @@
   },
   "usps": {
     "ingredients": "Premium ingredients",
-    "pricing": "Honest pricing",
+    "pricing": "Affordable pricing",
     "lasting": "Long-lasting scents",
-    "variety": "Twenty-two options"
+    "variety": "Variety of options"
   },
   "split": {
     "singleEyebrow": "The single — 50ml",
     "singleTitle": "One bottle. One hundred euro.",
     "singleCta": "Shop this scent",
-    "setEyebrow": "The set — two or more",
+    "setEyebrow": "The Duo Set — 50ml + 15ml",
     "setTitle": "Two bottles, ten percent off.",
     "setBody": "Pick any two of the twenty-two and the discount lands at checkout. Three take 15%, five take 20%.",
     "setBadge": "−10% at two",
-    "setCta": "Build your set"
+    "setCta": "See the sets"
   },
   "proof": {
     "headline": "Twenty-two scents. One honest price.",
@@ -619,14 +962,18 @@
     "travelFlag": "−{percent}% vs. buying the two apart",
     "includedTitle": "What is included",
     "includedBottle": "{name} — {size}",
-    "includedCompanion": "{name} — 15ml, for your bag"
+    "includedCompanion": "{name} — 15ml, for your bag",
+    "setLabel": "{size} + 15ml"
   },
   "shopNav": {
     "label": "Shop categories",
     "all": "All perfumes",
     "bestsellers": "Bestsellers",
     "new": "New arrivals",
-    "sets": "Build a set"
+    "sets": "Build a set",
+    "duo": "Duo set",
+    "discovery": "Discovery set",
+    "gift": "Gift set"
   },
   "shopFilters": {
     "searchPlaceholder": "Search scents, brands, notes",
@@ -641,7 +988,8 @@
     "collections": "Collections",
     "clear": "Clear",
     "empty": "Nothing matches those filters. Try clearing one.",
-    "fragrantica": "Look up {name} on Fragrantica"
+    "fragrantica": "Look up {name} on Fragrantica",
+    "sortFilter": "Sort & Filter"
   },
   "shopPromo": {
     "eyebrow": "Make it a set",
@@ -704,6 +1052,55 @@
     "contact": "Contact us",
     "shipping": "Shipping & returns",
     "makeABundle": "Make a bundle",
-    "makeADiscoverySet": "Make a discovery set"
+    "makeADiscoverySet": "Make your discovery set",
+    "referFriend": "Refer a friend"
+  },
+  "setPage": {
+    "eyebrow": "Duo set — 50ml + 15ml",
+    "back": "← All gift sets",
+    "details": "See details",
+    "included": "What is included",
+    "contents": "{anchor} in 50ml with {companion} in 15ml, boxed together."
+  },
+  "aboutPage": {
+    "metaTitle": "SPRITZ — About us",
+    "metaDescription": "Who makes SPRITZ, and how the twenty-two scents are made in small batches in Bucharest.",
+    "eyebrow": "Who we are",
+    "headline": "Twenty-two scents,",
+    "headlineEm": "one honest price."
+  },
+  "faqPage": {
+    "metaTitle": "SPRITZ — FAQ",
+    "metaDescription": "Straight answers on dupes, longevity, sizes, bundles, shipping and returns.",
+    "eyebrow": "Help"
+  },
+  "contactPage": {
+    "metaTitle": "SPRITZ — Contact us",
+    "metaDescription": "Write to SPRITZ — orders, scents, sets, anything.",
+    "eyebrow": "Help",
+    "headline": "Talk to",
+    "headlineEm": "a human.",
+    "body": "One inbox, read by the people who pour the bottles. Orders, scent questions, set advice — write and we answer.",
+    "emailLabel": "Email",
+    "email": "hello@spritz.ro",
+    "hoursLabel": "We answer",
+    "hours": "Monday to Friday, 10:00–18:00 (Bucharest). Usually the same day.",
+    "shipping": "Free shipping on every order across Romania and the EU. Thirty-day returns, no questions.",
+    "ctaFaq": "Read the FAQ"
+  },
+  "referPage": {
+    "metaTitle": "SPRITZ — Refer a friend",
+    "metaDescription": "Share SPRITZ with a friend. They get 20% off their first order.",
+    "eyebrow": "Who we are",
+    "headline": "Good scents",
+    "headlineEm": "travel.",
+    "body": "Send a friend to SPRITZ. They take 20% off their first bottle with the welcome code, and you get the credit for the compliment.",
+    "steps": [
+      "Tell a friend about SPRITZ and send them here.",
+      "They join the list with the badge in the corner and get their −20% code.",
+      "They pick a bottle or a set — the code lands at checkout."
+    ],
+    "footnote": "The −20% code is the welcome offer from the newsletter popup. Referral credit for the sender launches with the store.",
+    "cta": "Shop all scents"
   }
 }

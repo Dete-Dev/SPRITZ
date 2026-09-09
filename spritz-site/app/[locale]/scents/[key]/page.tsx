@@ -18,8 +18,8 @@ import { Spray, StripeBand } from "@/components/ui/vandal";
  * Product page for a single scent — brief §13, §14, §15.
  *
  *   TierBanner   — the sticky black bundle band, always on screen
- *   Above-fold   — ScentGallery (left) | BuyBox (right, sticky on md+)
- *   Accordions   — Scent Notes / About / Shipping + Returns / FAQs /
+ *   Above-fold   — ScentGallery (left, sticky on md+) | BuyBox + accordions
+ *                  (right): Scent Notes / About / Shipping + Returns / FAQs /
  *                  Best Layered With, in the brief's order
  *   MoreFromTheFive, SiteFooter
  *
@@ -138,7 +138,7 @@ export default async function ScentPage({
           <p className="mb-5 font-sans text-base text-muted">
             {t("layeredIntro")}
           </p>
-          <ul className="grid grid-cols-2 gap-4 sm:grid-cols-3">
+          <ul className="grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-2">
             {layerWith.map((s) => (
               <li key={s.key}>
                 <ScentCard
@@ -180,7 +180,9 @@ export default async function ScentPage({
             className="absolute -left-20 top-0 h-[30rem] w-[30rem]"
           />
           <div className="relative grid grid-cols-12 items-start gap-8 md:gap-14">
-            <div className="col-span-12 md:col-span-7">
+            {/* The gallery holds still while the right column (buy box +
+                accordions, brief §13/§14) scrolls past it. */}
+            <div className="col-span-12 md:sticky md:top-28 md:col-span-7 md:self-start">
               <ScentGallery
                 images={scent.gallery}
                 alt={scent.name}
@@ -189,14 +191,10 @@ export default async function ScentPage({
             </div>
             <div className="col-span-12 md:col-span-5">
               <BuyBox scent={scent} />
+              {/* Brief §14 — everything else folded away under the buy box,
+                  Scent Notes open by default (brief §13). */}
+              <Accordion items={accordionItems} className="mt-10" />
             </div>
-          </div>
-        </section>
-
-        {/* Brief §14 — everything else folded away to keep the page clean. */}
-        <section className="mx-auto max-w-7xl px-gutter pb-section">
-          <div className="md:max-w-3xl">
-            <Accordion items={accordionItems} />
           </div>
         </section>
 

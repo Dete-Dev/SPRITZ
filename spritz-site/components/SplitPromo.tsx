@@ -23,6 +23,18 @@ import { SCENTS } from "@/lib/scents";
 const SINGLE_KEY = "safran-ambre";
 const SET_KEY = "truffe-chocolat";
 
+/**
+ * Both panels are shot 9:16 with the bottles in the right half, because the
+ * scrim and the copy occupy the left one on desktop. See brand/editorial.
+ */
+/** Which hover register the page runs. Flip to "vandal" to swap both panels. */
+const LOOK = "street";
+
+const SINGLE_IMAGE = "/images/editorial/split-single.webp";
+const SET_IMAGE = "/images/editorial/split-set.webp";
+const SINGLE_HOVER = `/images/editorial/split-single-${LOOK}.webp`;
+const SET_HOVER = `/images/editorial/split-set-${LOOK}.webp`;
+
 export default async function SplitPromo() {
   const t = await getTranslations("split");
   const tCommon = await getTranslations("common");
@@ -52,14 +64,20 @@ export default async function SplitPromo() {
           <Link
             href={`/scents/${single.key}`}
             className={`${panel} border-b-2 border-ink md:border-b-0 md:border-r-2`}
-            style={{ backgroundColor: single.accent }}
           >
             <Image
-              src={single.hero}
+              src={SINGLE_IMAGE}
               alt=""
               fill
               sizes="(min-width: 768px) 50vw, 100vw"
-              className="object-cover transition-transform duration-[900ms] ease-spritz group-hover:scale-[1.04]"
+              className="object-cover transition-[transform,opacity] duration-[900ms] ease-spritz group-hover:scale-[1.04] group-hover:opacity-0"
+            />
+            <Image
+              src={SINGLE_HOVER}
+              alt=""
+              fill
+              sizes="(min-width: 768px) 50vw, 100vw"
+              className="absolute inset-0 object-cover opacity-0 transition-[transform,opacity] duration-[900ms] ease-spritz group-hover:scale-[1.04] group-hover:opacity-100"
             />
             <div aria-hidden className={scrim} />
 
@@ -75,13 +93,20 @@ export default async function SplitPromo() {
           </Link>
         }
         right={
-          <Link href="/sets" className={panel} style={{ backgroundColor: set.accent }}>
+          <Link href="/sets" className={panel}>
             <Image
-              src={set.hero}
+              src={SET_IMAGE}
               alt=""
               fill
               sizes="(min-width: 768px) 50vw, 100vw"
-              className="object-cover transition-transform duration-[900ms] ease-spritz group-hover:scale-[1.04]"
+              className="object-cover transition-[transform,opacity] duration-[900ms] ease-spritz group-hover:scale-[1.04] group-hover:opacity-0"
+            />
+            <Image
+              src={SET_HOVER}
+              alt=""
+              fill
+              sizes="(min-width: 768px) 50vw, 100vw"
+              className="absolute inset-0 object-cover opacity-0 transition-[transform,opacity] duration-[900ms] ease-spritz group-hover:scale-[1.04] group-hover:opacity-100"
             />
             <div aria-hidden className={scrim} />
 
