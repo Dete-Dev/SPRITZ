@@ -1,0 +1,131 @@
+<!doctype html>
+<meta charset="utf-8">
+<title>SPRITZ hero — full assembly</title>
+<style>
+  :root{ --ink:#0e0e0e; --paper:#f4f1ea; --red:#d8394a; --line:#2a2a2a; --gen:#8a5cd0; --keep:#2f6f4f; }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--ink);color:var(--paper);
+       font:14px/1.5 ui-sans-serif,system-ui,sans-serif;padding:32px}
+  h1{font-size:19px;margin:0 0 4px}
+  .sub{color:#8b8b8b;margin:0 0 26px;font-size:13px;max-width:760px}
+  .stage{position:relative;width:100%;max-width:1400px;aspect-ratio:21/9;
+         overflow:hidden;background:#000;border:2px solid var(--line)}
+  .stage video{position:absolute;inset:0;width:100%;height:100%;
+               object-fit:cover;opacity:0;transition:opacity 60ms linear}
+  .stage video.on{opacity:1}
+  .tag{position:absolute;left:12px;top:12px;z-index:5;padding:5px 10px;
+       font:bold 10px/1 ui-sans-serif,system-ui,sans-serif;letter-spacing:.14em;
+       text-transform:uppercase;color:#fff;background:#000a;border:1px solid #fff3}
+  .tag.gen{background:var(--gen)}
+  .bar{display:flex;gap:10px;align-items:center;margin:18px 0 0;max-width:1400px;flex-wrap:wrap}
+  button{background:var(--paper);color:var(--ink);border:0;padding:9px 16px;
+         font:bold 11px/1 ui-sans-serif,system-ui,sans-serif;letter-spacing:.12em;
+         text-transform:uppercase;cursor:pointer}
+  button.alt{background:#333;color:var(--paper)}
+  .read{margin-left:auto;font-family:ui-monospace,monospace;color:#8b8b8b;font-size:12px}
+  .track{display:flex;height:30px;margin-top:14px;max-width:1400px;border:1px solid var(--line);overflow:hidden}
+  .track div{position:relative;font:bold 9px/30px ui-sans-serif,system-ui,sans-serif;
+             letter-spacing:.1em;text-align:center;color:#fff;white-space:nowrap;overflow:hidden}
+  .track .g{background:var(--gen)}
+  .track .k{background:var(--keep)}
+  .track div.cur{outline:2px solid var(--red);outline-offset:-2px}
+  .legend{margin-top:26px;color:#7a7a7a;font-size:12px;max-width:760px}
+  .legend b{color:var(--paper)} .sw{display:inline-block;width:10px;height:10px;vertical-align:-1px;margin-right:4px}
+</style>
+
+<h1>SPRITZ hero — full assembly</h1>
+<p class="sub">Your kept footage with the two generated clips dropped into the holes. Plays in order and loops. Purple is generated, green is yours. Nothing is re-encoded — this is the real edit played back live, so what you see is what you would get.</p>
+
+<div class="stage" id="stage">
+  <span class="tag" id="tag">–</span>
+  <video id="gA" muted playsinline preload="auto" src="./generated/FINAL-holeA-skater-bottle.mp4"></video>
+  <video id="hero" muted playsinline preload="auto" src="../../spritz-site/public/video/hero.mp4"></video>
+  <video id="gB" muted playsinline preload="auto" src="./generated/FINAL-holeB-bottle-at-wall.mp4"></video>
+</div>
+
+<div class="bar">
+  <button id="pp">Pause</button>
+  <button id="restart" class="alt">Restart</button>
+  <span class="read" id="read">–</span>
+</div>
+
+<div class="track" id="track"></div>
+
+<p class="legend">
+  <span class="sw" style="background:var(--gen)"></span><b>Generated</b> — the opening, and the gap where the skater was.<br>
+  <span class="sw" style="background:var(--keep)"></span><b>Yours</b> — hotel, mob and limo; the graffiti tag (now ending 7.48, not 7.92); the man in the gold chain; the bottle on the night street.
+</p>
+
+<script>
+  /* One timeline, four segments. Each names which element plays it and the
+     in/out point inside that element. The hero file appears twice, at two
+     different ranges — that is the whole edit. */
+  const SEGS = [
+    { el: "gA",   from: 0.10,  to: 3.02,  label: "Generated · opening",        gen: true  },
+    { el: "hero", from: 2.92,  to: 7.48,  label: "Yours · hotel, mob, limo + tag", gen: false },
+    { el: "gB",   from: 0.10,  to: 2.58,  label: "Generated · bottle at wall", gen: true  },
+    { el: "hero", from: 10.40, to: 15.40, label: "Yours · gold chain + night", gen: false },
+  ];
+
+  const els = { gA: gA, hero: hero, gB: gB };
+  const track = document.getElementById("track");
+  const tag = document.getElementById("tag");
+  const read = document.getElementById("read");
+  const total = SEGS.reduce((s, x) => s + (x.to - x.from), 0);
+
+  SEGS.forEach((s, i) => {
+    const d = document.createElement("div");
+    d.className = s.gen ? "g" : "k";
+    d.style.flex = (s.to - s.from);
+    d.textContent = (s.to - s.from).toFixed(2) + "s";
+    d.dataset.i = i;
+    track.appendChild(d);
+  });
+
+  let idx = -1, playing = true;
+
+  function show(el) {
+    for (const k in els) els[k].classList.toggle("on", els[k] === el);
+  }
+
+  async function enter(i) {
+    idx = i;
+    const s = SEGS[i];
+    const v = els[s.el];
+    // Park every other element so two files never play at once.
+    for (const k in els) if (els[k] !== v) els[k].pause();
+    v.currentTime = s.from;
+    show(v);
+    tag.textContent = s.label;
+    tag.className = "tag" + (s.gen ? " gen" : "");
+    [...track.children].forEach((c, n) => c.classList.toggle("cur", n === i));
+    if (playing) { try { await v.play(); } catch (e) {} }
+  }
+
+  function tick() {
+    const s = SEGS[idx];
+    if (s) {
+      const v = els[s.el];
+      if (v.currentTime >= s.to - 0.03) {
+        enter((idx + 1) % SEGS.length);
+      } else {
+        const before = SEGS.slice(0, idx).reduce((a, x) => a + (x.to - x.from), 0);
+        const at = before + (v.currentTime - s.from);
+        read.textContent = at.toFixed(2) + "s / " + total.toFixed(2) + "s";
+      }
+    }
+    requestAnimationFrame(tick);
+  }
+
+  document.getElementById("pp").onclick = (e) => {
+    playing = !playing;
+    const v = els[SEGS[idx].el];
+    if (playing) { v.play(); e.target.textContent = "Pause"; }
+    else { v.pause(); e.target.textContent = "Play"; }
+  };
+  document.getElementById("restart").onclick = () => enter(0);
+
+  Promise.all(Object.values(els).map(v => new Promise(r => {
+    v.readyState >= 2 ? r() : v.addEventListener("loadeddata", r, { once: true });
+  }))).then(() => { enter(0); requestAnimationFrame(tick); });
+</script>

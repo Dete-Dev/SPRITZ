@@ -8,7 +8,13 @@
  * Each output is a transparent cutout — the bottle and its props sit on the
  * page's accent tint instead of inside a gray studio box. Run via:
  *
+ *   npm i --no-save @imgly/background-removal-node
  *   node scripts/optimize-images.mjs
+ *
+ * The background-removal package is NOT a project dependency. It pulls
+ * onnxruntime-node, which downloads ~290 MB of native binaries during install
+ * — on every deploy build, for a script no build ever runs. Install it on
+ * demand instead.
  *
  * Re-runnable: existing files are overwritten.
  */

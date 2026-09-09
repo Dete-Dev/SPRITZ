@@ -1,11 +1,12 @@
 "use client";
 
 import { useState } from "react";
-import Image from "next/image";
 import { AnimatePresence, motion } from "framer-motion";
 import { useLocale, useTranslations } from "next-intl";
-import { Link } from "@/i18n/navigation";
 import { SCENTS } from "@/lib/scents";
+import Cta from "@/components/ui/Cta";
+import ScentCard from "@/components/ui/ScentCard";
+import { Mark, Spray } from "@/components/ui/vandal";
 import FinderChips from "./FinderChips";
 import FinderResult from "./FinderResult";
 
@@ -30,6 +31,7 @@ interface Recommendation {
  */
 export default function ScentFinder() {
   const t = useTranslations("finder");
+  const tCommon = useTranslations("common");
   const locale = useLocale();
 
   const [phase, setPhase] = useState<Phase>("idle");
@@ -109,21 +111,23 @@ export default function ScentFinder() {
 
   return (
     <section
+      id="finder"
       aria-labelledby="finder-heading"
-      className="px-6 py-28 md:py-36"
+      className="relative overflow-hidden bg-paper-2 px-gutter py-section"
     >
-      <div className="mx-auto max-w-3xl">
-        <header className="mb-14 text-center">
-          <p className="mb-6 text-[11px] uppercase tracking-[0.45em] text-ink/60">
-            {t("eyebrow")}
-          </p>
-          <h2
-            id="finder-heading"
-            className="font-display text-[clamp(2.2rem,4.5vw,3.8rem)] leading-[0.98] text-ink mb-5"
-          >
-            {t("headline")}
+      <Spray
+        color="var(--sp-pink)"
+        opacity={0.3}
+        className="absolute -right-28 -top-20 h-[26rem] w-[26rem]"
+      />
+
+      <div className="relative mx-auto max-w-3xl">
+        <header className="mb-12 text-center">
+          <p className="sp-eyebrow">{t("eyebrow")}</p>
+          <h2 id="finder-heading" className="sp-display mt-5 text-d-2xl">
+            <Mark color="var(--sp-pink)">{t("headline")}</Mark>
           </h2>
-          <p className="mx-auto max-w-md text-[15px] leading-relaxed text-ink/70">
+          <p className="mx-auto mt-6 max-w-md font-sans text-d-lg text-muted">
             {t("intro")}
           </p>
         </header>
@@ -155,21 +159,20 @@ export default function ScentFinder() {
                 disabled={phase === "loading"}
                 onChange={(e) => setFreeText(e.target.value)}
                 placeholder={t("freeTextPlaceholder")}
-                className="mb-8 w-full border-b border-ink/25 bg-transparent pb-3 text-[15px] text-ink placeholder:text-ink/40 focus:border-ink focus:outline-none disabled:opacity-50"
+                className="mb-8 w-full rounded-full border-2 border-ink bg-paper px-5 py-3 font-sans text-base text-ink placeholder:text-muted focus:outline-none disabled:opacity-50"
               />
 
               <div className="flex items-center justify-center">
                 {phase === "loading" ? (
                   <LoadingDots label={t("loading")} />
                 ) : (
-                  <button
-                    type="button"
+                  <Cta
                     onClick={handleSubmit}
-                    disabled={!hasInput}
-                    className="inline-flex items-center rounded-full border border-ink/70 bg-ink px-8 py-3 text-[11px] uppercase tracking-[0.32em] text-ivory transition-colors hover:bg-transparent hover:text-ink disabled:cursor-not-allowed disabled:opacity-50"
+                    variant="primary"
+                    className={hasInput ? "" : "pointer-events-none opacity-40"}
                   >
                     {t("submit")}
-                  </button>
+                  </Cta>
                 )}
               </div>
             </motion.div>
@@ -194,38 +197,24 @@ export default function ScentFinder() {
               transition={{ duration: 0.4 }}
               className="text-center"
             >
-              <p className="mb-10 text-[15px] leading-relaxed text-ink/70">
+              <p className="mb-10 font-sans text-d-lg text-muted">
                 {t("fallback")}
               </p>
-              <ul className="flex flex-wrap items-end justify-center gap-6">
+              <ul className="grid grid-cols-2 items-stretch gap-5 text-left sm:grid-cols-3 lg:grid-cols-5">
                 {SCENTS.map((scent) => (
                   <li key={scent.key}>
-                    <Link
-                      href={`/scents/${scent.key}`}
-                      className="group block text-center"
-                    >
-                      <span className="relative block h-32 w-24">
-                        <Image
-                          src={scent.clean}
-                          alt={scent.name}
-                          fill
-                          sizes="96px"
-                          className="object-contain transition-transform duration-300 group-hover:-translate-y-1"
-                        />
-                      </span>
-                      <span
-                        aria-hidden
-                        className="mx-auto mt-3 block h-1.5 w-1.5 rounded-full"
-                        style={{ backgroundColor: scent.accent }}
-                      />
-                    </Link>
+                    <ScentCard
+                      scent={scent}
+                      priceLabel={tCommon("price", { price: scent.price })}
+                      inspiredByLabel={tCommon("inspiredBy", { name: scent.inspiredBy })}
+                    />
                   </li>
                 ))}
               </ul>
               <button
                 type="button"
                 onClick={restart}
-                className="mt-10 text-[11px] uppercase tracking-[0.32em] text-ink/50 underline-offset-4 hover:text-ink hover:underline"
+                className="sp-eyebrow mt-10 underline-offset-4 hover:text-ink hover:underline"
               >
                 {t("restart")}
               </button>
@@ -246,7 +235,7 @@ function LoadingDots({ label }: { label: string }) {
           <motion.span
             key={scent.key}
             className="block h-2 w-2 rounded-full"
-            style={{ backgroundColor: scent.accent }}
+            style={{ backgroundColor: scent.stripe }}
             animate={{ opacity: [0.25, 1, 0.25], scale: [1, 1.25, 1] }}
             transition={{
               duration: 1.2,
@@ -257,9 +246,7 @@ function LoadingDots({ label }: { label: string }) {
           />
         ))}
       </div>
-      <p className="text-[10px] uppercase tracking-[0.4em] text-ink/50">
-        {label}
-      </p>
+      <p className="sp-eyebrow">{label}</p>
     </div>
   );
 }

@@ -1,0 +1,62 @@
+/* VENDORED from spritz-site/app/tokens/colors.css by scripts/sync-ds.mjs — do not edit here. */
+/* ==========================================================================
+   SPRITZ v2 — colour tokens
+   Guideline palette (ch.04) + neutrals + the five scent colourways.
+   v2 rule: all five brand colours are LOUD — paint hits, stickers, stripes —
+   but red stays the only CTA colour.
+   ========================================================================== */
+:root {
+  /* Brand palette (guideline ch.04) */
+  --sp-ink: #0a0a0a;
+  --sp-blue: #1652c2;
+  --sp-red: #e5143c;
+  --sp-yellow: #e8b83c;
+  --sp-pink: #f178ac;
+  --sp-green: #16a85f;
+
+  /* Neutrals */
+  --sp-paper: #ffffff;
+  --sp-paper-2: #f6f5f3;
+  --sp-line: #e4e2de;
+  --sp-muted: #6c6a66;
+
+  /* Dark-surface neutrals (v2 hero world) */
+  --sp-ink-2: #161616;      /* card on ink */
+  --sp-ink-line: #2c2c2c;   /* rules on ink */
+  --sp-ink-muted: #9a978f;  /* secondary text on ink */
+  --sp-cream: #f4ede2;      /* text on ink — never pure white walls */
+
+  /* Scent colourways (label accents, from lib/scents.ts) */
+  --sp-scent-ananas: #d9b675;
+  --sp-scent-cerise: #e89bb4;
+  --sp-scent-menthe: #7ec4b7;
+  --sp-scent-safran: #c45a4f;
+  --sp-scent-truffe: #8a6238;
+
+  /* Scent stripe colours (label stripe = nearest loud brand colour) */
+  --sp-stripe-ananas: var(--sp-yellow);
+  --sp-stripe-cerise: var(--sp-pink);
+  --sp-stripe-menthe: var(--sp-blue);
+  --sp-stripe-safran: var(--sp-red);
+  --sp-stripe-truffe: var(--sp-green);
+
+  /* Semantic */
+  --sp-bg: var(--sp-paper);
+  --sp-fg: var(--sp-ink);
+  --sp-accent: var(--sp-red);      /* the ONLY button colour */
+  --sp-on-accent: #ffffff;
+  --sp-success: var(--sp-green);
+  --sp-focus: var(--sp-blue);
+}
+
+/* Ink surface — the dark hero world. Drop this class (or data-surface="ink")
+   on any section to flip the semantic slots. */
+.sp-surface-ink {
+  --sp-bg: var(--sp-ink);
+  --sp-fg: var(--sp-cream);
+  --sp-line: var(--sp-ink-line);
+  --sp-muted: var(--sp-ink-muted);
+  --sp-paper-2: var(--sp-ink-2);
+  background: var(--sp-bg);
+  color: var(--sp-fg);
+}

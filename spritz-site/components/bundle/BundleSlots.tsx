@@ -5,10 +5,13 @@ import { AnimatePresence, motion } from "framer-motion";
 import { useTranslations } from "next-intl";
 import { SCENTS } from "@/lib/scents";
 import { BUNDLE_TIERS } from "@/lib/bundle";
+import type { BundleSlot } from "./BundleProvider";
 
 interface BundleSlotsProps {
-  /** Ordered scent keys currently in the bundle, one per filled slot. */
-  slots: string[];
+  /** Ordered bottles currently in the bundle, one per filled slot. */
+  slots: BundleSlot[];
+  /** Fixed composition when building a shaped set; drives the empty slots. */
+  shapeSizes?: readonly string[];
   /** Remove the bottle at slot index (shifts the rest left). */
   onRemove: (index: number) => void;
   /** Smaller slots for the persistent bottom bar. */
@@ -27,9 +30,14 @@ export default function BundleSlots({
   slots,
   onRemove,
   compact = false,
+  shapeSizes,
 }: BundleSlotsProps) {
   const tCart = useTranslations("cart");
-  const slotCount = Math.max(TOP_TIER_QTY, slots.length + 1);
+  /* A shaped set shows exactly its own slots — no growing row, no tier
+     rewards, because its discount does not come from the tiers. */
+  const slotCount = shapeSizes
+    ? shapeSizes.length
+    : Math.max(TOP_TIER_QTY, slots.length + 1);
 
   return (
     <div
@@ -39,11 +47,12 @@ export default function BundleSlots({
     >
       {Array.from({ length: slotCount }, (_, i) => {
         const position = i + 1;
-        const scentKey = slots[i];
-        const scent = scentKey
-          ? SCENTS.find((s) => s.key === scentKey)
+        const slot = slots[i];
+        const scent = slot
+          ? SCENTS.find((s) => s.key === slot.key)
           : undefined;
-        const tier = TIER_BY_QTY.get(position);
+        const tier = shapeSizes ? undefined : TIER_BY_QTY.get(position);
+        const sizeLabel = slot?.size ?? shapeSizes?.[i];
 
         return (
           <div
@@ -55,10 +64,10 @@ export default function BundleSlots({
             }`}
           >
             <div
-              className={`relative flex h-full w-full items-center justify-center rounded-2xl border text-center transition-colors ${
+              className={`relative flex h-full w-full items-center justify-center overflow-hidden rounded-card border-2 border-ink text-center transition-shadow ${
                 scent
-                  ? "border-solid border-ink/15 bg-[#faf5ea]"
-                  : "border-dashed border-ink/25 bg-[#faf5ea]/60"
+                  ? "bg-paper shadow-hard-sm"
+                  : "border-dashed bg-paper-2"
               }`}
             >
               <AnimatePresence mode="wait">
@@ -68,10 +77,12 @@ export default function BundleSlots({
                     type="button"
                     onClick={() => onRemove(i)}
                     aria-label={tCart("remove")}
-                    initial={{ opacity: 0, scale: 0.85 }}
+                    initial={{ opacity: 0, scale: 0.6 }}
                     animate={{ opacity: 1, scale: 1 }}
                     exit={{ opacity: 0, scale: 0.85 }}
-                    transition={{ duration: 0.25, ease: [0.16, 1, 0.3, 1] }}
+                    /* Spring with one visible overshoot — the bottle "drops"
+                       into the slot rather than fading in. */
+                    transition={{ type: "spring", stiffness: 480, damping: 17 }}
                     className="group absolute inset-0 flex items-center justify-center"
                   >
                     <Image
@@ -81,13 +92,14 @@ export default function BundleSlots({
                       sizes="140px"
                       className={`object-contain ${compact ? "p-1.5" : "p-3"}`}
                     />
-                    <span className="absolute inset-0 flex items-center justify-center rounded-2xl bg-ink/0 text-[10px] uppercase tracking-[0.28em] text-ink/0 transition-colors group-hover:bg-ivory/80 group-hover:text-ink">
+                    <span className="absolute inset-0 flex items-center justify-center bg-transparent font-sans text-[10px] font-bold uppercase tracking-[0.12em] text-transparent transition-colors group-hover:bg-paper/85 group-hover:text-ink">
                       {tCart("remove")}
                     </span>
+                    {/* The scent's own stripe colourway, banded like the label. */}
                     <span
                       aria-hidden
-                      className="absolute left-2 top-2 h-1.5 w-1.5 rounded-full"
-                      style={{ backgroundColor: scent.accent }}
+                      className="sp-stripe absolute inset-x-0 bottom-0 h-2"
+                      style={{ ["--stripe" as string]: scent.stripe }}
                     />
                   </motion.button>
                 ) : tier ? (
@@ -95,7 +107,7 @@ export default function BundleSlots({
                     key="reward"
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
-                    className={`px-1 font-medium uppercase tracking-[0.08em] text-rust ${
+                    className={`px-1 font-sans font-bold uppercase tracking-[0.06em] text-red ${
                       compact
                         ? "text-[0.55rem]"
                         : "text-[clamp(0.7rem,1.3vw,0.95rem)]"
@@ -103,12 +115,25 @@ export default function BundleSlots({
                   >
                     −{tier.percentOff}%
                   </motion.span>
+                ) : shapeSizes ? (
+                  <motion.span
+                    key="wants"
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    className={`px-1 font-sans font-bold uppercase tracking-[0.06em] text-muted ${
+                      compact
+                        ? "text-[0.55rem]"
+                        : "text-[clamp(0.65rem,1.2vw,0.85rem)]"
+                    }`}
+                  >
+                    + {sizeLabel}
+                  </motion.span>
                 ) : (
                   <motion.span
                     key="plus"
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
-                    className={`text-rust/70 ${compact ? "text-base" : "text-2xl"}`}
+                    className={`text-muted ${compact ? "text-base" : "text-2xl"}`}
                   >
                     +
                   </motion.span>
@@ -116,7 +141,7 @@ export default function BundleSlots({
               </AnimatePresence>
 
               <span
-                className={`absolute tabular-nums text-amber/70 ${
+                className={`absolute font-sans tabular-nums text-muted ${
                   compact
                     ? "bottom-0.5 right-1 text-[8px]"
                     : "bottom-1.5 right-2 text-[11px]"
@@ -124,6 +149,16 @@ export default function BundleSlots({
               >
                 {position}
               </span>
+
+              {scent && sizeLabel ? (
+                <span
+                  className={`absolute left-0 top-0 bg-ink px-1.5 py-0.5 font-sans font-bold uppercase tracking-[0.08em] text-paper ${
+                    compact ? "text-[7px]" : "text-[10px]"
+                  }`}
+                >
+                  {sizeLabel}
+                </span>
+              ) : null}
             </div>
           </div>
         );

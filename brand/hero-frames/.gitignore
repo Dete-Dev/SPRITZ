@@ -1,0 +1,7 @@
+# Rejected generations — kept locally so the failures can be re-examined,
+# but 44MB of clips nobody will use does not belong in the repo.
+generated/rejected/
+
+# Render output. The shipped copies live in spritz-site/public/video/;
+# keeping a second 12MB copy here would just be a copy that drifts.
+out/

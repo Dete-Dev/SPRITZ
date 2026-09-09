@@ -1,9 +1,21 @@
 import { useTranslations } from "next-intl";
 import ParallaxImage from "./ParallaxImage";
 import Reveal from "./Reveal";
+import { Mark, Spray, Sticker, StripeBand } from "@/components/ui/vandal";
 
 const STEP_KEYS = ["compose", "batch", "send"] as const;
-const ROMAN = ["I", "II", "III"];
+
+/**
+ * How it's made — the second ink-world beat. The three steps are numbered
+ * with stickers instead of roman numerals, and each step is ruled off with
+ * the label stripe in a different colourway so the list reads as three
+ * labels rather than three paragraphs.
+ */
+const STEP_STRIPES = [
+  "var(--sp-yellow)",
+  "var(--sp-pink)",
+  "var(--sp-green)",
+] as const;
 
 export default function CraftSection() {
   const t = useTranslations("craft");
@@ -11,53 +23,56 @@ export default function CraftSection() {
   return (
     <section
       id="craft"
-      className="relative py-32 md:py-44 px-8 md:px-14 overflow-hidden"
+      data-header-bg="dark"
+      className="sp-surface-ink sp-grain relative overflow-hidden px-gutter py-section"
     >
-      <div className="mx-auto max-w-7xl grid grid-cols-12 gap-8 md:gap-16">
+      <Spray
+        color="var(--sp-green)"
+        opacity={0.3}
+        className="absolute -right-24 top-1/4 h-[28rem] w-[28rem]"
+      />
+
+      <div className="relative mx-auto grid max-w-6xl grid-cols-12 gap-10 md:gap-16">
         <div className="col-span-12 md:col-span-5">
-          <div className="md:sticky md:top-24">
+          <div className="md:sticky md:top-28">
             <Reveal>
-              <ParallaxImage
-                src="/images/scents/ananas/clean.webp"
-                alt="SPRITZ — voile d'ananas et bouleau"
-                speed={0.12}
-                className="aspect-[4/5]"
-                imageClassName="object-contain"
-              />
-              <p className="mt-6 text-[11px] uppercase tracking-[0.4em] text-ink/55">
-                {t("caption")}
-              </p>
+              <div className="-rotate-2">
+                <ParallaxImage
+                  src="/images/scents/ananas-bouleau/clean.webp"
+                  alt="SPRITZ — voile d'ananas et bouleau"
+                  speed={0.12}
+                  className="aspect-[4/5] rounded-card border-2 border-cream bg-paper"
+                  imageClassName="object-contain"
+                />
+              </div>
+              <p className="sp-eyebrow mt-6">{t("caption")}</p>
             </Reveal>
           </div>
         </div>
 
         <div className="col-span-12 md:col-span-6 md:col-start-7">
-          <Reveal className="mb-16">
-            <p className="text-[11px] uppercase tracking-[0.4em] text-ink/55 mb-6">
-              {t("eyebrow")}
-            </p>
-            <h2 className="font-display text-5xl md:text-6xl leading-[1.02]">
-              {t("headline")}
-              <br />
-              <em className="italic">{t("headlineEm")}</em>
+          <Reveal className="mb-14">
+            <p className="sp-eyebrow">{t("eyebrow")}</p>
+            <h2 className="sp-display mt-5 text-d-2xl">
+              {t("headline")}{" "}
+              <Mark color="var(--sp-green)">{t("headlineEm")}</Mark>
             </h2>
           </Reveal>
 
-          <ol className="space-y-12">
+          <ol className="space-y-10">
             {STEP_KEYS.map((step, idx) => (
               <Reveal key={step} delay={idx * 100} as="li">
-                <div className="flex gap-8 items-start border-t border-ink/15 pt-8">
-                  <span className="font-display text-3xl italic text-amber shrink-0 w-10">
-                    {ROMAN[idx]}
-                  </span>
-                  <div>
-                    <h3 className="font-display text-3xl mb-3">
-                      {t(`steps.${step}.title`)}
-                    </h3>
-                    <p className="text-ink/70 leading-relaxed max-w-md">
-                      {t(`steps.${step}.body`)}
-                    </p>
-                  </div>
+                <StripeBand color={STEP_STRIPES[idx]} height={10} thin />
+                <div className="pt-7">
+                  <Sticker tilt={idx % 2 === 0 ? -4 : 3} variant="fill" fill={STEP_STRIPES[idx]}>
+                    {`0${idx + 1}`}
+                  </Sticker>
+                  <h3 className="sp-display mt-5 text-d-xl">
+                    {t(`steps.${step}.title`)}
+                  </h3>
+                  <p className="mt-3 max-w-md font-sans text-base text-cream/75">
+                    {t(`steps.${step}.body`)}
+                  </p>
                 </div>
               </Reveal>
             ))}

@@ -1,0 +1,68 @@
+================================================================
+ DNS pentru Resend — spritzperfumes.com
+ De adaugat in GoDaddy: https://dcc.godaddy.com/control/dnsmanagement?domainName=spritzperfumes.com
+================================================================
+
+ADAUGA EXACT TREI INREGISTRARI.
+
+--- 1 din 3 --- DKIM (semnatura) ---------------------------------
+Type:  TXT
+Name:  resend._domainkey
+TTL:   1 hour (sau lasa implicit)
+Value:
+p=MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQDYjwnFObzr5P7zbqBI7TtRojtmnFV3Z535R3g1A1nMCLVBhukX2E8PtLaulLw46f61hC6KA9tk68ByoJjlAHFraLLd1OdwWxdfx9yzZu54V3WYCcjhk/6i3DLKnUX66qUmTJs3Fv84Br/wNUlbFD8JyBoccRZPnnGQk9VOSJ3lNwIDAQAB
+
+
+--- 2 din 3 --- MX pe subdomeniul "send" -------------------------
+Type:      MX
+Name:      send
+Priority:  10
+TTL:       1 hour
+Value:     feedback-smtp.eu-west-1.amazonses.com
+
+
+--- 3 din 3 --- SPF pe subdomeniul "send" ------------------------
+Type:  TXT
+Name:  send
+TTL:   1 hour
+Value: v=spf1 include:amazonses.com ~all
+
+
+================================================================
+ NU ADAUGA ASTA
+================================================================
+
+  Type: MX   Name: @   Priority: 0
+  Value: inbound-smtp.eu-west-1.amazonaws.com
+
+Apare in lista Resend pentru functia "Enable Receiving", care e
+OPRITA si nu-ti trebuie.
+
+Daca o adaugi, prioritatea 0 bate MX-urile Google (1, 5, 10) si
+TOT mailul primit pe spritzperfumes.com pleaca la Amazon in loc de
+Google Workspace. admin@spritzperfumes.com nu mai primeste nimic.
+
+================================================================
+ DE CE CELELALTE TREI SUNT SIGURE
+================================================================
+
+Toate stau pe "resend._domainkey" si "send" — subdomenii separate.
+Nu ating MX-ul si SPF-ul de pe radacina, deci Google Workspace
+continua neatins:
+
+  MX actual:  aspmx.l.google.com (1), alt2 (5), alt4 (10)
+  SPF actual: v=spf1 include:dc-aa8e722993._spfm.spritzperfumes.com ~all
+
+Ambele raman exact cum sunt.
+
+================================================================
+ DUPA CE LE ADAUGI
+================================================================
+
+1. In Resend apesi "I've already added the records"
+2. Astepti verificarea (de obicei 5-30 min, uneori pana la cateva ore)
+3. Cand domeniul scrie "Verified", ABIA ATUNCI salvezi SMTP-ul in
+   Supabase cu expeditorul admin@spritzperfumes.com
+
+Daca salvezi SMTP-ul inainte de verificare, Resend refuza fiecare
+mail si nu mai poti intra deloc in aplicatie.

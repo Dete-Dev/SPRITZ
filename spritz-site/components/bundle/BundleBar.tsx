@@ -4,6 +4,8 @@ import { useEffect, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { useTranslations } from "next-intl";
 import { useCart } from "@/components/cart/CartProvider";
+import Cta from "@/components/ui/Cta";
+import { StripeBand } from "@/components/ui/vandal";
 import { useBundle } from "./BundleProvider";
 import BundleSlots from "./BundleSlots";
 
@@ -19,11 +21,13 @@ import BundleSlots from "./BundleSlots";
 export default function BundleBar() {
   const t = useTranslations("bundle");
   const tCart = useTranslations("cart");
+  const tCommon = useTranslations("common");
   const { isReady, loading } = useCart();
   const {
     slots,
     count,
     estimate,
+    shape,
     next,
     unlocked,
     variantsMissing,
@@ -66,17 +70,23 @@ export default function BundleBar() {
           animate={{ y: 0 }}
           exit={{ y: "110%" }}
           transition={{ duration: 0.45, ease: [0.16, 1, 0.3, 1] }}
-          className="pointer-events-auto fixed inset-x-0 bottom-0 z-40 border-t border-ink/10 bg-bone/95 backdrop-blur-md"
+          className="pointer-events-auto fixed inset-x-0 bottom-0 z-40 bg-paper"
         >
+          <StripeBand color="var(--sp-red)" height={10} />
           <div className="mx-auto flex max-w-6xl flex-col gap-3 px-4 py-3 md:flex-row md:items-center md:gap-6 md:px-8 md:py-4">
             {/* Slots */}
             <div className="min-w-0 flex-1">
-              <BundleSlots slots={slots} onRemove={removeAt} compact />
+              <BundleSlots
+                slots={slots}
+                onRemove={removeAt}
+                shapeSizes={shape?.slots}
+                compact
+              />
             </div>
 
             {/* Progress + total */}
             <div className="shrink-0 text-left md:text-right">
-              <p className="text-[10px] uppercase tracking-[0.3em] text-ink/60">
+              <p className="sp-eyebrow">
                 {next
                   ? t("tierProgress", {
                       count: next.remaining,
@@ -86,14 +96,13 @@ export default function BundleBar() {
                     ? t("tierUnlocked", { percent: unlocked.percentOff })
                     : ""}
               </p>
-              <p className="mt-1 font-display text-2xl text-ink">
+              <p className="mt-1 font-sans text-2xl font-bold">
                 {estimate.percentOff > 0 && (
-                  <span className="mr-2 text-base text-ink/35 line-through">
-                    {estimate.subtotal}
+                  <span className="sp-strike mr-2 text-base font-normal text-muted">
+                    {tCommon("price", { price: estimate.subtotal })}
                   </span>
                 )}
-                {estimate.total}{" "}
-                <span className="text-sm text-ink/55">RON</span>
+                {tCommon("price", { price: estimate.total })}
               </p>
             </div>
 
@@ -103,22 +112,22 @@ export default function BundleBar() {
                 type="button"
                 onClick={clear}
                 aria-label={t("clear")}
-                className="text-[10px] uppercase tracking-[0.3em] text-ink/45 hover:text-ink"
+                className="sp-eyebrow hover:text-ink"
               >
                 {t("clear")}
               </button>
-              <button
-                type="button"
+              <Cta
                 onClick={handleAddAll}
-                disabled={!canSubmit}
-                className="inline-flex items-center justify-center rounded-full border border-ink/70 bg-ink px-6 py-2.5 text-[11px] uppercase tracking-[0.3em] text-ivory transition-colors hover:bg-transparent hover:text-ink disabled:cursor-not-allowed disabled:opacity-50"
+                variant="primary"
+                size="sm"
+                className={canSubmit ? "" : "pointer-events-none opacity-40"}
               >
                 {notReady ? tCart("notReady") : t("addAll", { count })}
-              </button>
+              </Cta>
             </div>
           </div>
           {error && (
-            <p className="px-8 pb-2 text-center text-[10px] uppercase tracking-[0.3em] text-rust">
+            <p className="sp-scrawl px-8 pb-2 text-center text-xs text-red">
               {error}
             </p>
           )}

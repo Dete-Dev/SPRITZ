@@ -6,23 +6,28 @@ import { routing } from "@/i18n/routing";
 import { SCENTS, SCENT_KEYS } from "@/lib/scents";
 import ScentGallery from "@/components/scent/ScentGallery";
 import BuyBox from "@/components/scent/BuyBox";
-import NotesPyramid from "@/components/scent/NotesPyramid";
+import TierBanner from "@/components/scent/TierBanner";
+import ScentNotes from "@/components/scent/ScentNotes";
 import MoreFromTheFive from "@/components/scent/MoreFromTheFive";
 import SiteFooter from "@/components/SiteFooter";
+import Accordion, { type AccordionItem } from "@/components/ui/Accordion";
+import ScentCard from "@/components/ui/ScentCard";
+import { Spray, StripeBand } from "@/components/ui/vandal";
 
 /**
- * Real product page for a single scent.
+ * Product page for a single scent — brief §13, §14, §15.
  *
- * Layout:
- *   Above-fold:  ScentGallery (left)        |  BuyBox (right, sticky on md+)
- *   Below:       "The story"  — long-form copy in centered column
- *                NotesPyramid — top/heart/base 3-col
- *                "How to wear" — small editorial block
- *                MoreFromTheFive — surfaces the other four scents
- *                SiteFooter
+ *   TierBanner   — the sticky black bundle band, always on screen
+ *   Above-fold   — ScentGallery (left, sticky on md+) | BuyBox + accordions
+ *                  (right): Scent Notes / About / Shipping + Returns / FAQs /
+ *                  Best Layered With, in the brief's order
+ *   MoreFromTheFive, SiteFooter
  *
  * Pre-renders one route per (locale × scent) at build time.
  */
+
+/** Brief §14 asks for three impactful questions, not the whole FAQ. */
+const PDP_FAQ_KEYS = ["dupe", "lasting", "bundle"] as const;
 
 export function generateStaticParams() {
   return routing.locales.flatMap((locale) =>
@@ -38,10 +43,10 @@ export async function generateMetadata({
   const { locale, key } = await params;
   const scent = SCENTS.find((s) => s.key === key);
   if (!scent) return { title: "SPRITZ" };
-  const tHero = await getTranslations({ locale, namespace: "hero.scents" });
+  const t = await getTranslations({ locale, namespace: "common" });
   return {
     title: `SPRITZ — ${scent.name}`,
-    description: tHero(`${key}.notes`),
+    description: `${scent.name} — ${t("inspiredBy", { name: scent.inspiredBy })}. ${scent.size} eau de parfum, €${scent.price}.`,
   };
 }
 
@@ -56,93 +61,143 @@ export default async function ScentPage({
   if (!scent) notFound();
 
   const t = await getTranslations("scentPage");
-  const tStory = await getTranslations(`scentDetails.${key}`);
+  const tCommon = await getTranslations("common");
+  const tFive = await getTranslations("five");
+  const tFaq = await getTranslations("faq");
+  // Only the five with `hasStory` carry hand-written editorial. The rest read
+  // from label facts alone rather than inventing copy.
+  const tStory = scent.hasStory
+    ? await getTranslations(`scentDetails.${key}`)
+    : null;
+
+  /* Brief §14 "Best layered with" — no pairing data exists, so this derives
+     from the scent family: same family layers predictably. Real data, no
+     invention. */
+  const layerWith = SCENTS.filter(
+    (s) => s.key !== scent.key && s.family === scent.family,
+  ).slice(0, 3);
+
+  const accordionItems: AccordionItem[] = [
+    {
+      id: "notes",
+      title: t("accordion.notes"),
+      defaultOpen: true,
+      body: <ScentNotes scent={scent} />,
+    },
+    {
+      id: "about",
+      title: t("accordion.about"),
+      body: (
+        <div className="space-y-4 font-sans text-base text-muted">
+          {tStory ? (
+            <>
+              <p className="text-ink">{tStory("story1")}</p>
+              <p>{tStory("story2")}</p>
+            </>
+          ) : (
+            <p>{t("aboutFallback")}</p>
+          )}
+          <p>{t("wearBody")}</p>
+        </div>
+      ),
+    },
+    {
+      id: "shipping",
+      title: t("accordion.shipping"),
+      hint: t("shippingHint"),
+      body: (
+        <div className="space-y-4 font-sans text-base text-muted">
+          <p>{tFaq("items.shipping.a")}</p>
+          <p>{tFaq("items.returns.a")}</p>
+        </div>
+      ),
+    },
+    {
+      id: "faqs",
+      title: t("accordion.faqs"),
+      body: (
+        <dl className="space-y-5">
+          {PDP_FAQ_KEYS.map((q) => (
+            <div key={q}>
+              <dt className="font-sans text-sm font-bold uppercase tracking-[0.06em]">
+                {tFaq(`items.${q}.q`)}
+              </dt>
+              <dd className="mt-2 font-sans text-base text-muted">
+                {tFaq(`items.${q}.a`)}
+              </dd>
+            </div>
+          ))}
+        </dl>
+      ),
+    },
+    {
+      id: "layered",
+      title: t("accordion.layered"),
+      body: (
+        <>
+          <p className="mb-5 font-sans text-base text-muted">
+            {t("layeredIntro")}
+          </p>
+          <ul className="grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-2">
+            {layerWith.map((s) => (
+              <li key={s.key}>
+                <ScentCard
+                  scent={s}
+                  priceLabel={tCommon("price", { price: s.price })}
+                  note={tFive(`shortNotes.${s.key}`)}
+                />
+              </li>
+            ))}
+          </ul>
+        </>
+      ),
+    },
+  ];
 
   return (
     <>
-      <main
-        className="min-h-screen"
-        style={{
-          background: `linear-gradient(180deg, var(--color-surface) 0%, ${scent.accent}1a 100%)`,
-        }}
-      >
+      {/* Brief §13 — the progressive-discount band, visible non-stop. */}
+      <TierBanner />
+
+      {/* Bottles sit on plain paper white — no gradient behind product
+          (design system rule 5). The scent's identity is carried by its
+          stripe colourway and one spray hit instead. */}
+      <main className="relative min-h-screen overflow-hidden bg-paper">
+        <StripeBand color={scent.stripe} height={14} />
+
         {/* Back link */}
-        <div className="mx-auto max-w-7xl px-6 md:px-14 pt-28 md:pt-32">
-          <Link
-            href="/#five"
-            className="text-[11px] uppercase tracking-[0.4em] text-ink/55 hover:text-ink"
-          >
+        <div className="mx-auto max-w-7xl px-gutter pt-24 md:pt-28">
+          <Link href="/shop" className="sp-eyebrow hover:text-ink">
             {t("back")}
           </Link>
         </div>
 
         {/* Above the fold: gallery + buy box */}
-        <section className="mx-auto max-w-7xl px-6 md:px-14 py-14 md:py-20">
-          <div className="grid grid-cols-12 gap-8 md:gap-14 items-start">
-            <div className="col-span-12 md:col-span-7">
+        <section className="relative mx-auto max-w-7xl px-gutter py-10 md:py-16">
+          <Spray
+            color={scent.stripe}
+            opacity={0.25}
+            className="absolute -left-20 top-0 h-[30rem] w-[30rem]"
+          />
+          <div className="relative grid grid-cols-12 items-start gap-8 md:gap-14">
+            {/* The gallery holds still while the right column (buy box +
+                accordions, brief §13/§14) scrolls past it. */}
+            <div className="col-span-12 md:sticky md:top-28 md:col-span-7 md:self-start">
               <ScentGallery
                 images={scent.gallery}
                 alt={scent.name}
-                accent={scent.accent}
+                stripe={scent.stripe}
               />
             </div>
             <div className="col-span-12 md:col-span-5">
               <BuyBox scent={scent} />
+              {/* Brief §14 — everything else folded away under the buy box,
+                  Scent Notes open by default (brief §13). */}
+              <Accordion items={accordionItems} className="mt-10" />
             </div>
           </div>
         </section>
 
-        {/* The story */}
-        <section className="px-6 md:px-14 py-24 md:py-32 bg-bone">
-          <div className="mx-auto max-w-3xl">
-            <p className="text-[11px] uppercase tracking-[0.4em] text-ink/55 mb-6">
-              {t("story")}
-            </p>
-            <p className="font-display text-3xl md:text-4xl leading-[1.15] text-ink mb-6">
-              {tStory("story1")}
-            </p>
-            <p className="text-ink/75 leading-relaxed text-lg max-w-2xl">
-              {tStory("story2")}
-            </p>
-          </div>
-        </section>
-
-        {/* Notes pyramid */}
-        <section className="px-6 md:px-14 py-24 md:py-32 bg-ivory">
-          <div className="mx-auto max-w-6xl mb-14 max-w-2xl">
-            <p className="text-[11px] uppercase tracking-[0.4em] text-ink/55 mb-6">
-              {t("notes")}
-            </p>
-            <h2 className="font-display text-4xl md:text-5xl leading-[1.02] mb-5">
-              {scent.name}
-            </h2>
-            <p className="text-ink/70 leading-relaxed max-w-md">
-              {t("notesIntro")}
-            </p>
-          </div>
-          <div className="mx-auto max-w-6xl">
-            <NotesPyramid scentKey={key} />
-          </div>
-        </section>
-
-        {/* How to wear */}
-        <section
-          className="px-6 md:px-14 py-24 md:py-32"
-          style={{
-            background: `linear-gradient(180deg, ${scent.accent}11 0%, var(--color-surface) 100%)`,
-          }}
-        >
-          <div className="mx-auto max-w-3xl text-center">
-            <p className="text-[11px] uppercase tracking-[0.4em] text-ink/55 mb-6">
-              {t("wear")}
-            </p>
-            <p className="font-display text-2xl md:text-3xl leading-[1.3] text-ink max-w-2xl mx-auto">
-              {t("wearBody")}
-            </p>
-          </div>
-        </section>
-
-        {/* The other four */}
         <MoreFromTheFive excludeKey={key} />
       </main>
 

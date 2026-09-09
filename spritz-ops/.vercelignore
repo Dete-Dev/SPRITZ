@@ -1,0 +1,8 @@
+node_modules
+.next
+.next.nosync
+.next.dev.nosync
+.data
+tests
+supabase
+*.tsbuildinfo

@@ -9,31 +9,29 @@ import { useState } from "react";
  * Single source of truth: the parent passes an ordered array of webp paths.
  * Thumbnail clicks swap the main image with a soft crossfade.
  *
- * Aspect ratio of each image is 1.339:1 (1600x1195) — locked so the layout
- * doesn't jump when swapping.
+ * The frame is portrait to suit the product: the bottle shots are tall and
+ * narrow, so a landscape frame shrank them to a sliver. Locked so the layout
+ * doesn't jump when swapping images.
  */
 export default function ScentGallery({
   images,
   alt,
-  accent,
+  stripe,
 }: {
   images: string[];
   alt: string;
-  accent: string;
+  /** The scent's stripe colourway — banded under the main shot. */
+  stripe: string;
 }) {
   const [activeIdx, setActiveIdx] = useState(0);
   const active = images[activeIdx] ?? images[0];
 
   return (
     <div className="w-full">
-      {/* Main image — the cutouts float on a soft radial halo of the label
-          color (no hard box edge). */}
-      <div
-        className="relative w-full aspect-[1.339/1]"
-        style={{
-          background: `radial-gradient(closest-side at 50% 60%, ${accent}26 0%, transparent 80%)`,
-        }}
-      >
+      {/* Bottles sit on plain paper white — no gradient behind product
+          (design system rule 5). The frame is a pasted-on card instead. */}
+      <div className="overflow-hidden rounded-card border-2 border-ink bg-paper shadow-hard">
+      <div className="relative aspect-[2/3] w-full">
         {/* Crossfade: render every image stacked, vary opacity. */}
         {images.map((src, i) => (
           <Image
@@ -47,6 +45,12 @@ export default function ScentGallery({
             style={{ opacity: src === active ? 1 : 0 }}
           />
         ))}
+      </div>
+        <div
+          aria-hidden
+          className="sp-stripe h-3.5"
+          style={{ ["--stripe" as string]: stripe }}
+        />
       </div>
 
       {/* Thumb strip. Hidden if only one image. */}
@@ -66,14 +70,11 @@ export default function ScentGallery({
                   aria-selected={isActive}
                   aria-label={`View image ${i + 1}`}
                   onClick={() => setActiveIdx(i)}
-                  className="relative block h-20 w-24 transition-opacity focus:outline-none focus-visible:ring-2 focus-visible:ring-ink/50"
-                  style={{
-                    opacity: isActive ? 1 : 0.5,
-                    outline: isActive
-                      ? "1px solid rgba(26,20,17,0.4)"
-                      : "1px solid transparent",
-                    outlineOffset: -1,
-                  }}
+                  className={`relative block h-20 w-24 rounded-card border-2 bg-paper transition-all duration-150 ease-spritz ${
+                    isActive
+                      ? "border-ink shadow-hard-sm"
+                      : "border-line opacity-60 hover:opacity-100"
+                  }`}
                 >
                   <Image
                     src={src}

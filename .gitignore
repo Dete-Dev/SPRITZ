@@ -23,6 +23,23 @@ dist/
 # Local agent config
 .claude/
 
-# Raw source assets (large; processed versions live in spritz-site/public)
-/archive (1)/
-/video-sources/
+# Vercel CLI project link (ids, not secrets — still not repo material)
+.vercel/
+
+# Superseded material, kept locally only. Safe to delete once you are sure.
+/_junk/
+
+# Brand source assets — large originals. Processed versions ship in
+# spritz-site/public/. See brand/README.md.
+/brand/guideline.pdf
+/brand/labels/
+/brand/vandal-ds/
+/brand/bottle-photos.zip
+*.zip
+
+# Generated video output + LUT previews (rebuild: video/luts/generate-lut.py)
+/video/out/
+/video/luts/preview/
+
+# TypeScript incremental build cache
+*.tsbuildinfo
