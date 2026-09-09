@@ -2,7 +2,6 @@ import Image from "next/image";
 import { getTranslations } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
 import { Sticker } from "@/components/ui/vandal";
-import PinFrame from "@/components/motion/PinFrame";
 import { SCENTS } from "@/lib/scents";
 
 /**
@@ -12,13 +11,9 @@ import { SCENTS } from "@/lib/scents";
  * Right: the set offer. SPRITZ has no packaged duo SKU, so "the set" is the
  * bundle builder — pick any two and the −10% tier applies at checkout.
  *
- * This is the page's peak, so the two panels run inside <PinFrame/>: on desktop
- * the frame sticks for three viewport-heights while the choices counter-drift.
- * The copy centres instead of sitting on the bottom edge, because the fixed
- * <BundleBar/> owns that edge whenever a bundle is in progress.
- *
- * The panels are passed as props, not children of a client component's render
- * callback, so this file stays a server component and none of its markup ships.
+ * Plain 50/50 grid, no scroll pinning (the pinned counter-drift was removed
+ * at the client's request). The copy centres on desktop because the fixed
+ * <BundleBar/> owns the bottom edge whenever a bundle is in progress.
  */
 const SINGLE_KEY = "safran-ambre";
 const SET_KEY = "truffe-chocolat";
@@ -47,7 +42,7 @@ export default async function SplitPromo() {
     "group relative flex min-h-[26rem] flex-col justify-end overflow-hidden md:h-full md:min-h-[34rem] md:justify-center";
 
   // The scrim tracks the copy rather than the frame. Stacked on a phone the copy
-  // sits at the bottom, so the wash runs up from the floor; pinned on desktop it
+  // sits at the bottom, so the wash runs up from the floor; on desktop it
   // centres, so the wash runs in from the left edge instead. Either way it
   // covers where the text is and nothing else — these bottle shots are pale, and
   // cream type on them is unreadable without it.
@@ -59,8 +54,7 @@ export default async function SplitPromo() {
 
   return (
     <section className="border-y-2 border-ink">
-      <PinFrame
-        left={
+      <div className="grid md:grid-cols-2">
           <Link
             href={`/scents/${single.key}`}
             className={`${panel} border-b-2 border-ink md:border-b-0 md:border-r-2`}
@@ -91,8 +85,6 @@ export default async function SplitPromo() {
               <span className={cta}>{t("singleCta")} →</span>
             </div>
           </Link>
-        }
-        right={
           <Link href="/sets" className={panel}>
             <Image
               src={SET_IMAGE}
@@ -129,8 +121,7 @@ export default async function SplitPromo() {
               <span className={cta}>{t("setCta")} →</span>
             </div>
           </Link>
-        }
-      />
+      </div>
     </section>
   );
 }
