@@ -36,6 +36,7 @@
     "subscriptionBadge": "Subscription",
     "shippingNote": "Shipping & taxes calculated at checkout",
     "checkout": "Checkout",
+    "addToCart": "ADD TO CART",
     "addToBag": "Add to bag",
     "added": "Added",
     "notReady": "Store launching soon"
@@ -915,22 +916,6 @@
     "setBody": "Pick any two of the twenty-two and the discount lands at checkout. Three take 15%, five take 20%.",
     "setBadge": "−10% at two",
     "setCta": "See the sets"
-  },
-  "proof": {
-    "headline": "Twenty-two scents. One honest price.",
-    "footnote": "* Figures from our own customer surveys, pre-launch.",
-    "value": {
-      "percent": "96",
-      "label": "say SPRITZ offers unbeatable value for the quality"
-    },
-    "lasting": {
-      "percent": "93",
-      "label": "say the scent is still there at the end of the day"
-    },
-    "recommend": {
-      "percent": "95",
-      "label": "would recommend SPRITZ to a friend"
-    }
   },
   "blog": {
     "eyebrow": "The journal",

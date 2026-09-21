@@ -1,11 +1,13 @@
 "use client";
 
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import Image from "next/image";
+import { useTranslations } from "next-intl";
 import { animate, stagger, utils } from "animejs";
 import { Link } from "@/i18n/navigation";
 import LabelName from "@/components/ui/LabelName";
 import { StripeBand, Sticker } from "@/components/ui/vandal";
+import { useCart } from "@/components/cart/CartProvider";
 import { readableInk } from "@/lib/color";
 import { prefersReducedMotion, springPop } from "@/lib/motion";
 import { fragranticaUrl } from "@/lib/scents";
@@ -36,6 +38,7 @@ export default function ScentCard({
   note,
   inspiredByLabel,
   savingsLabel,
+  savingsUnderInspiredBy = false,
   badge,
   badgeFill,
   genderLabel,
@@ -51,6 +54,8 @@ export default function ScentCard({
   inspiredByLabel?: string;
   /** Orange line under the price: "45% cheaper than the luxury brand". */
   savingsLabel?: string;
+  /** Landing rails: savings line sits under "inspired by", not under the price. */
+  savingsUnderInspiredBy?: boolean;
   /** Optional corner sticker ("Bestseller", "Nou"). */
   badge?: string;
   badgeFill?: string;
@@ -61,6 +66,26 @@ export default function ScentCard({
   priority?: boolean;
 }) {
   const imageRef = useRef<HTMLDivElement | null>(null);
+  const tCart = useTranslations("cart");
+  const { addItem, isReady, loading } = useCart();
+  const [cartMessage, setCartMessage] = useState<string | null>(null);
+
+  const canBuy = isReady && scent.shopifyVariantId.length > 0;
+
+  /** Same flow as AddToCartButton: one unit, drawer opens from the provider. */
+  async function addToCart(): Promise<void> {
+    if (!canBuy) {
+      setCartMessage(tCart("notReady"));
+      return;
+    }
+    try {
+      await addItem(scent.shopifyVariantId, 1);
+      setCartMessage(tCart("added"));
+      window.setTimeout(() => setCartMessage(null), 1500);
+    } catch (err: unknown) {
+      setCartMessage(err instanceof Error ? err.message : tCart("notReady"));
+    }
+  }
 
   function scatterNotes(show: boolean) {
     const host = imageRef.current;
@@ -86,10 +111,18 @@ export default function ScentCard({
     }
   }
 
+  /* Brief §11.2 — the red saving line. Under the price by default; the
+     landing rails drop the note and pull it up under "inspired by". */
+  const savings = savingsLabel ? (
+    <p className="mt-1.5 font-sans text-[11px] font-bold uppercase leading-tight tracking-[0.1em] text-red">
+      {savingsLabel}
+    </p>
+  ) : null;
+
   return (
     /* The card is a plain element, not one big anchor: the designer name
        carries its own outbound Fragrantica link and an <a> cannot nest. */
-    <div className="group flex h-full flex-col">
+    <div className="group flex h-full w-full flex-col">
       <Link
         href={`/scents/${scent.key}`}
         aria-label={scent.name}
@@ -169,29 +202,38 @@ export default function ScentCard({
           </a>
         </p>
       ) : null}
+      {savingsUnderInspiredBy ? savings : null}
       {note ? (
         <p className="mt-1.5 font-sans text-sm text-muted">{note}</p>
       ) : null}
-      {/* Same bubble as the hover note words, so the price reads as part of
-          the same slapped-on kit. mt-auto keeps every price on the same
+      {/* Same bubble as the hover note words, stretched across the card so
+          it doubles as the buy button. mt-auto keeps every button on the same
           baseline across a ragged row; readableInk flips the type to cream on
           the dark stripes, where .sp-sticker--fill's black would fail AA. */}
       <p className="mt-auto pt-2">
-        <Sticker
-          tilt={-2}
-          variant="fill"
-          fill={scent.stripe}
-          style={{ color: readableInk(scent.stripe) }}
+        <button
+          type="button"
+          onClick={addToCart}
+          disabled={loading}
+          className="sp-sticker sp-sticker--fill w-full justify-between font-sans text-[11px] font-bold uppercase tracking-[0.1em] transition-transform duration-150 ease-spritz hover:-translate-y-px disabled:opacity-60"
+          style={
+            {
+              "--tilt": "-1deg",
+              "--fill": scent.stripe,
+              color: readableInk(scent.stripe),
+            } as React.CSSProperties
+          }
         >
-          {priceLabel}
-        </Sticker>
+          <span>{tCart("addToCart")}</span>
+          <span>{priceLabel}</span>
+        </button>
       </p>
-      {/* Brief §11.2 — the orange saving line sits under our price. */}
-      {savingsLabel ? (
-        <p className="mt-2 font-sans text-[11px] font-bold uppercase leading-tight tracking-[0.1em] text-orange">
-          {savingsLabel}
+      {cartMessage ? (
+        <p className="sp-scrawl mt-2 text-xs text-ink" role="status">
+          {cartMessage}
         </p>
       ) : null}
+      {savingsUnderInspiredBy ? null : savings}
     </div>
   );
 }

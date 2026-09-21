@@ -36,6 +36,7 @@
     "subscriptionBadge": "Abonament",
     "shippingNote": "Livrarea și taxele se calculează la checkout",
     "checkout": "Finalizează",
+    "addToCart": "ADAUGĂ ÎN COȘ",
     "addToBag": "Adaugă în sacoșă",
     "added": "Adăugat",
     "notReady": "Magazinul se deschide curând"
@@ -915,22 +916,6 @@
     "setBody": "Alege oricare două dintre cele douăzeci și două, iar reducerea se aplică la checkout. Trei iau 15%, cinci iau 20%.",
     "setBadge": "−10% la două",
     "setCta": "Vezi seturile"
-  },
-  "proof": {
-    "headline": "Douăzeci și două de parfumuri. Un preț corect.",
-    "footnote": "* Cifre din sondajele noastre, înainte de lansare.",
-    "value": {
-      "percent": "96",
-      "label": "spun că SPRITZ oferă cel mai bun raport calitate-preț"
-    },
-    "lasting": {
-      "percent": "93",
-      "label": "spun că parfumul se simte și la finalul zilei"
-    },
-    "recommend": {
-      "percent": "95",
-      "label": "ar recomanda SPRITZ unui prieten"
-    }
   },
   "blog": {
     "eyebrow": "Jurnalul",

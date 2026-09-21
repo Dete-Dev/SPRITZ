@@ -6,7 +6,6 @@ import GenderTiles from "@/components/GenderTiles";
 import UspMarquee from "@/components/UspMarquee";
 import SplitPromo from "@/components/SplitPromo";
 import BlogBanner from "@/components/BlogBanner";
-import SocialProof from "@/components/SocialProof";
 import FaqSection from "@/components/FaqSection";
 import SiteFooter from "@/components/SiteFooter";
 
@@ -102,8 +101,6 @@ export default async function Page({
       {/* §8 */}
       <BlogBanner />
 
-      {/* §9 */}
-      <SocialProof />
       <div id="faq">
         <FaqSection limit={3} />
       </div>

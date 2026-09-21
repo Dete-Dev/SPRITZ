@@ -19,8 +19,8 @@ const LOOK = "street";
 
 const TILES: { gender: ScentGender; slug: string }[] = [
   { gender: "her", slug: "gender-her" },
-  { gender: "him", slug: "gender-him" },
   { gender: "unisex", slug: "gender-unisex" },
+  { gender: "him", slug: "gender-him" },
 ];
 
 export default async function GenderTiles() {
@@ -56,10 +56,10 @@ export default async function GenderTiles() {
                 />
 
                 <span className="absolute left-5 top-5 md:left-7 md:top-7">
-                  <span className="sp-display block text-[clamp(1.75rem,3.2vw,2.8rem)] uppercase text-ink">
+                  <span className="sp-display block text-[clamp(1.75rem,3.2vw,2.8rem)] uppercase text-white drop-shadow-[0_2px_8px_rgba(0,0,0,0.45)]">
                     {t(`genders.${gender}`)}
                   </span>
-                  <span className="mt-1 block font-sans text-[11px] font-bold uppercase tracking-[0.12em] text-ink/70">
+                  <span className="mt-1 block font-sans text-[11px] font-bold uppercase tracking-[0.12em] text-white/85 drop-shadow-[0_1px_4px_rgba(0,0,0,0.45)]">
                     {t("count", { count })}
                   </span>
                 </span>

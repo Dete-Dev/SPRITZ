@@ -227,9 +227,8 @@ export default function ShopGrid({
                     name: scent.inspiredBy,
                   })}
                   genderLabel={t(`genders.${scent.gender}`)}
-                  /* Below €20 the flex reads as an anti-flex — skip it. */
                   savingsLabel={
-                    scent.retailPrice - scent.price >= 20
+                    scent.retailPrice > scent.price
                       ? tCommon("cheaperPercent", {
                           percent: savingPercent(scent),
                         })

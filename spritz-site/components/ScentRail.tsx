@@ -56,7 +56,6 @@ export default function ScentRail({
   /** Cards answer the pointer. Fine-pointer devices only, by CSS. */
   tilt?: boolean;
 }) {
-  const tFive = useTranslations("five");
   const tCommon = useTranslations("common");
   const tRail = useTranslations("rail");
 
@@ -193,12 +192,12 @@ export default function ScentRail({
       <ul
         ref={railRef}
         onScroll={syncEdges}
-        className="sp-rail mt-4 flex snap-x snap-mandatory gap-3 overflow-x-auto px-gutter pb-2"
+        className="sp-rail mt-4 flex snap-x snap-mandatory gap-3 overflow-x-auto px-gutter scroll-px-gutter pb-2"
       >
         {scents.map((scent, idx) => (
           <li
             key={scent.key}
-            className={`w-[15rem] shrink-0 snap-start sm:w-[16rem] lg:w-[17.5rem]${
+            className={`flex w-[15rem] shrink-0 snap-start sm:w-[16rem] lg:w-[17.5rem]${
               stagger ? " sp-pre-enter" : ""
             }`}
           >
@@ -211,15 +210,14 @@ export default function ScentRail({
               scent={scent}
               priceLabel={tCommon("price", { price: scent.price })}
               inspiredByLabel={tCommon("inspiredBy", { name: scent.inspiredBy })}
-              /* Below €20 the flex reads as an anti-flex — skip the banner. */
               savingsLabel={
-                scent.retailPrice - scent.price >= 20
+                scent.retailPrice > scent.price
                   ? tCommon("cheaperThan", {
                       amount: scent.retailPrice - scent.price,
                     })
                   : undefined
               }
-              note={tFive(`shortNotes.${scent.key}`)}
+              savingsUnderInspiredBy
               badge={badges[scent.key]}
               priority={idx < 2}
             />
@@ -251,7 +249,7 @@ function TiltShell({
   if (!on) return <>{children}</>;
   return (
     <div
-      className="sp-tilt"
+      className="sp-tilt flex w-full"
       onPointerMove={onPointerMove}
       onPointerLeave={onPointerLeave}
     >

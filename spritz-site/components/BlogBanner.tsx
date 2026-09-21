@@ -20,7 +20,7 @@ export default async function BlogBanner() {
   const t = await getTranslations("blog");
 
   return (
-    <section className="bg-paper py-6">
+    <section className="bg-paper-2">
       {/* Full-bleed band: no gutter, no max-width. Side borders and the
           rounded corners come off so the card meets both screen edges; the
           top/bottom rules keep it reading as a distinct block, matching
