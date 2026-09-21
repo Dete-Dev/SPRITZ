@@ -1,0 +1,20 @@
+# Belt-and-braces for CLI deploys. Git-connected builds only ever see committed
+# files, but `vercel deploy` uploads the working directory — and this repo has
+# a live ANTHROPIC_API_KEY plus a Vercel OIDC token in spritz-site/.env.local.
+.env
+.env.*
+**/.env
+**/.env.*
+
+# Large local-only material at the REPO ROOT only.
+# Leading slashes matter: bare `brand/` and `video/` also match
+# spritz-site/public/brand and spritz-site/public/video, which strips the
+# wordmark and the hero video out of the build.
+/_junk/
+/brand/
+/video/
+/spritz-shopify-app/
+
+node_modules
+.next
+.git

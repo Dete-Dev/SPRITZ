@@ -22,16 +22,20 @@ export default function HeaderThemeWatcher() {
     if (els.length === 0) return;
 
     const root = document.documentElement;
-    let inDarkCount = 0;
+
+    // Track WHICH sections are under the header, not how many events fired.
+    // A counter breaks as soon as there are two dark sections: the observer's
+    // initial callback reports every observed element, so the one off-screen
+    // decrements away the one that is actually under the header.
+    const inDark = new Set<Element>();
 
     const obs = new IntersectionObserver(
       (entries) => {
         for (const entry of entries) {
-          if (entry.isIntersecting) inDarkCount += 1;
-          else inDarkCount -= 1;
+          if (entry.isIntersecting) inDark.add(entry.target);
+          else inDark.delete(entry.target);
         }
-        inDarkCount = Math.max(0, inDarkCount);
-        root.classList.toggle("header-on-dark", inDarkCount > 0);
+        root.classList.toggle("header-on-dark", inDark.size > 0);
       },
       {
         // Only count intersection within the top ~10vh of the viewport,

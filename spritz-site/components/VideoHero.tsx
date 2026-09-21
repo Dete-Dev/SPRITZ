@@ -1,20 +1,31 @@
+import { useTranslations } from "next-intl";
+import Cta from "@/components/ui/Cta";
+
 /**
- * SPRITZ video hero — one full viewport, full-bleed video, auto-playing on
- * loop and muted (required by every modern browser for autoplay).
+ * SPRITZ landing hero — brief §1.
  *
- * Drop your video at `/public/video/hero.mp4`. Optionally provide an
- * additional `/public/video/hero.webm` (VP9) for ~40% smaller file size on
- * Chrome / Firefox; Safari falls back to the MP4 source.
+ * Full-bleed film and the one ask the brief wants: a centred SHOP ALL at the
+ * bottom of the frame, in red — the only CTA colour in the system. The film
+ * carries the frame on its own; the roaming wordmark that used to park here
+ * has been removed.
  *
- * If you also drop a `/public/video/hero-poster.webp` still frame, it shows
- * before the video loads — keeps the page from being a black hole during
- * the first 100-300 ms of network fetch.
+ * The floating search pill and the sticky 20% badge are mounted in the locale
+ * layout, so they ride every page rather than living here.
+ *
+ * Video assets: /public/video/hero.{webm,mp4} with hero-poster.webp behind.
+ *
+ * The film is the original 16:9 cut (the 21:9 re-cut was reverted). It fills
+ * 86vh with object-cover; on very wide windows the top and bottom crop, by
+ * design.
  */
 export default function VideoHero() {
+  const t = useTranslations("landing");
+
   return (
     <section
-      aria-label="SPRITZ — video"
-      className="relative w-full h-screen overflow-hidden"
+      data-header-bg="dark"
+      aria-label={t("heroLabel")}
+      className="relative h-[86vh] min-h-[34rem] w-full overflow-hidden bg-ink"
     >
       <video
         autoPlay
@@ -25,11 +36,24 @@ export default function VideoHero() {
         poster="/video/hero-poster.webp"
         className="absolute inset-0 h-full w-full object-cover"
       >
-        {/* WebM (VP9) first — smaller — then MP4 fallback for Safari. */}
         <source src="/video/hero.webm" type="video/webm" />
         <source src="/video/hero.mp4" type="video/mp4" />
-        {/* Final fallback if the browser supports no <video> source format. */}
       </video>
+
+      {/* Just enough scrim under the CTA for the cream line to hold. */}
+      <div
+        aria-hidden
+        className="absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-ink via-ink/70 to-transparent"
+      />
+
+      <div className="absolute inset-x-0 bottom-12 flex flex-col items-center gap-4 px-gutter text-center md:bottom-16">
+        <p className="font-sans text-sm text-cream md:text-base">
+          {t("heroNudge")}
+        </p>
+        <Cta href="/shop" variant="primary">
+          {t("ctaShopAll")}
+        </Cta>
+      </div>
     </section>
   );
 }

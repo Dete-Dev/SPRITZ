@@ -1,6 +1,12 @@
+import { Suspense } from "react";
 import type { Metadata } from "next";
 import { getTranslations, setRequestLocale } from "next-intl/server";
-import BundleBuilder from "@/components/bundle/BundleBuilder";
+import ShopGrid from "@/components/shop/ShopGrid";
+import ShopSubmenu from "@/components/shop/ShopSubmenu";
+import BundlePromoCard from "@/components/shop/BundlePromoCard";
+import TierBanner from "@/components/scent/TierBanner";
+import SiteFooter from "@/components/SiteFooter";
+import { Mark, Sticker, Spray } from "@/components/ui/vandal";
 
 export async function generateMetadata({
   params,
@@ -16,9 +22,14 @@ export async function generateMetadata({
 }
 
 /**
- * Shop page — the slot-style bundle builder. BundleBuilder is self-contained
- * (its own card + heading), so the page is just a centered shell. Same
- * component renders under the hero on the home page.
+ * The shop — brief §11.
+ *
+ *   TierBanner   — the thin fixed promo bar
+ *   ShopSubmenu  — the horizontal category row
+ *   ShopGrid     — search + sort on the left, quick filters on the right,
+ *                  the catalogue below with a set promo tile dealt in
+ *
+ * Paper world throughout. Bundling lives on its own page at /bundle.
  */
 export default async function ShopPage({
   params,
@@ -27,16 +38,48 @@ export default async function ShopPage({
 }) {
   const { locale } = await params;
   setRequestLocale(locale);
-  const t = await getTranslations("bundle");
+  const t = await getTranslations("shop");
+  const tCommon = await getTranslations("common");
 
   return (
-    <main className="min-h-screen px-6 pb-32 pt-36 md:pt-44">
-      <p className="mx-auto mb-8 max-w-3xl text-[11px] uppercase tracking-[0.45em] text-ink/55">
-        {t("eyebrow")}
-      </p>
-      <div className="mx-auto max-w-3xl">
-        <BundleBuilder />
-      </div>
-    </main>
+    <>
+      {/* Brief §11 — the thin promo bar, fixed at the top of the shop. */}
+      <TierBanner />
+
+      <main className="min-h-screen bg-paper">
+        <section className="relative overflow-hidden px-gutter pb-section pt-28 md:pt-32">
+          <Spray
+            color="var(--sp-red)"
+            opacity={0.28}
+            className="absolute -left-24 -top-10 h-[26rem] w-[26rem]"
+          />
+
+          <div className="relative mx-auto max-w-6xl">
+            <p className="sp-eyebrow">{t("eyebrow")}</p>
+            <h1 className="sp-display mt-5 text-d-2xl">
+              <Mark color="var(--sp-red)">{t("headline")}</Mark>
+            </h1>
+            <div className="mt-6">
+              <Sticker tilt={-4} variant="ink" fill="var(--sp-red)">
+                {tCommon("allUnder")}
+              </Sticker>
+            </div>
+
+            {/* useSearchParams in both needs the boundary. */}
+            <Suspense>
+              <div className="mt-12">
+                <ShopSubmenu />
+              </div>
+              {/* The promo tile is rendered on the server and dealt into the
+                  client grid as a prop. */}
+              <ShopGrid promoCard={<BundlePromoCard />} />
+            </Suspense>
+          </div>
+        </section>
+
+      </main>
+
+      <SiteFooter />
+    </>
   );
 }

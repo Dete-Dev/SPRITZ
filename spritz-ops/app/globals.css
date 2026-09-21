@@ -1,0 +1,79 @@
+/* ==========================================================================
+   SPRITZ OPS — global stylesheet
+   Design system: v2 "Vandal", identical to the storefront. Tokens in ./tokens
+   are vendored by scripts/sync-ds.mjs — edit them in spritz-site, not here.
+   Everything below is app plumbing the internal tool needs.
+   ========================================================================== */
+@import "./tokens/fonts.css";
+@import "./tokens/colors.css";
+@import "./tokens/typography.css";
+@import "./tokens/spacing.css";
+@import "./tokens/effects.css";
+@import "./tokens/motion.css";
+@import "./tokens/base.css";
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* --------------------------------------------------------------------------
+   Patch: CTA colour on ink surfaces. Carried over from spritz-site, same
+   reason — tokens/base.css declares `.sp-surface-ink a { color: cream }` at
+   specificity 0,1,1, which outranks the CTA variant rules at 0,1,0, so an
+   <a class="sp-cta"> on ink inherits cream and the white pill goes unreadable.
+   -------------------------------------------------------------------------- */
+.sp-surface-ink a.sp-cta--primary { color: var(--sp-on-accent); }
+.sp-surface-ink a.sp-cta--primary:hover { color: var(--sp-ink); }
+.sp-surface-ink a.sp-cta--invert { color: var(--sp-ink); }
+.sp-surface-ink a.sp-cta--invert:hover { color: var(--sp-on-accent); }
+.sp-surface-ink a.sp-cta--outline-invert { color: var(--sp-paper); }
+.sp-surface-ink a.sp-cta--outline-invert:hover { color: var(--sp-ink); }
+
+/* Lenis manages smooth scroll; native scroll-behavior is intentionally off. */
+html.lenis,
+html.lenis body { height: auto; }
+.lenis.lenis-smooth { scroll-behavior: auto !important; }
+.lenis.lenis-smooth [data-lenis-prevent] { overscroll-behavior: contain; }
+
+html,
+body { overflow-x: clip; }
+
+/* Elements queued for an anime.js entrance start hidden (no flash before the
+   IntersectionObserver fires). lib/motion.ts removes the class as it animates. */
+.sp-pre-enter { opacity: 0; }
+
+/* --------------------------------------------------------------------------
+   Ops-only plumbing. Data tables are the one place the house motion stops:
+   a stagger over 200 stock rows is a second of waiting on every filter.
+   -------------------------------------------------------------------------- */
+.ops-table { width: 100%; border-collapse: collapse; font-size: 0.9375rem; }
+.ops-table th {
+  text-align: left;
+  font-family: var(--sp-font-sans);
+  font-weight: 700;
+  font-size: 0.6875rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--sp-muted);
+  padding: 0.75rem 1rem;
+  border-bottom: 2px solid var(--sp-ink);
+  white-space: nowrap;
+}
+.ops-table td {
+  padding: 0.875rem 1rem;
+  border-bottom: 1px solid var(--sp-line);
+  vertical-align: middle;
+}
+.ops-table tbody tr:hover { background: var(--sp-paper-2); }
+/* Money and quantities line up on the decimal — tabular figures, right edge. */
+.ops-num { text-align: right; font-variant-numeric: tabular-nums; }
+
+/* The colour stripe that ties an ERP row back to the bottle's label. */
+.ops-swatch {
+  display: inline-block;
+  width: 0.25rem;
+  height: 1.5rem;
+  border-radius: 2px;
+  vertical-align: middle;
+  background: var(--swatch, var(--sp-line));
+}

@@ -14,7 +14,7 @@ import AddToCartButton from "@/components/cart/AddToCartButton";
 interface PurchaseOptionsProps {
   /** Shopify variant GID — empty until the store is wired up. */
   variantId: string;
-  /** Base one-time price in RON (from lib/scents). */
+  /** Base one-time price in EUR (from lib/scents). */
   price: number;
   className?: string;
 }
@@ -73,7 +73,7 @@ export default function PurchaseOptions({
               checked={selectedPlanId === null}
               onSelect={() => setSelectedPlanId(null)}
               title={t("oneTime")}
-              detail={`${price} RON`}
+              detail={`€${price}`}
             />
 
             {/* Subscription plans */}
@@ -95,7 +95,7 @@ export default function PurchaseOptions({
                   }
                   detail={
                     planPrice
-                      ? `${Number(planPrice).toFixed(0)} RON ${t("perDelivery")}`
+                      ? `€${Number(planPrice).toFixed(0)} ${t("perDelivery")}`
                       : t("perDelivery")
                   }
                   hint={t("cancelAnytime")}
@@ -128,10 +128,10 @@ interface PlanRowProps {
 function PlanRow({ checked, onSelect, title, detail, hint }: PlanRowProps) {
   return (
     <label
-      className={`mb-2 flex cursor-pointer items-start gap-3 rounded-2xl border px-5 py-4 transition-colors ${
+      className={`mb-3 flex cursor-pointer items-start gap-3 rounded-card border-2 px-5 py-4 transition-all duration-150 ease-spritz ${
         checked
-          ? "border-ink/60 bg-ink/[0.04]"
-          : "border-ink/15 hover:border-ink/35"
+          ? "border-ink bg-paper shadow-hard-sm"
+          : "border-line bg-paper hover:border-ink"
       }`}
     >
       <input
@@ -143,20 +143,18 @@ function PlanRow({ checked, onSelect, title, detail, hint }: PlanRowProps) {
       />
       <span
         aria-hidden
-        className={`mt-[3px] inline-block h-3 w-3 shrink-0 rounded-full border transition-colors ${
-          checked ? "border-ink bg-ink" : "border-ink/35"
+        className={`mt-[3px] inline-block h-3.5 w-3.5 shrink-0 rounded-full border-2 border-ink transition-colors ${
+          checked ? "bg-red" : "bg-paper"
         }`}
       />
       <span className="flex flex-1 flex-col">
-        <span className="text-[11px] uppercase tracking-[0.28em] text-ink">
+        <span className="font-sans text-[11px] font-bold uppercase tracking-[0.12em]">
           {title}
         </span>
-        <span className="mt-1 text-[13px] text-ink/65">{detail}</span>
-        {hint && checked && (
-          <span className="mt-1 text-[10px] uppercase tracking-[0.28em] text-ink/40">
-            {hint}
-          </span>
-        )}
+        <span className="mt-1 font-sans text-[13px] text-muted">{detail}</span>
+        {hint && checked ? (
+          <span className="sp-eyebrow mt-1">{hint}</span>
+        ) : null}
       </span>
     </label>
   );

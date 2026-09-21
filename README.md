@@ -1,7 +1,8 @@
 # SPRITZ
 
-Marketing + commerce site for SPRITZ, a small Romanian perfume house of five
-scents. Headless Shopify storefront with an editorial, motion-driven front end.
+Marketing + commerce site for SPRITZ, a Romanian perfume house selling 22
+inspired-by ("dupe") eau de parfum at EUR 100. Headless Shopify storefront
+with a street-leaning, motion-driven front end.
 
 ## Monorepo layout
 
@@ -9,6 +10,16 @@ scents. Headless Shopify storefront with an editorial, motion-driven front end.
 |---|---|
 | `spritz-site/` | Next.js 15 (App Router) + React 19 + Tailwind storefront. RO/EN via next-intl. |
 | `spritz-shopify-app/` | Custom Shopify app holding the bundle tier discount Function (deploy deferred). |
+| `brand/` | Design system and large source assets — see `brand/README.md`. Gitignored. |
+| `video/` | Colour LUTs, generation prompts, rendered clips. |
+| `_junk/` | Superseded material, kept only so nothing is lost. Safe to delete. |
+
+## Design system
+
+v2 "Vandal" — tokens live in `spritz-site/app/tokens/`, vendored from
+`brand/vandal-ds/`. A living reference renders at `/design`. Build new surfaces
+from the primitives in `spritz-site/components/ui/` rather than styling from
+scratch.
 
 ## Stack
 

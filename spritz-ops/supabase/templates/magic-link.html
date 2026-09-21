@@ -1,0 +1,89 @@
+<!--
+  SPRITZ OPS — Magic Link template, rewritten to send a CODE, not a link.
+
+  Paste into Supabase → Authentication → Email Templates → Magic Link.
+
+  The ConfirmationURL variable is deliberately absent and must stay absent —
+  and must never be written out in full even in a comment, because Go renders
+  template tags inside HTML comments too, which would put a live, scannable
+  link back into the message source. The link
+  and the code are the same one-time token, so leaving a link in lets a mail
+  scanner open it, burn the token, and the typed code dies with it — which is
+  the exact bug this replaced.
+
+  Email rules, not web rules: tables for layout, inline styles, no web fonts.
+  Arimo is metric-compatible with Arial and Alegreya falls back to Georgia, so
+  the type keeps its proportions where the real faces cannot load. The hard
+  offset shadow is a red cell behind an ink cell rather than box-shadow, which
+  Outlook ignores.
+-->
+<table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="margin:0;padding:0;background-color:#0a0a0a;">
+  <tr>
+    <td align="center" style="padding:40px 16px;background-color:#0a0a0a;">
+
+      <!-- preview line in the inbox list, never rendered in the body -->
+      <div style="display:none;max-height:0;overflow:hidden;opacity:0;color:transparent;height:0;width:0;">
+        Codul tău SPRITZ OPS: {{ .Token }}
+      </div>
+
+      <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="max-width:480px;background-color:#161616;border:2px solid #2c2c2c;border-radius:4px;">
+
+        <!-- red band, the house stripe -->
+        <tr>
+          <td style="height:10px;line-height:10px;font-size:0;background-color:#e5143c;">&nbsp;</td>
+        </tr>
+
+        <tr>
+          <td style="padding:36px 32px 32px 32px;">
+
+            <p style="margin:0 0 10px 0;font-family:Arimo,Arial,Helvetica,sans-serif;font-size:11px;font-weight:700;letter-spacing:0.22em;text-transform:uppercase;color:#9a978f;">
+              Uz intern
+            </p>
+
+            <h1 style="margin:0 0 28px 0;font-family:Alegreya,Georgia,'Times New Roman',serif;font-size:34px;line-height:1.05;font-weight:900;letter-spacing:-0.01em;color:#f4ede2;">
+              SPRITZ OPS
+            </h1>
+
+            <p style="margin:0 0 20px 0;font-family:Arimo,Arial,Helvetica,sans-serif;font-size:15px;line-height:1.6;color:#f4ede2;">
+              Codul tău de acces:
+            </p>
+
+            <!-- hard offset shadow: red cell behind, ink cell pushed top-left -->
+            <table role="presentation" cellpadding="0" cellspacing="0" border="0" style="margin:0 0 24px 0;">
+              <tr>
+                <td style="background-color:#e5143c;padding:0 5px 5px 0;border-radius:4px;">
+                  <table role="presentation" cellpadding="0" cellspacing="0" border="0">
+                    <tr>
+                      <td align="center" style="background-color:#0a0a0a;border:2px solid #f4ede2;border-radius:4px;padding:18px 28px;">
+                        <span style="font-family:Arimo,Arial,Helvetica,sans-serif;font-size:34px;font-weight:700;letter-spacing:0.28em;color:#f4ede2;white-space:nowrap;">{{ .Token }}</span>
+                      </td>
+                    </tr>
+                  </table>
+                </td>
+              </tr>
+            </table>
+
+            <p style="margin:0 0 8px 0;font-family:Arimo,Arial,Helvetica,sans-serif;font-size:14px;line-height:1.6;color:#f4ede2;">
+              Scrie-l pe pagina de login. Expiră într-o oră.
+            </p>
+
+            <p style="margin:0;font-family:Arimo,Arial,Helvetica,sans-serif;font-size:13px;line-height:1.6;color:#9a978f;">
+              Dacă nu ai cerut tu codul, ignoră mesajul. Fără cod nu intră nimeni.
+            </p>
+
+          </td>
+        </tr>
+
+        <tr>
+          <td style="padding:0 32px 28px 32px;">
+            <div style="height:1px;line-height:1px;font-size:0;background-color:#2c2c2c;">&nbsp;</div>
+            <p style="margin:16px 0 0 0;font-family:Arimo,Arial,Helvetica,sans-serif;font-size:11px;font-weight:700;letter-spacing:0.18em;text-transform:uppercase;color:#6c6a66;">
+              SPRITZ — uz intern
+            </p>
+          </td>
+        </tr>
+
+      </table>
+    </td>
+  </tr>
+</table>

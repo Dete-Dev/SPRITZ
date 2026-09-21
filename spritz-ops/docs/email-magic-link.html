@@ -1,0 +1,43 @@
+<!--
+  Sablonul "Magic link or OTP" din Supabase, pentru spritz-ops.
+
+  Doua lucruri sunt deliberate si usor de stricat inapoi:
+
+  1. NU exista niciun link aici. Linkul si codul sunt acelasi token — daca
+     lasi un link in sablon, scanerul de linkuri al Gmail il deschide inainte
+     de destinatar, consuma tokenul, si codul moare odata cu el. De asta a
+     fost scos, nu pastrat "ca rezerva".
+
+  2. FARA diacritice. Textul trece prin clipboard in editorul din dashboard,
+     iar acolo UTF-8 s-a corupt: "tau" a devenit "tfEu". Un email de sistem
+     nu merita un bug de codare care reapare la fiecare editare.
+-->
+<table width="100%" cellpadding="0" cellspacing="0" style="background:#0a0a0a;padding:40px 0;font-family:Arial,Helvetica,sans-serif;">
+  <tr>
+    <td align="center">
+      <table width="420" cellpadding="0" cellspacing="0" style="max-width:420px;">
+        <tr>
+          <td style="padding:0 24px 24px;">
+            <p style="margin:0;color:#9a978f;font-size:11px;font-weight:bold;letter-spacing:4px;text-transform:uppercase;">Uz intern</p>
+            <p style="margin:8px 0 0;color:#f4ede2;font-size:34px;font-weight:bold;line-height:0.95;font-family:Georgia,'Times New Roman',serif;">SPRITZ<br>OPS</p>
+            <div style="width:110px;height:8px;background:#e5143c;margin-top:16px;"></div>
+          </td>
+        </tr>
+        <tr>
+          <td style="padding:0 24px;">
+            <p style="margin:0 0 16px;color:#f4ede2;font-size:15px;line-height:1.6;">Codul tau de acces:</p>
+            <div style="background:#161616;border:2px solid #2c2c2c;padding:22px;text-align:center;">
+              <span style="color:#f4ede2;font-size:34px;font-weight:bold;letter-spacing:12px;font-family:'Courier New',monospace;">{{ .Token }}</span>
+            </div>
+            <p style="margin:20px 0 0;color:#9a978f;font-size:13px;line-height:1.6;">
+              Scrie-l in pagina de login. Expira intr-o ora.
+            </p>
+            <p style="margin:16px 0 0;color:#9a978f;font-size:13px;line-height:1.6;">
+              Daca nu ai cerut tu codul, ignora mesajul. Fara el nu deschide nimic.
+            </p>
+          </td>
+        </tr>
+      </table>
+    </td>
+  </tr>
+</table>

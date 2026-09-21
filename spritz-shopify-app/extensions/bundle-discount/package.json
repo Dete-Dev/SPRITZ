@@ -2,9 +2,11 @@
   "name": "bundle-discount",
   "private": true,
   "version": "0.1.0",
+  "type": "module",
   "scripts": {
     "build": "shopify app function build",
-    "typegen": "shopify app function typegen"
+    "typegen": "shopify app function typegen",
+    "test": "node src/run.test.mjs"
   },
   "dependencies": {
     "@shopify/shopify_function": "^1.0.0"

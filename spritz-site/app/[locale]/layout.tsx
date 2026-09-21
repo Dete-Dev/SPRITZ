@@ -4,8 +4,8 @@ import { getTranslations, setRequestLocale } from "next-intl/server";
 import { notFound } from "next/navigation";
 import { routing } from "@/i18n/routing";
 import FloatingHeader from "@/components/FloatingHeader";
+import PromoBadge from "@/components/PromoBadge";
 import HeaderThemeWatcher from "@/components/HeaderThemeWatcher";
-import JumpingWordmark from "@/components/JumpingWordmark";
 import SmoothScroll from "@/components/SmoothScroll";
 import { CartProvider } from "@/components/cart/CartProvider";
 import CartDrawer from "@/components/cart/CartDrawer";
@@ -47,15 +47,12 @@ export default async function LocaleLayout({
   return (
     <html lang={locale}>
       <head>
+        {/* Arimo + Alegreya are pulled in by app/tokens/fonts.css. */}
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link
           rel="preconnect"
           href="https://fonts.gstatic.com"
           crossOrigin=""
-        />
-        <link
-          href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300&family=Inter:wght@300;400;500&display=swap"
-          rel="stylesheet"
         />
       </head>
       <body className="antialiased">
@@ -65,8 +62,8 @@ export default async function LocaleLayout({
               <SmoothScroll />
               <HeaderThemeWatcher />
               <FloatingHeader />
-              <JumpingWordmark />
               {children}
+              <PromoBadge />
               <CartDrawer />
               <BundleBar />
             </BundleProvider>

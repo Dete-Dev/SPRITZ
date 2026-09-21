@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Cta from "@/components/ui/Cta";
 import { useCart } from "./CartProvider";
 
 interface AddToCartButtonProps {
@@ -54,18 +55,16 @@ export default function AddToCartButton({
 
   return (
     <div className={className}>
-      <button
-        type="button"
+      <Cta
+        variant="primary"
+        block
         onClick={handleClick}
-        disabled={!ready || loading}
-        className="inline-flex w-full items-center justify-center gap-2 rounded-full border border-ink/70 bg-ink px-7 py-3 text-[11px] uppercase tracking-[0.32em] text-ivory transition-colors hover:bg-ivory hover:text-ink disabled:cursor-not-allowed disabled:opacity-60"
+        className={!ready || loading ? "pointer-events-none opacity-40" : ""}
       >
         {!ready ? notReadyLabel : justAdded ? addedLabel : label}
-      </button>
+      </Cta>
       {error && (
-        <p className="mt-2 text-[11px] uppercase tracking-[0.3em] text-rust">
-          {error}
-        </p>
+        <p className="sp-scrawl mt-2 text-xs text-red">{error}</p>
       )}
     </div>
   );

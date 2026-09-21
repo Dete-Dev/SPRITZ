@@ -1,6 +1,9 @@
 node_modules/
 .next/
+.next.nosync/
 out/
 .DS_Store
 *.log
 .env*.local
+.vercel
+.env*

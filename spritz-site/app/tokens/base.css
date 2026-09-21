@@ -1,0 +1,96 @@
+/* SPRITZ v2 — base element defaults */
+html {
+  background: var(--sp-paper);
+}
+body {
+  margin: 0;
+  background: var(--sp-bg);
+  color: var(--sp-fg);
+  font-family: var(--sp-font-sans);
+  font-size: var(--sp-text-base);
+  line-height: 1.55;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+::selection {
+  background: var(--sp-red);
+  color: #ffffff;
+}
+a {
+  color: var(--sp-ink);
+  text-decoration-thickness: 2px;
+  text-underline-offset: 3px;
+}
+a:hover {
+  color: var(--sp-red);
+}
+.sp-surface-ink a { color: var(--sp-cream); }
+.sp-surface-ink a:hover { color: var(--sp-yellow); }
+:focus-visible {
+  outline: 3px solid var(--sp-focus);
+  outline-offset: 3px;
+}
+
+/* CTA primitive — one class, four variants. Every ask on the platform is one
+   of these. Never build a fifth. */
+.sp-cta {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6em;
+  font-family: var(--sp-font-sans);
+  font-weight: 700;
+  font-size: var(--sp-text-sm);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 1.05em 2.2em;
+  border-radius: var(--sp-radius);
+  border: 2px solid transparent;
+  cursor: pointer;
+  text-decoration: none;
+  transition:
+    transform var(--sp-fast) var(--sp-ease),
+    box-shadow var(--sp-fast) var(--sp-ease),
+    background-color var(--sp-fast) var(--sp-ease),
+    color var(--sp-fast) var(--sp-ease),
+    border-color var(--sp-fast) var(--sp-ease);
+}
+.sp-cta:active { transform: translateY(1px); }
+.sp-cta:focus-visible { outline: 3px solid var(--sp-focus); outline-offset: 3px; }
+
+/* v2 primary: red pill + hard ink shadow — pasted on, not printed. */
+.sp-cta--primary {
+  background: var(--sp-accent);
+  color: var(--sp-on-accent);
+  box-shadow: var(--sp-shadow-hard-sm);
+}
+.sp-cta--primary:hover {
+  background: var(--sp-ink);
+  transform: translate(-1px, -1px);
+  box-shadow: var(--sp-shadow-hard);
+}
+.sp-surface-ink .sp-cta--primary { box-shadow: 3px 3px 0 var(--sp-cream); }
+.sp-surface-ink .sp-cta--primary:hover { background: var(--sp-cream); color: var(--sp-ink); }
+
+.sp-cta--ghost {
+  background: transparent;
+  color: var(--sp-ink);
+  border-color: var(--sp-ink);
+}
+.sp-cta--ghost:hover { background: var(--sp-ink); color: var(--sp-paper); }
+
+.sp-cta--invert {
+  background: var(--sp-paper);
+  color: var(--sp-ink);
+}
+.sp-cta--invert:hover { background: var(--sp-accent); color: var(--sp-on-accent); }
+
+.sp-cta--outline-invert {
+  background: transparent;
+  color: var(--sp-paper);
+  border-color: var(--sp-paper);
+}
+.sp-cta--outline-invert:hover { background: var(--sp-paper); color: var(--sp-ink); }
+
+.sp-cta--sm { padding: 0.75em 1.4em; font-size: var(--sp-text-xs); }
+.sp-cta--block { display: flex; width: 100%; }

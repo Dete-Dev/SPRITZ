@@ -1,75 +1,90 @@
 import { getTranslations } from "next-intl/server";
 import type { Scent } from "@/lib/scents";
-import PurchaseOptions from "@/components/scent/PurchaseOptions";
+import SizeSelector from "@/components/scent/SizeSelector";
 import AddToBundleButton from "@/components/bundle/AddToBundleButton";
+import LabelName from "@/components/ui/LabelName";
+import { Sticker } from "@/components/ui/vandal";
 
 interface BuyBoxProps {
   scent: Scent;
 }
 
 /**
- * Sticky-on-desktop product buy box.
+ * Product buy box — brief §13. The gallery beside it is the sticky part.
  *
- * Primary CTA is Add to Bag — wires the scent's `shopifyVariantId` into the
- * cart context. When the variant id is empty (Shopify store not set up
- * yet), the button label switches to "Store launching soon" and click is a
- * no-op. Filling in `shopifyVariantId` in lib/scents.ts is enough to make
- * the button live — no other code change required.
+ * Order follows the brief: name, then "inspired by X (retail price Y)" —
+ * the whole dupe pitch in one line — then our price with the saving against
+ * the original, then the pack selector, then the trust bullets.
+ *
+ * The Add-to-bag button lives inside <SizeSelector/>, because which CTA
+ * belongs there depends on which pack is chosen. It goes live the moment
+ * `shopifyVariantId` is filled in on lib/scents.ts; no other change needed.
  */
 export default async function BuyBox({ scent }: BuyBoxProps) {
   const t = await getTranslations("scentPage");
-  const tHero = await getTranslations("hero.scents");
-  const tStory = await getTranslations(`scentDetails.${scent.key}`);
+  const tCommon = await getTranslations("common");
 
   const bullets = t.raw("bullets") as string[];
-  const priceFormatted = new Intl.NumberFormat("ro-RO").format(scent.price);
+  const saving = scent.retailPrice - scent.price;
 
   return (
-    <div className="md:sticky md:top-28">
-      <p className="text-[11px] uppercase tracking-[0.4em] text-ink/55 mb-5">
-        {tHero(`${scent.key}.eyebrow`)}
-      </p>
-
-      <h1 className="font-display text-[clamp(2.4rem,4.4vw,4.4rem)] leading-[0.96] whitespace-pre-line mb-7">
-        {scent.nameDisplay}
+    <div>
+      {/* The name is set exactly as printed on the bottle: lowercase French,
+          note words bold (rule 7). */}
+      <h1 className="sp-display mb-5 text-[clamp(2.2rem,4vw,4rem)] lowercase">
+        <LabelName name={scent.name} noteWords={scent.noteWords} />
       </h1>
 
-      <p className="text-ink/75 leading-relaxed mb-10 max-w-md">
-        {tStory("story1")}
+      {/* Brief §13 — inspired-by plus the original's retail price is the
+          essential line; without the comparison the price means nothing. */}
+      <p className="font-sans text-sm text-muted">
+        {tCommon("inspiredBy", { name: scent.inspiredBy })}{" "}
+        <span className="text-ink">
+          {t("retailPrice", { price: scent.retailPrice })}
+        </span>
       </p>
 
-      {/* Price + size row */}
-      <div className="flex items-end gap-10 mb-8 border-t border-ink/15 pt-6">
-        <div>
-          <p className="text-[10px] uppercase tracking-[0.4em] text-ink/55 mb-2">
-            {t("priceLabel")}
-          </p>
-          <p className="font-display text-3xl text-ink">
-            {priceFormatted}{" "}
-            <span className="text-base text-ink/55">{t("currency")}</span>
-          </p>
-        </div>
-        <div>
-          <p className="text-[10px] uppercase tracking-[0.4em] text-ink/55 mb-2">
-            {t("sizeLabel")}
-          </p>
-          <p className="font-display text-3xl text-ink">
-            {scent.size}{" "}
-            <span className="text-base text-ink/55">{t("edpLabel")}</span>
-          </p>
-        </div>
+      <div className="mt-6">
+        <Sticker tilt={-4} variant="fill" fill={scent.stripe}>
+          {scent.size} · eau de parfum
+        </Sticker>
       </div>
 
-      {/* One-time vs subscription + Add to Bag. Renders just the CTA until
-          a subscription app publishes selling plans for this variant. */}
-      <PurchaseOptions
-        variantId={scent.shopifyVariantId}
-        price={scent.price}
-        className="max-w-md"
-      />
+      {/* Price + saving */}
+      <div className="mb-8 mt-8 border-t-2 border-ink pt-6">
+        <div className="flex items-end gap-10">
+          <div>
+            <p className="sp-eyebrow mb-2">{t("priceFromLabel")}</p>
+            <p className="font-sans text-3xl font-bold">
+              {scent.price}{" "}
+              <span className="text-base font-normal text-muted">
+                {t("currency")}
+              </span>
+            </p>
+          </div>
+          <div>
+            <p className="sp-eyebrow mb-2">{t("sizeFromLabel")}</p>
+            <p className="font-sans text-3xl font-bold">
+              {scent.size}{" "}
+              <span className="text-base font-normal text-muted">
+                {t("edpLabel")}
+              </span>
+            </p>
+          </div>
+        </div>
 
-      {/* Secondary CTA — start/extend a discounted bundle without leaving
-          the product page. Surfaces the persistent bundle bar. */}
+        {/* Below €20 the flex reads as an anti-flex — skip the line. */}
+        {saving >= 20 ? (
+          <p className="mt-4 inline-block bg-ink px-3 py-1.5 font-sans text-[10px] font-bold uppercase tracking-[0.12em] text-paper">
+            {tCommon("cheaperThan", { amount: saving })}
+          </p>
+        ) : null}
+      </div>
+
+      {/* Pack selector + the matching CTA (brief §13/§15). */}
+      <SizeSelector scent={scent} />
+
+      {/* Secondary CTA — extend a bigger set without leaving the page. */}
       <div className="mt-3 max-w-md">
         <AddToBundleButton scentKey={scent.key} />
       </div>
@@ -79,12 +94,11 @@ export default async function BuyBox({ scent }: BuyBoxProps) {
         {bullets.map((line, i) => (
           <li
             key={i}
-            className="flex items-start gap-3 text-[13px] text-ink/65 leading-relaxed"
+            className="flex items-start gap-3 font-sans text-[13px] leading-relaxed text-muted"
           >
-            <span
-              aria-hidden
-              className="mt-[7px] inline-block h-1 w-1 rounded-full bg-ink/40"
-            />
+            <span aria-hidden className="mt-px font-bold text-green">
+              ✓
+            </span>
             <span>{line}</span>
           </li>
         ))}

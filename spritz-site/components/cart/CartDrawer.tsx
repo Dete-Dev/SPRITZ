@@ -3,6 +3,8 @@
 import Image from "next/image";
 import { useEffect } from "react";
 import { useTranslations } from "next-intl";
+import Cta from "@/components/ui/Cta";
+import { StripeBand } from "@/components/ui/vandal";
 import { useCart } from "./CartProvider";
 
 /**
@@ -71,38 +73,38 @@ export default function CartDrawer() {
         role="dialog"
         aria-modal="true"
         aria-label={t("title")}
-        className={`fixed right-0 top-0 z-50 flex h-full w-full max-w-md flex-col bg-ivory shadow-2xl transition-transform duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] ${
+        className={`fixed right-0 top-0 z-50 flex h-full w-full max-w-md flex-col border-l-2 border-ink bg-paper transition-transform duration-300 ease-spritz ${
           isOpen ? "translate-x-0" : "translate-x-full"
         }`}
       >
-        <header className="flex items-center justify-between border-b border-ink/10 px-6 py-5">
-          <h2 className="text-[11px] uppercase tracking-[0.4em] text-ink">
-            {t("title")}
-          </h2>
+        <StripeBand color="var(--sp-red)" height={12} />
+
+        <header className="flex items-center justify-between border-b-2 border-ink px-6 py-5">
+          <h2 className="sp-display text-d-xl">{t("title")}</h2>
           <button
             type="button"
             onClick={closeDrawer}
             aria-label={t("close")}
-            className="text-[11px] uppercase tracking-[0.32em] text-ink/55 hover:text-ink"
+            className="font-sans text-xl font-bold leading-none text-muted hover:text-ink"
           >
-            ✕
+            ×
           </button>
         </header>
 
         {items.length === 0 ? (
           <div className="flex flex-1 flex-col items-center justify-center px-8 text-center">
-            <p className="font-display text-3xl text-ink mb-3">{t("empty")}</p>
-            <p className="text-sm text-ink/65 max-w-xs leading-relaxed">
+            <p className="sp-display mb-3 text-d-xl">{t("empty")}</p>
+            <p className="max-w-xs font-sans text-sm text-muted">
               {t("emptyHint")}
             </p>
           </div>
         ) : (
-          <ul className="flex-1 divide-y divide-ink/10 overflow-y-auto px-6">
+          <ul className="flex-1 divide-y-2 divide-line overflow-y-auto px-6">
             {items.map((line) => {
               const image = line.merchandise.product.images.nodes[0];
               return (
                 <li key={line.id} className="flex gap-4 py-5">
-                  <div className="relative h-24 w-20 shrink-0 overflow-hidden bg-bone">
+                  <div className="relative h-24 w-20 shrink-0 overflow-hidden rounded-card border-2 border-ink bg-paper">
                     {image && (
                       <Image
                         src={image.url}
@@ -114,30 +116,30 @@ export default function CartDrawer() {
                     )}
                   </div>
                   <div className="flex flex-1 flex-col">
-                    <p className="font-display text-lg leading-tight">
+                    <p className="sp-label-name text-[15px] leading-tight">
                       {line.merchandise.product.title}
                     </p>
-                    <p className="text-[10px] uppercase tracking-[0.3em] text-ink/55 mt-1">
+                    <p className="sp-eyebrow mt-1">
                       {line.merchandise.title}
                     </p>
                     {line.sellingPlanAllocation && (
-                      <p className="text-[10px] uppercase tracking-[0.3em] text-ink/45 mt-1">
+                      <p className="sp-eyebrow mt-1">
                         {t("subscriptionBadge")} ·{" "}
                         {line.sellingPlanAllocation.sellingPlan.name}
                       </p>
                     )}
                     <div className="mt-auto flex items-center justify-between pt-3">
-                      <div className="flex items-center gap-2 border border-ink/20 rounded-full px-3 py-1">
+                      <div className="flex items-center gap-2 rounded-full border-2 border-ink px-3 py-1">
                         <button
                           type="button"
                           aria-label={t("decrease")}
                           onClick={() => updateQty(line.id, line.quantity - 1)}
                           disabled={loading}
-                          className="text-ink/55 hover:text-ink disabled:opacity-50"
+                          className="font-bold text-ink hover:text-red disabled:opacity-40"
                         >
                           −
                         </button>
-                        <span className="min-w-5 text-center text-sm">
+                        <span className="min-w-5 text-center font-sans text-sm font-bold">
                           {line.quantity}
                         </span>
                         <button
@@ -145,22 +147,22 @@ export default function CartDrawer() {
                           aria-label={t("increase")}
                           onClick={() => updateQty(line.id, line.quantity + 1)}
                           disabled={loading}
-                          className="text-ink/55 hover:text-ink disabled:opacity-50"
+                          className="font-bold text-ink hover:text-red disabled:opacity-40"
                         >
                           +
                         </button>
                       </div>
-                      <p className="text-sm text-ink">
+                      <p className="font-sans text-sm font-bold">
                         {Number(line.cost.subtotalAmount.amount) >
                           Number(line.cost.totalAmount.amount) && (
-                          <span className="mr-2 text-ink/40 line-through">
+                          <span className="sp-strike mr-2 font-normal text-muted">
                             {Number(line.cost.subtotalAmount.amount).toFixed(
                               0,
                             )}
                           </span>
                         )}
                         {Number(line.cost.totalAmount.amount).toFixed(0)}{" "}
-                        <span className="text-ink/55">
+                        <span className="font-normal text-muted">
                           {line.cost.totalAmount.currencyCode}
                         </span>
                       </p>
@@ -169,7 +171,7 @@ export default function CartDrawer() {
                       type="button"
                       onClick={() => removeItem(line.id)}
                       disabled={loading}
-                      className="mt-2 self-start text-[10px] uppercase tracking-[0.3em] text-ink/45 hover:text-ink"
+                      className="sp-eyebrow mt-2 self-start hover:text-red"
                     >
                       {t("remove")}
                     </button>
@@ -181,47 +183,38 @@ export default function CartDrawer() {
         )}
 
         {items.length > 0 && subtotal && total && (
-          <footer className="border-t border-ink/10 px-6 py-5">
+          <footer className="border-t-2 border-ink px-6 py-5">
             {discountAmount > 0 && (
               <div className="mb-2 flex items-center justify-between">
-                <span className="text-[10px] uppercase tracking-[0.32em] text-ink/45">
-                  {t("subtotal")}
-                </span>
-                <span className="text-sm text-ink/55 line-through">
+                <span className="sp-eyebrow">{t("subtotal")}</span>
+                <span className="sp-strike font-sans text-sm text-muted">
                   {Number(subtotal.amount).toFixed(0)} {subtotal.currencyCode}
                 </span>
               </div>
             )}
             {discountAmount > 0 && (
               <div className="mb-2 flex items-center justify-between">
-                <span className="text-[10px] uppercase tracking-[0.32em] text-ink/45">
-                  {t("discount")}
-                </span>
-                <span className="text-sm text-ink">
+                <span className="sp-eyebrow">{t("discount")}</span>
+                <span className="font-sans text-sm font-bold text-red">
                   −{discountAmount.toFixed(0)} {total.currencyCode}
                 </span>
               </div>
             )}
             <div className="mb-4 flex items-center justify-between">
-              <span className="text-[11px] uppercase tracking-[0.4em] text-ink/55">
+              <span className="sp-eyebrow">
                 {discountAmount > 0 ? t("total") : t("subtotal")}
               </span>
-              <span className="font-display text-2xl text-ink">
+              <span className="font-sans text-2xl font-bold">
                 {Number(total.amount).toFixed(0)}{" "}
-                <span className="text-base text-ink/55">
+                <span className="text-base font-normal text-muted">
                   {total.currencyCode}
                 </span>
               </span>
             </div>
-            <p className="mb-4 text-[10px] uppercase tracking-[0.32em] text-ink/45">
-              {t("shippingNote")}
-            </p>
-            <a
-              href={checkoutUrl ?? "#"}
-              className="block w-full rounded-full border border-ink/70 bg-ink px-6 py-3 text-center text-[11px] uppercase tracking-[0.32em] text-ivory transition-colors hover:bg-ivory hover:text-ink"
-            >
+            <p className="sp-eyebrow mb-4">{t("shippingNote")}</p>
+            <Cta href={checkoutUrl ?? "#"} variant="primary" block>
               {t("checkout")}
-            </a>
+            </Cta>
           </footer>
         )}
       </aside>

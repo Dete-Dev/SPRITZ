@@ -1,5 +1,7 @@
 "use client";
 
+import Chip from "@/components/ui/Chip";
+
 interface FinderChipsProps {
   label: string;
   options: ReadonlyArray<{ value: string; label: string }>;
@@ -9,9 +11,9 @@ interface FinderChipsProps {
 }
 
 /**
- * Single-select pill chip group. Tapping the selected chip deselects it —
- * every question is optional. Selected state mirrors the site's CTA pill
- * language: ink fill, ivory text.
+ * Single-select chip group. Tapping the selected chip deselects it — every
+ * question is optional. Uses the design system's <Chip/>, so selection reads
+ * as inked with a hard shadow rather than as a call to action.
  */
 export default function FinderChips({
   label,
@@ -22,27 +24,19 @@ export default function FinderChips({
 }: FinderChipsProps) {
   return (
     <fieldset className="mb-7">
-      <legend className="mb-3 text-[10px] uppercase tracking-[0.4em] text-ink/50">
-        {label}
-      </legend>
+      <legend className="sp-eyebrow mb-3">{label}</legend>
       <div className="flex flex-wrap gap-2">
         {options.map((option) => {
           const active = selected === option.value;
           return (
-            <button
+            <Chip
               key={option.value}
-              type="button"
+              selected={active}
               disabled={disabled}
-              aria-pressed={active}
               onClick={() => onSelect(active ? null : option.value)}
-              className={`rounded-full border px-4 py-2 text-[11px] uppercase tracking-[0.28em] transition-colors disabled:opacity-50 ${
-                active
-                  ? "border-ink bg-ink text-ivory"
-                  : "border-ink/25 text-ink/70 hover:border-ink/60 hover:text-ink"
-              }`}
             >
               {option.label}
-            </button>
+            </Chip>
           );
         })}
       </div>

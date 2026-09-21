@@ -1,0 +1,130 @@
+/* VENDORED from spritz-site/app/tokens/effects.css by scripts/sync-ds.mjs — do not edit here. */
+/* ==========================================================================
+   SPRITZ v2 — vandal effects
+   Grain, spray, stripes, tape, stickers. These carry the street energy;
+   the grid underneath stays dossier-clean.
+   ========================================================================== */
+
+/* Grain — atmosphere over ink surfaces and photography bands. */
+.sp-grain { position: relative; }
+.sp-grain::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.08;
+  mix-blend-mode: multiply;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='240' height='240'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%25' height='100%25' filter='url(%23n)' opacity='0.7'/></svg>");
+}
+.sp-surface-ink .sp-grain::after,
+.sp-grain--screen::after { mix-blend-mode: screen; opacity: 0.1; }
+
+/* Diagonal stripe (guideline ch.02 label system).
+   Set --stripe on the element to skin it in a scent colourway. */
+.sp-stripe {
+  background-image: repeating-linear-gradient(
+    -45deg,
+    var(--stripe, var(--sp-red)) 0 14px,
+    transparent 14px 28px
+  );
+}
+/* Thin stripe rule — section dividers, card edges. */
+.sp-stripe--thin {
+  background-image: repeating-linear-gradient(
+    -45deg,
+    var(--stripe, var(--sp-red)) 0 6px,
+    transparent 6px 12px
+  );
+}
+
+/* Spray hit — a soft blast of colour behind type or product.
+   Set --spray to a scent colour. Pure CSS, compositor-cheap. */
+.sp-spray {
+  background: radial-gradient(
+    closest-side,
+    var(--spray, var(--sp-red)) 0%,
+    color-mix(in oklch, var(--spray, var(--sp-red)) 55%, transparent) 55%,
+    transparent 100%
+  );
+  filter: blur(2px);
+}
+
+/* Tape — a strip of translucent tape holding an element to the page.
+   Position absolutely, rotate ±(2-6)deg. */
+.sp-tape {
+  display: inline-block;
+  width: 110px;
+  height: 30px;
+  background: color-mix(in srgb, var(--sp-cream) 82%, transparent);
+  box-shadow: 0 1px 2px rgba(10, 10, 10, 0.18);
+  clip-path: polygon(2% 0, 98% 4%, 100% 92%, 96% 100%, 3% 96%, 0 10%);
+}
+.sp-surface-ink .sp-tape { background: color-mix(in srgb, var(--sp-cream) 60%, transparent); }
+
+/* Sticker — white pill slapped on at an angle, hard shadow.
+   Combine with .sp-scrawl for the voice. */
+.sp-sticker {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5em;
+  padding: 0.55em 1.1em;
+  background: var(--sp-paper);
+  color: var(--sp-ink);
+  border: 2px solid var(--sp-ink);
+  border-radius: var(--sp-radius-sticker);
+  box-shadow: var(--sp-shadow-hard-sm);
+  transform: rotate(var(--tilt, -3deg));
+  font-family: var(--sp-font-sans);
+  font-weight: 700;
+  font-style: italic;
+  text-transform: uppercase;
+  font-size: var(--sp-text-xs);
+  letter-spacing: 0.04em;
+  white-space: nowrap;
+}
+.sp-sticker--fill {
+  background: var(--fill, var(--sp-yellow));
+  color: var(--sp-ink);
+}
+.sp-sticker--ink {
+  background: var(--sp-ink);
+  color: var(--sp-paper);
+  border-color: var(--sp-ink);
+  box-shadow: 3px 3px 0 var(--fill, var(--sp-red));
+}
+
+/* Paint underline — marker swipe under a word. Skewed block, not an SVG. */
+.sp-mark {
+  position: relative;
+  z-index: 0;
+  white-space: nowrap;
+}
+.sp-mark::before {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  left: -0.12em;
+  right: -0.12em;
+  bottom: 0.02em;
+  height: 0.42em;
+  background: var(--mark, var(--sp-yellow));
+  transform: skew(-12deg) rotate(-1deg);
+}
+
+/* Strike — the wordmark's strike-through applied to crossed-out prices,
+   dupe names, anything cancelled. */
+.sp-strike {
+  position: relative;
+  white-space: nowrap;
+}
+.sp-strike::after {
+  content: "";
+  position: absolute;
+  left: -4%;
+  right: -4%;
+  top: 52%;
+  height: 0.09em;
+  min-height: 2px;
+  background: currentColor;
+  transform: rotate(-2deg);
+}
